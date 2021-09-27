@@ -1,4 +1,5 @@
 ﻿using System;
+using SimpleNotes.Pages;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

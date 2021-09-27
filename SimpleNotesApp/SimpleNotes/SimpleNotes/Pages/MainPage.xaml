@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="Honeydew"
-             x:Class="SimpleNotes.MainPage">
+             x:Class="SimpleNotes.Pages.MainPage">
 
     <StackLayout Padding="10">
         <Label Text="Simple Notes" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
