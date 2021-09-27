@@ -386,3 +386,7 @@ FodyWeavers.xsd
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Resource.Designer.cs:
+**/Android/**/[Rr]esource.[Dd]esigner.cs
+**/*.Android/**/[Rr]esource.[Dd]esigner.cs
