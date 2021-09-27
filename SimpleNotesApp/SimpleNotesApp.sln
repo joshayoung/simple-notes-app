@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNotes.Android", "Simp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNotes.iOS", "SimpleNotes\SimpleNotes.iOS\SimpleNotes.iOS.csproj", "{969AE745-E3C8-4AB7-9F51-D5E9E5B34376}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNotes.Models", "SimpleNotes.Models\SimpleNotes.Models.csproj", "{D326FB04-26A2-4744-87CA-6BDE70F98E40}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|iPhone = Ad-Hoc|iPhone
@@ -82,5 +84,21 @@ Global
 		{969AE745-E3C8-4AB7-9F51-D5E9E5B34376}.Release|iPhoneSimulator.ActiveCfg = Release|iPhoneSimulator
 		{969AE745-E3C8-4AB7-9F51-D5E9E5B34376}.Release|iPhoneSimulator.Build.0 = Release|iPhoneSimulator
 		{969AE745-E3C8-4AB7-9F51-D5E9E5B34376}.Release|iPhoneSimulator.Deploy.0 = Release|iPhoneSimulator
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|iPhone.Build.0 = Release|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{D326FB04-26A2-4744-87CA-6BDE70F98E40}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
