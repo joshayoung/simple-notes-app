@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using System;
+using Xamarin.Forms;
 
 namespace SimpleNotes.Pages
 {
@@ -7,6 +8,11 @@ namespace SimpleNotes.Pages
         public MainPage()
         {
             InitializeComponent();
+        }
+
+        private void AddNotes(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new AddNotePage());
         }
     }
 }

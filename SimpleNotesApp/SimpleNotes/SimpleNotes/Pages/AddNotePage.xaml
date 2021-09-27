@@ -1,13 +1,16 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="Honeydew"
-             x:Class="SimpleNotes.Pages.MainPage">
-
+             x:Class="SimpleNotes.Pages.AddNotePage">
+    <ContentPage.Content>
     <StackLayout Padding="10">
         <Label Text="Simple Notes" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
-        <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="CadetBlue" TextColor="WhiteSmoke" VerticalOptions="EndAndExpand" />
+        
+        <Editor Placeholder="Add new note..." VerticalOptions="CenterAndExpand" />
+        
+        <Button Text="Save" Clicked="SaveNote" />
     </StackLayout>
-
+    </ContentPage.Content>
 </ContentPage>
