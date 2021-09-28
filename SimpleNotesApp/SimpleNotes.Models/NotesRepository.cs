@@ -6,7 +6,7 @@ namespace SimpleNotes.Models
     {
         public List<Note> Notes = new List<Note>();
 
-        public void  Refresh()
+        public NotesRepository()
         {
             Notes.Add(new Note { Description = "First Note" });
             Notes.Add(new Note { Description = "Second Note" });

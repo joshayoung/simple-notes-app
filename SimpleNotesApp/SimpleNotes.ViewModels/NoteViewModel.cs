@@ -6,6 +6,8 @@ namespace SimpleNotes.ViewModels
     {
         private readonly Note note;
 
+        public string Description => note.Description;
+
         public NoteViewModel(Note note)
         {
             this.note = note;

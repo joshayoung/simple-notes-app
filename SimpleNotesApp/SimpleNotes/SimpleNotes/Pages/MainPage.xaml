@@ -1,12 +1,23 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="Honeydew"
+             x:DataType="viewModels:NoteRepositoryViewModel"
              x:Class="SimpleNotes.Pages.MainPage">
 
     <StackLayout Padding="10">
         <Label Text="Simple Notes" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
+        
+        <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
+            <BindableLayout.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:NoteViewModel">
+                    <Label Text="{Binding Description}" />
+                </DataTemplate>
+            </BindableLayout.ItemTemplate>
+        </StackLayout>
+        
         <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="CadetBlue" TextColor="WhiteSmoke" VerticalOptions="EndAndExpand" />
     </StackLayout>
 

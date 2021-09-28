@@ -21,4 +21,8 @@
         <SubType>Code</SubType>
       </Compile>
     </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\SimpleNotes.ViewModels\SimpleNotes.ViewModels.csproj" />
+    </ItemGroup>
 </Project>
