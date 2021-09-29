@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using SimpleNotes.Models;
 
 namespace SimpleNotes.ViewModels
