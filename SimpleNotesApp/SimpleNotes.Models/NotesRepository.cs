@@ -8,10 +8,10 @@ namespace SimpleNotes.Models
 
         public NotesRepository()
         {
-            Notes.Add(new Note { Description = "First Note" });
-            Notes.Add(new Note { Description = "Second Note" });
-            Notes.Add(new Note { Description = "Third Note" });
-            Notes.Add(new Note { Description = "Fourth Note" });
+            Notes.Add(new Note("First Note"));
+            Notes.Add(new Note("Second Note"));
+            Notes.Add(new Note("Third Note"));
+            Notes.Add(new Note("Fourth Note"));
         }
     }
 }

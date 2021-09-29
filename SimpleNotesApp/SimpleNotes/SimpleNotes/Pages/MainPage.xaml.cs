@@ -14,6 +14,12 @@ namespace SimpleNotes.Pages
             this.BindingContext = this.noteRepositoryViewModel = noteRepositoryViewModel;
         }
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            this.noteRepositoryViewModel.Refresh();
+        }
+
         private void AddNotes(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AddNotePage(new NoteViewModel(noteRepositoryViewModel.GetInitialNote())));

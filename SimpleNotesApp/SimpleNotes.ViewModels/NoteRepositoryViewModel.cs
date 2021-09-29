@@ -24,7 +24,7 @@ namespace SimpleNotes.ViewModels
 
         public Note GetInitialNote()
         {
-            return new Note();
+            return new Note("first test");
         }
     }
 }

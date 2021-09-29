@@ -4,10 +4,6 @@ namespace SimpleNotes.Models
     {
         public string Description { get; set; }
 
-        public Note()
-        {
-        }
-
         public Note(string description)
         {
             Description = description;
