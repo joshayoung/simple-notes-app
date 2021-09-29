@@ -20,7 +20,11 @@ namespace SimpleNotes.ViewModels
             {
                 Notes.Add(new NoteViewModel(note));
             }
+        }
 
+        public Note GetInitialNote()
+        {
+            return new Note();
         }
     }
 }

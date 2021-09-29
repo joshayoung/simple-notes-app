@@ -1,9 +1,5 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,13 +8,17 @@ namespace SimpleNotes.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddNotePage : ContentPage
     {
-        public AddNotePage()
+        private readonly NoteViewModel noteViewModel;
+        
+        public AddNotePage(NoteViewModel noteViewModel)
         {
             InitializeComponent();
+            this.BindingContext = this.noteViewModel = noteViewModel;
         }
 
         private void SaveNote(object sender, EventArgs e)
         {
+            // var nvm = (NoteViewModel)((BindableObject) sender).BindingContext;
             Navigation.PopAsync();
         }
     }
