@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using Shared;
 
 namespace SimpleNotes.Models
@@ -16,9 +17,13 @@ namespace SimpleNotes.Models
 
         // TODO: Pass the necessary values in.
         // NOTE: Just a proof of concept at this point.
-        public void Save()
+        public void Save(Note note)
         {
-            data.Save("test", "val");
+            Notes.Add(note);
+            var serializeNotes = JsonConvert.SerializeObject(Notes);
+            data.Save("notes", serializeNotes);
+            var notes = data.Retrieve("notes");
+            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
         }
     }
 }

@@ -32,7 +32,7 @@ namespace SimpleNotes.Models
 
         public void Save()
         {
-            repository.Save();
+            repository.Save(this);
         }
     }
 }
