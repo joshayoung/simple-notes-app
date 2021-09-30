@@ -33,5 +33,7 @@ namespace SimpleNotes.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public void Save() => note.Save();
     }
 }

@@ -14,10 +14,9 @@ namespace SimpleNotes
         public App()
         {
             InitializeComponent();
+            Dependencies.Init();
 
-            // TODO: Refactor this and use DI:
-            var notesRepository = new NotesRepository();
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(notesRepository);
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(Dependencies.NotesRepository);
             noteRepositoryViewModel.Refresh();
             MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
         }

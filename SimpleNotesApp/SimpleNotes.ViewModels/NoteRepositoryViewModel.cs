@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using SimpleNotes.Models;
 
 namespace SimpleNotes.ViewModels
@@ -26,7 +24,7 @@ namespace SimpleNotes.ViewModels
 
         public Note GetInitialNote()
         {
-            return new Note("first test");
+            return new Note(notesRepository, "first test");
         }
     }
 }
