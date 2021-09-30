@@ -1,6 +1,6 @@
 using Xamarin.Forms;
 
-namespace SimpleNotes.Models
+namespace SimpleNotes.Storage
 {
     public static class Data
     {
