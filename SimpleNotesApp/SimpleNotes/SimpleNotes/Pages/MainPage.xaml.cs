@@ -24,5 +24,12 @@ namespace SimpleNotes.Pages
         {
             Navigation.PushAsync(new AddNotePage(new NoteViewModel(noteRepositoryViewModel.GetInitialNote())));
         }
+
+        private void GoToDetails(object sender, EventArgs e)
+        {
+            var noteViewModel = (NoteViewModel)((BindableObject) sender).BindingContext;
+            
+            Navigation.PushModalAsync(new DetailsNotePage(noteViewModel));
+        }
     }
 }

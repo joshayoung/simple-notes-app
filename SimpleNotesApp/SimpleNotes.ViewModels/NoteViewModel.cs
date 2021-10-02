@@ -9,6 +9,12 @@ namespace SimpleNotes.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         
         private readonly Note note;
+        
+        public string Id
+        {
+            get => note.Id;
+            set => note.Id = value;
+        }
 
         public string Description
         {

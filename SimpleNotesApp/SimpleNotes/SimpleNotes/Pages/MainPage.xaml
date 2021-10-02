@@ -10,13 +10,20 @@
     <StackLayout Padding="10">
         <Label Text="Simple Notes" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
         
-        <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
-            <BindableLayout.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:NoteViewModel">
-                    <Label Text="{Binding Description}" />
-                </DataTemplate>
-            </BindableLayout.ItemTemplate>
-        </StackLayout>
+        <ScrollView Padding="0, 10, 0, 30">
+            <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="viewModels:NoteViewModel">
+                        <Frame>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="GoToDetails" />
+                            </Frame.GestureRecognizers>
+                            <Label Text="{Binding Description}" />
+                        </Frame>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </ScrollView>
         
         <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="CadetBlue" TextColor="WhiteSmoke" VerticalOptions="EndAndExpand" />
     </StackLayout>
