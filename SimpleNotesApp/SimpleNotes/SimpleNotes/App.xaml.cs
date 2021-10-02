@@ -14,9 +14,9 @@ namespace SimpleNotes
         public App()
         {
             InitializeComponent();
-            Dependencies.Init();
+            Bootstrap.Init();
 
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(Dependencies.NotesRepository);
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
             noteRepositoryViewModel.Refresh();
             MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
         }

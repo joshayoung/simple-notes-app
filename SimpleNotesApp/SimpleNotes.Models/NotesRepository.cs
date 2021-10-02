@@ -1,13 +1,17 @@
-using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Shared;
 
 namespace SimpleNotes.Models
 {
-    public class NotesRepository
+    public class NotesRepository : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler? PropertyChanged;
+        
         public List<Note> Notes = new List<Note>();
+        
         private readonly IData data;
 
         public NotesRepository(IData data)
@@ -23,15 +27,17 @@ namespace SimpleNotes.Models
             this.Notes = deserializedNotes;
         }
 
-        // TODO: Pass the necessary values in.
-        // NOTE: Just a proof of concept at this point.
         public void Save(Note note)
         {
             this.Notes.Add(note);
             var serializeNotes = JsonConvert.SerializeObject(Notes);
             data.Save("notes", serializeNotes);
-            var notes = data.Retrieve("notes");
-            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
+            NotifyPropertyChanged(nameof(Notes));
+        }
+        
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

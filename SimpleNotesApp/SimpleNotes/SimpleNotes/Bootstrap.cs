@@ -6,7 +6,7 @@ using SimpleNotes.Storage;
 
 namespace SimpleNotes
 {
-    public static class Dependencies
+    public static class Bootstrap
     {
         private static IServiceCollection serviceCollection;
         private static IServiceProvider serviceProvider { get; set; }
