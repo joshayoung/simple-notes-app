@@ -8,6 +8,7 @@ namespace SimpleNotes.Storage
         public void Save(string id, string value)
         {
             Application.Current.Properties[id] = value;
+            Application.Current.SavePropertiesAsync();
         }
 
         public string Retrieve(string id)

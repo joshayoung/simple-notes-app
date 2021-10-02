@@ -16,7 +16,7 @@ namespace SimpleNotes.ViewModels
 
         public void Refresh()
         {
-            foreach (var note in notesRepository.Notes)
+            foreach (var note in this.notesRepository.Notes)
             {
                 Notes.Add(new NoteViewModel(note));
             }

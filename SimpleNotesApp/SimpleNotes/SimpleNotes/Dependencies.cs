@@ -6,13 +6,13 @@ using SimpleNotes.Storage;
 
 namespace SimpleNotes
 {
-    public class Dependencies
+    public static class Dependencies
     {
         private static IServiceCollection serviceCollection;
         private static IServiceProvider serviceProvider { get; set; }
         
         public static NotesRepository NotesRepository =>
-            serviceProvider.GetService<NotesRepository>();
+            serviceProvider.GetRequiredService<NotesRepository>();
 
         public static void Init()
         {
