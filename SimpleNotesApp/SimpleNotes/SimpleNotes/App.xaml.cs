@@ -17,7 +17,7 @@ namespace SimpleNotes
             Bootstrap.Init();
 
             var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
-            noteRepositoryViewModel.Refresh();
+            // noteRepositoryViewModel.Refresh();
             MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
         }
 

@@ -5,11 +5,10 @@ namespace SimpleNotes.Models
 {
     public class Note : INotifyPropertyChanged
     {
+        private int id;
         private string description;
-        private string id;
-        private readonly NotesRepository repository;
         
-        public string Id
+        public int Id
         {
             get => id;
             set
@@ -29,10 +28,10 @@ namespace SimpleNotes.Models
             }
         }
 
-        public Note(NotesRepository notesRepository, string description)
+        public Note(int id, string description)
         {
-            this.repository = notesRepository;
-            Description = description;
+            this.Id = id;
+            this.description = description;
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
@@ -40,11 +39,6 @@ namespace SimpleNotes.Models
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Save()
-        {
-            repository.Save(this);
         }
     }
 }

@@ -31,19 +31,22 @@ namespace SimpleNotes.ViewModels
             if (e.PropertyName == nameof(NotesRepository.Notes)) Refresh();
         }
 
-        public void Refresh()
+        private void Refresh()
         {
             var noteList = new List<NoteViewModel>();
+            if (this.notesRepository.Notes == null) return;
+            
             foreach (var note in this.notesRepository.Notes)
             {
-                noteList.Add(new NoteViewModel(note));
+                noteList.Add(new NoteViewModel(note, this.notesRepository));
             }
             this.Notes = noteList;
         }
 
-        public Note GetInitialNote()
+        public NoteViewModel GetInitialNote()
         {
-            return new Note(notesRepository, "");
+            var id = notesRepository.Notes.Count + 1;
+            return new NoteViewModel(new Note(id, ""), this.notesRepository);
         }
         
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

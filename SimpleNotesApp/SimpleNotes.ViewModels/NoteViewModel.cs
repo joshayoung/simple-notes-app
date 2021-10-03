@@ -9,8 +9,9 @@ namespace SimpleNotes.ViewModels
         public event PropertyChangedEventHandler? PropertyChanged;
         
         private readonly Note note;
+        private readonly NotesRepository repository;
         
-        public string Id
+        public int Id
         {
             get => note.Id;
             set => note.Id = value;
@@ -22,11 +23,12 @@ namespace SimpleNotes.ViewModels
             set => note.Description = value;
         }
 
-        public NoteViewModel(Note note)
+        public NoteViewModel(Note note, NotesRepository notesRepository)
         {
             this.note = note;
+            this.repository = notesRepository;
 
-            note.PropertyChanged += (sender, args) =>
+            this.note.PropertyChanged += (sender, args) =>
             {
                 if (args.PropertyName == nameof(Note.Description))
                 {
@@ -40,6 +42,8 @@ namespace SimpleNotes.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Save() => note.Save();
+        public void Save() => this.repository.Save(note);
+
+        public void Delete() => this.repository.Delete(note);
     }
 }

@@ -9,6 +9,7 @@
         <StackLayout>
             <Label Text="{Binding Id}" />
             <Label Text="{Binding Description}" />
+            <Button Text="Delete" Clicked="DeleteNote" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
