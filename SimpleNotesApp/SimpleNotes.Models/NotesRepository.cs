@@ -12,7 +12,9 @@ namespace SimpleNotes.Models
         public event PropertyChangedEventHandler? PropertyChanged;
         
         public List<Note> Notes = new List<Note>();
-        
+
+        public bool NotesExist { get; private set; }
+
         private readonly IData data;
 
         public NotesRepository(IData data)
@@ -55,6 +57,12 @@ namespace SimpleNotes.Models
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public void UpdateNotesExist()
+        {
+            this.NotesExist = Notes.Count > 0;
+            NotifyPropertyChanged(nameof(NotesExist));
         }
     }
 }

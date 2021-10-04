@@ -11,6 +11,8 @@ namespace SimpleNotes.ViewModels
         
         private readonly NotesRepository notesRepository;
 
+        public bool NotesExist => notesRepository.NotesExist;
+
         public List<NoteViewModel> Notes { get; set; } = new List<NoteViewModel>();
 
         public NoteRepositoryViewModel(NotesRepository notesRepository)
@@ -29,6 +31,7 @@ namespace SimpleNotes.ViewModels
         private void NotesRepositoryOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(NotesRepository.Notes)) Refresh();
+            if (e.PropertyName == nameof(NotesRepository.NotesExist)) NotifyPropertyChanged(nameof(NotesExist));
         }
 
         private void Refresh()
@@ -41,6 +44,7 @@ namespace SimpleNotes.ViewModels
                 noteList.Add(new NoteViewModel(note, this.notesRepository));
             }
             this.Notes = noteList;
+            notesRepository.UpdateNotesExist();
         }
 
         public NoteViewModel GetInitialNote()
