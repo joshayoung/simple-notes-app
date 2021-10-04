@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              xmlns:converters="clr-namespace:SimpleNotes.Converters;assembly=SimpleNotes"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#E9EEEC"
+             BackgroundColor="{StaticResource Five}"
              x:DataType="viewModels:NoteRepositoryViewModel"
              x:Class="SimpleNotes.Pages.MainPage">
     <ContentPage.Resources>
@@ -14,7 +14,7 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="10">
-        <Label Text="Simple Notes" FontAttributes="Bold" Margin="0,0,0,20" HorizontalOptions="CenterAndExpand" FontSize="32" />
+        <Label Text="Simple Notes" FontAttributes="Bold" Margin="0,0,0,20" TextColor="#2C2C2C" FontFamily="ArimaMadurai-Black" HorizontalOptions="CenterAndExpand" FontSize="32" />
         
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
             <Label Text="No notes, please add one" />
@@ -24,18 +24,18 @@
             <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
-                        <Frame BackgroundColor="#3DA87D">
+                        <Frame BackgroundColor="#79B79E" BorderColor="#747474">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="GoToDetails" />
                             </Frame.GestureRecognizers>
-                            <Label Text="{Binding Description}" FontAttributes="Bold" />
+                            <Label Text="{Binding Description}" TextColor="White" />
                         </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </ScrollView>
         
-        <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="#F59371" TextColor="#000000" VerticalOptions="EndAndExpand" />
+        <Button Text="Add New Note" Clicked="AddNotes" Style="{StaticResource NoteButton}" VerticalOptions="EndAndExpand" />
     </StackLayout>
 
 </ContentPage>
