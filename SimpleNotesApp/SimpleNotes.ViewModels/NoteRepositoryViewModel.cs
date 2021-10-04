@@ -22,7 +22,7 @@ namespace SimpleNotes.ViewModels
             notesRepository.PropertyChanged += NotesRepositoryOnPropertyChanged;
             notesRepository.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(Notes)) NotifyPropertyChanged(nameof(Notes));
+                if (args.PropertyName == nameof(NotesRepository.Notes)) NotifyPropertyChanged(nameof(Notes));
             };
         }
 

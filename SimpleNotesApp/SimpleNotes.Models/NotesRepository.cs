@@ -42,9 +42,11 @@ namespace SimpleNotes.Models
         {
             var lsNotes = data.Retrieve("notes");
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
-            var nt = deserializeNotes?.Find(n => n.Id == note.Id);
-            this.Notes.Remove(nt);
-            deserializeNotes?.Remove(nt);
+            var noteIndex = deserializeNotes?.FindIndex(n => n.Id == note.Id);
+            if (noteIndex == null) return;
+            
+            this.Notes.RemoveAt(noteIndex.Value);
+            deserializeNotes?.RemoveAt(noteIndex.Value);
             var serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
             data.Save("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));

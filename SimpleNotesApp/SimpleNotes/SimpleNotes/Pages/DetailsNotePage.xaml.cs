@@ -18,7 +18,7 @@ namespace SimpleNotes.Pages
         private void DeleteNote(object sender, EventArgs e)
         {
             this.noteViewModel.Delete();
-            // Navigation.PopModalAsync();
+            Navigation.PopModalAsync();
         }
     }
 }
