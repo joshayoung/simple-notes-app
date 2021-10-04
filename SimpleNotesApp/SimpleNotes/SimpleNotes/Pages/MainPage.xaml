@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              xmlns:converters="clr-namespace:SimpleNotes.Converters;assembly=SimpleNotes"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="Honeydew"
+             BackgroundColor="#E9EEEC"
              x:DataType="viewModels:NoteRepositoryViewModel"
              x:Class="SimpleNotes.Pages.MainPage">
     <ContentPage.Resources>
@@ -14,7 +14,7 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="10">
-        <Label Text="Simple Notes" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
+        <Label Text="Simple Notes" FontAttributes="Bold" Margin="0,0,0,20" HorizontalOptions="CenterAndExpand" FontSize="32" />
         
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
             <Label Text="No notes, please add one" />
@@ -24,18 +24,18 @@
             <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
-                        <Frame>
+                        <Frame BackgroundColor="#3DA87D">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="GoToDetails" />
                             </Frame.GestureRecognizers>
-                            <Label Text="{Binding Description}" />
+                            <Label Text="{Binding Description}" FontAttributes="Bold" />
                         </Frame>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>
         </ScrollView>
         
-        <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="CadetBlue" TextColor="WhiteSmoke" VerticalOptions="EndAndExpand" />
+        <Button Text="Add New Note" Clicked="AddNotes" BackgroundColor="#F59371" TextColor="#000000" VerticalOptions="EndAndExpand" />
     </StackLayout>
 
 </ContentPage>

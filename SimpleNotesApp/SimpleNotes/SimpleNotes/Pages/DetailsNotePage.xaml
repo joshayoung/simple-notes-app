@@ -4,12 +4,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              x:DataType="viewModels:NoteViewModel"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#E9EEEC"
              x:Class="SimpleNotes.Pages.DetailsNotePage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="{Binding Id}" />
-            <Label Text="{Binding Description}" />
-            <Button Text="Delete" Clicked="DeleteNote" />
+        <StackLayout Padding="10">
+            <Label Text="Edit Note" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
+            <Entry Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
+            <Button Text="Delete" Clicked="DeleteNote" BackgroundColor="#F59371" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
