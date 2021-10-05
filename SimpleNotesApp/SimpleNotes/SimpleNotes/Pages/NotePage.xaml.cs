@@ -4,11 +4,11 @@ using Xamarin.Forms;
 
 namespace SimpleNotes.Pages
 {
-    public partial class MainPage : ContentPage
+    public partial class NotePage : ContentPage
     {
         private readonly NoteRepositoryViewModel noteRepositoryViewModel;
         
-        public MainPage(NoteRepositoryViewModel noteRepositoryViewModel)
+        public NotePage(NoteRepositoryViewModel noteRepositoryViewModel)
         {
             InitializeComponent();
             this.BindingContext = this.noteRepositoryViewModel = noteRepositoryViewModel;
@@ -16,7 +16,7 @@ namespace SimpleNotes.Pages
 
         private void AddNotes(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new AddNotePage(noteRepositoryViewModel.GetInitialNote()));
+            Navigation.PushModalAsync(new AddPage(noteRepositoryViewModel.GetInitialNote()));
         }
         
         private void DeleteNote(object sender, EventArgs e)
@@ -29,7 +29,7 @@ namespace SimpleNotes.Pages
         private void GoToDetails(object sender, EventArgs e)
         {
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            Navigation.PushModalAsync(new DetailsNotePage(noteViewModel));
+            Navigation.PushModalAsync(new DetailPage(noteViewModel));
         }
     }
 }
