@@ -15,6 +15,7 @@
             <StackLayout VerticalOptions="CenterAndExpand">
                 <Editor Placeholder="note title…" Text="{Binding Title}" />
                 <Editor Placeholder="note description…" Text="{Binding Description}" />
+                <Button Text="Save" Clicked="SaveNote" />
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

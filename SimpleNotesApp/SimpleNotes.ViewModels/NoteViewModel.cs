@@ -36,11 +36,22 @@ namespace SimpleNotes.ViewModels
 
             this.note.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(Note.Description))
+                switch (args.PropertyName)
                 {
-                    NotifyPropertyChanged(nameof(NoteViewModel.Description));
+                    case nameof(Note.Title):
+                        NotifyPropertyChanged(nameof(NoteViewModel.Title));
+                        break;
+                    case nameof(Note.Description):
+                        NotifyPropertyChanged(nameof(NoteViewModel.Description));
+                        break;
                 }
             };
+        }
+
+        public NoteViewModel EditNoteCopy()
+        {
+            var newNote = new Note(note.Id, note.Title, note.Description);
+            return new NoteViewModel(newNote, repository);
         }
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

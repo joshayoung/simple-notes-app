@@ -22,7 +22,7 @@ namespace SimpleNotes.Pages
         private void EditNote(object sender, EventArgs e)
         {
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            Navigation.PushModalAsync(new EditPage(noteViewModel));
+            Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy()));
         }
         
         private void DeleteNote(object sender, EventArgs e)
