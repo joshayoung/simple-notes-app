@@ -16,8 +16,14 @@ namespace SimpleNotes.ViewModels
             get => note.Id;
             set => note.Id = value;
         }
+        
+        public string? Title
+        {
+            get => note.Title;
+            set => note.Title = value;
+        }
 
-        public string Description
+        public string? Description
         {
             get => note.Description;
             set => note.Description = value;

@@ -50,7 +50,7 @@ namespace SimpleNotes.ViewModels
         public NoteViewModel GetInitialNote()
         {
             var id = notesRepository.Notes.Count + 1;
-            return new NoteViewModel(new Note(id, ""), this.notesRepository);
+            return new NoteViewModel(new Note(id), this.notesRepository);
         }
         
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)

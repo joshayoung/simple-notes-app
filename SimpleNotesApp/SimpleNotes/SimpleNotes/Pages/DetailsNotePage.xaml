@@ -12,7 +12,10 @@
         <StackLayout Padding="10">
             <views:CloseModal />
             <Label Text="Edit Note" Style="{StaticResource HeaderStyle}" />
-            <Entry Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
+            <StackLayout VerticalOptions="CenterAndExpand">
+                <Editor Placeholder="note title…" Text="{Binding Title}" />
+                <Editor Placeholder="note description…" Text="{Binding Description}" />
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -6,7 +6,8 @@ namespace SimpleNotes.Models
     public class Note : INotifyPropertyChanged
     {
         private int id;
-        private string description;
+        private string? title;
+        private string? description;
         
         public int Id
         {
@@ -18,7 +19,17 @@ namespace SimpleNotes.Models
             }
         }
         
-        public string Description
+        public string? Title
+        {
+            get => title;
+            set
+            {
+                this.title = value;
+                NotifyPropertyChanged();
+            }
+        }
+        
+        public string? Description
         {
             get => description;
             set
@@ -28,9 +39,10 @@ namespace SimpleNotes.Models
             }
         }
 
-        public Note(int id, string description)
+        public Note(int id, string? title = null, string? description = null)
         {
             this.Id = id;
+            this.title = title;
             this.description = description;
         }
 
