@@ -9,6 +9,7 @@
             <Color x:Key="BackgroundColor">#F2F2F2</Color>
             <Color x:Key="AccentColor">#0095d5</Color>
             <Color x:Key="AlmostWhite">#F0F0F0</Color>
+            <Color x:Key="HighlightColor">#FF6A51</Color>
             
             <Style x:Key="HeaderStyle" TargetType="Button">
                 <Setter Property="FontAttributes" Value="Bold" />
@@ -20,30 +21,35 @@
             
             <Style x:Key="EditButton" TargetType="Button">
                 <Setter Property="Margin" Value="0,0,10,0" />
-                <Setter Property="Padding" Value="10" />
+                <Setter Property="Padding" Value="20" />
                 <Setter Property="TextColor" Value="{StaticResource AlmostWhite}" />
                 <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
+                <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             
             <Style x:Key="DeleteButton" TargetType="Button">
                 <Setter Property="TextColor" Value="Black" />
                 <Setter Property="Margin" Value="10,0,0,0" />
-                <Setter Property="Padding" Value="10" />
+                <Setter Property="Padding" Value="20" />
+                <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="BorderColor" Value="#FF4301" />
-                <Setter Property="BackgroundColor" Value="#FF6A51" />
+                <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}" />
                 <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             
             <Style x:Key="NoteButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
+                <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="TextColor" Value="#FFFFFF" />
             </Style>
             
             <Style x:Key="NoteStyle" TargetType="Frame">
                 <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BackgroundColor" Value="{StaticResource NoteColor}" />
-                <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
+                <!-- <Setter Property="BackgroundColor" Value="{StaticResource NoteColor}" /> -->
+                <Setter Property="BackgroundColor" Value="#DCDCDC" />
+                <Setter Property="HasShadow" Value="False" />
+                <!-- <Setter Property="BorderColor" Value="{StaticResource AccentColor}" /> -->
             </Style>
         </ResourceDictionary>
     </Application.Resources>

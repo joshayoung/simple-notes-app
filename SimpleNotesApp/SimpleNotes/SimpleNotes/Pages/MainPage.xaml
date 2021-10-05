@@ -49,11 +49,29 @@
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
-                            <Frame Style="{StaticResource NoteStyle}" Margin="0,0,0,10">
+                            <Frame Padding="0" BackgroundColor="{StaticResource HighlightColor}" CornerRadius="8" HasShadow="True" Margin="0,0,0,16">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="GoToDetails" />
                                 </Frame.GestureRecognizers>
-                                <Label Text="{Binding Title}" TextColor="White" />
+                                <Frame Style="{StaticResource NoteStyle}" Margin="0,0,0,2">
+                                    <StackLayout>
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="GoToDetails" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                        <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100">
+                                            <BoxView.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="GoToDetails" />
+                                            </BoxView.GestureRecognizers>
+                                        </BoxView>
+                                        <Label Text="{Binding Description}" FontAttributes="Italic">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="GoToDetails" />
+                                            </Label.GestureRecognizers>
+                                        </Label>
+                                    </StackLayout>
+                                </Frame>
                             </Frame>
                         </SwipeView>
                     </DataTemplate>

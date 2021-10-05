@@ -13,7 +13,7 @@
         <Label Text="Add Note" Style="{StaticResource HeaderStyle}" />
         <StackLayout VerticalOptions="CenterAndExpand">
             <Editor Placeholder="note title…" Text="{Binding Title}" />
-            <Editor Placeholder="note description…" Text="{Binding Description}" />
+            <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />
         </StackLayout>
         <Button Style="{StaticResource NoteButton}" Text="Save" Clicked="SaveNote" />
     </StackLayout>

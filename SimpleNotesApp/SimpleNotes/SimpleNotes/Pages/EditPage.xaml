@@ -14,9 +14,9 @@
             <Label Text="Edit Note" Style="{StaticResource HeaderStyle}" />
             <StackLayout VerticalOptions="CenterAndExpand">
                 <Editor Placeholder="note title…" Text="{Binding Title}" />
-                <Editor Placeholder="note description…" Text="{Binding Description}" />
-                <Button Text="Save" Clicked="SaveNote" />
+                <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />
             </StackLayout>
+            <Button Text="Save" Clicked="SaveNote" Style="{StaticResource NoteButton}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
