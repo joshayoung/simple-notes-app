@@ -17,7 +17,7 @@
         <Label Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
         
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
-            <Label Text="No notes, please add one…" />
+            <Label Text="No notes, please add one…" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
         
             <CollectionView Margin="0,20,0,0" ItemsSource="{Binding Notes}">
@@ -26,7 +26,7 @@
                         <Label
                             FontAttributes="Italic"
                             FontSize="14"
-                            Text="Swipe right to delete…"
+                            Text="Swipe left to edit, right to delete…"
                             TextColor="#9E9E9E"
                             Padding="0,10,0,0"
                             HorizontalOptions="Center" />
@@ -35,6 +35,13 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
                         <SwipeView>
+                            <SwipeView.LeftItems>
+                                <SwipeItems>
+                                    <SwipeItemView Invoked="EditNote">
+                                        <Button Style="{StaticResource EditButton}" Text="Edit Note" />
+                                    </SwipeItemView>
+                                </SwipeItems>
+                            </SwipeView.LeftItems>
                             <SwipeView.RightItems>
                                 <SwipeItems>
                                     <SwipeItemView Invoked="DeleteNote">
@@ -46,7 +53,7 @@
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="GoToDetails" />
                                 </Frame.GestureRecognizers>
-                                <Label Text="{Binding Description}" TextColor="White" />
+                                <Label Text="{Binding Title}" TextColor="White" />
                             </Frame>
                         </SwipeView>
                     </DataTemplate>

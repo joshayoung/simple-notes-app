@@ -8,6 +8,7 @@
             <Color x:Key="ButtonColor">#199AD5</Color>
             <Color x:Key="BackgroundColor">#F2F2F2</Color>
             <Color x:Key="AccentColor">#0095d5</Color>
+            <Color x:Key="AlmostWhite">#F0F0F0</Color>
             
             <Style x:Key="HeaderStyle" TargetType="Button">
                 <Setter Property="FontAttributes" Value="Bold" />
@@ -15,6 +16,14 @@
                 <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
                 <Setter Property="FontSize" Value="32" />
+            </Style>
+            
+            <Style x:Key="EditButton" TargetType="Button">
+                <Setter Property="Margin" Value="0,0,10,0" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="TextColor" Value="{StaticResource AlmostWhite}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
+                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             
             <Style x:Key="DeleteButton" TargetType="Button">
