@@ -16,10 +16,10 @@ namespace SimpleNotes.Pages
             this.BindingContext = this.noteViewModel = noteViewModel;
         }
 
-        private void SaveNote(object sender, EventArgs e)
+        private async void SaveNote(object sender, EventArgs e)
         {
-            noteViewModel.Save();
-            Navigation.PopModalAsync();
+            await noteViewModel.SaveAsync();
+            await Navigation.PopModalAsync();
         }
     }
 }

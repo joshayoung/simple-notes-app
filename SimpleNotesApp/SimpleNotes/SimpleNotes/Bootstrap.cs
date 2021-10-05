@@ -8,11 +8,11 @@ namespace SimpleNotes
 {
     public static class Bootstrap
     {
-        private static IServiceCollection serviceCollection;
-        private static IServiceProvider serviceProvider { get; set; }
+        private static IServiceCollection? serviceCollection;
+        private static IServiceProvider? serviceProvider { get; set; }
         
-        public static NotesRepository NotesRepository =>
-            serviceProvider.GetRequiredService<NotesRepository>();
+        public static NotesRepository? NotesRepository =>
+            serviceProvider?.GetRequiredService<NotesRepository>();
 
         public static void Init()
         {

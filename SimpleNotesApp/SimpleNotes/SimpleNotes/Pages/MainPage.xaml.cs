@@ -25,11 +25,13 @@ namespace SimpleNotes.Pages
             Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy()));
         }
         
-        private void DeleteNote(object sender, EventArgs e)
+        private async void DeleteNote(object sender, EventArgs e)
         {
+            var deleteNote = await DisplayAlert("Continue", "Permanently delete this note?", "Yes", "No");
+            if (!deleteNote) return;
+            
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            noteViewModel.Delete();
-            Navigation.PopModalAsync();
+            await noteViewModel.DeleteAsync();
         }
 
         private void GoToDetails(object sender, EventArgs e)

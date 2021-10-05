@@ -1,5 +1,6 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using SimpleNotes.Models;
 
 namespace SimpleNotes.ViewModels
@@ -59,10 +60,10 @@ namespace SimpleNotes.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async void Save() => await this.repository.Save(note);
+        public async Task SaveAsync() => await this.repository.Save(note);
 
-        public async void Delete() => await this.repository.Delete(note);
+        public async Task DeleteAsync() => await this.repository.Delete(note);
 
-        public async void SaveEdits() => await this.repository.SaveEdits(note);
+        public async Task SaveEditsAsync() => await this.repository.SaveEdits(note);
     }
 }
