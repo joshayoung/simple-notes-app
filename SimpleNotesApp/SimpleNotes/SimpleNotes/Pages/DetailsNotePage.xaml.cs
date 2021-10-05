@@ -1,4 +1,3 @@
-using System;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -9,6 +8,7 @@ namespace SimpleNotes.Pages
     public partial class DetailsNotePage : ContentPage
     {
         private readonly NoteViewModel noteViewModel;
+        
         public DetailsNotePage(NoteViewModel noteViewModel)
         {
             InitializeComponent();

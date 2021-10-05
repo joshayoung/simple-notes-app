@@ -9,9 +9,6 @@ namespace SimpleNotes.Views
     {
         public CloseModal() => InitializeComponent();
 
-        private void Close(object sender, EventArgs e)
-        {
-            this.Navigation.PopModalAsync();
-        }
+        private void Close(object sender, EventArgs e) => this.Navigation.PopModalAsync();
     }
 }

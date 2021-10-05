@@ -11,10 +11,19 @@
             
             <Style x:Key="HeaderStyle" TargetType="Button">
                 <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="Margin" Value="0,0,0,20" />
+                <Setter Property="Margin" Value="0,10,0,10" />
                 <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
                 <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
                 <Setter Property="FontSize" Value="32" />
+            </Style>
+            
+            <Style x:Key="DeleteButton" TargetType="Button">
+                <Setter Property="TextColor" Value="Black" />
+                <Setter Property="Margin" Value="10,0,0,0" />
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="BorderColor" Value="#FF4301" />
+                <Setter Property="BackgroundColor" Value="#FF6A51" />
+                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
             
             <Style x:Key="NoteButton" TargetType="Button">

@@ -20,7 +20,6 @@
             <Label Text="No notes, please add one…" />
         </StackLayout>
         
-        <ScrollView Padding="0, 10, 0, 30">
             <CollectionView Margin="0,20,0,0" ItemsSource="{Binding Notes}">
                 <CollectionView.Footer>
                     <Grid IsVisible="{Binding NotesExist}">
@@ -36,22 +35,23 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
                         <SwipeView>
-                                <SwipeView.RightItems>
-                                    <SwipeItems>
-                                        <SwipeItem Text="Delete" BackgroundColor="Tomato" Clicked="DeleteNote" />
-                                    </SwipeItems>
-                                </SwipeView.RightItems>
-                                <Frame Style="{StaticResource NoteStyle}">
-                                    <Frame.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="GoToDetails" />
-                                    </Frame.GestureRecognizers>
-                                    <Label Text="{Binding Description}" TextColor="White" />
-                                </Frame>
-                            </SwipeView>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-        </ScrollView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItemView Invoked="DeleteNote">
+                                        <Button Style="{StaticResource DeleteButton}" Text="Delete Note" />
+                                    </SwipeItemView>
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Style="{StaticResource NoteStyle}" Margin="0,0,0,10">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoToDetails" />
+                                </Frame.GestureRecognizers>
+                                <Label Text="{Binding Description}" TextColor="White" />
+                            </Frame>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
         
         <Button Text="Add New Note" Clicked="AddNotes" Style="{StaticResource NoteButton}" VerticalOptions="EndAndExpand" />
     </StackLayout>

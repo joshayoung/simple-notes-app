@@ -19,7 +19,7 @@ namespace SimpleNotes.Pages
         private void SaveNote(object sender, EventArgs e)
         {
             noteViewModel.Save();
-            Navigation.PopAsync();
+            Navigation.PopModalAsync();
         }
     }
 }
