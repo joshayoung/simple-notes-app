@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared;
 
@@ -29,18 +30,21 @@ namespace SimpleNotes.Models
             if (notes == String.Empty) return;
             
             var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
-            this.Notes = deserializedNotes;
+            if (deserializedNotes != null)
+            {
+                this.Notes = deserializedNotes;
+            }
         }
 
-        public void Save(Note note)
+        public async Task Save(Note note)
         {
             this.Notes.Add(note);
             var serializeNotes = JsonConvert.SerializeObject(Notes);
-            data.Save("notes", serializeNotes);
+            await data.Save("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
         
-        public void Delete(Note note)
+        public async Task Delete(Note note)
         {
             var lsNotes = data.Retrieve("notes");
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
@@ -50,7 +54,7 @@ namespace SimpleNotes.Models
             this.Notes.RemoveAt(noteIndex.Value);
             deserializeNotes?.RemoveAt(noteIndex.Value);
             var serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            data.Save("notes", serializeNotes);
+            await data.Save("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
         

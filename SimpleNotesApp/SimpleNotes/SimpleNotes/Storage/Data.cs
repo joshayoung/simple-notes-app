@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Shared;
 using Xamarin.Forms;
 
@@ -5,10 +6,10 @@ namespace SimpleNotes.Storage
 {
     public class Data : IData
     {
-        public void Save(string id, string value)
+        public async Task Save(string id, string value)
         {
             Application.Current.Properties[id] = value;
-            Application.Current.SavePropertiesAsync();
+            await Application.Current.SavePropertiesAsync();
         }
 
         public string Retrieve(string id)

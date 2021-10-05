@@ -59,8 +59,8 @@ namespace SimpleNotes.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void Save() => this.repository.Save(note);
+        public async void Save() => await this.repository.Save(note);
 
-        public void Delete() => this.repository.Delete(note);
+        public async void Delete() => await this.repository.Delete(note);
     }
 }
