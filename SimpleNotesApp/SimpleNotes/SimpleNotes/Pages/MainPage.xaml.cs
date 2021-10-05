@@ -16,7 +16,7 @@ namespace SimpleNotes.Pages
 
         private void AddNotes(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AddNotePage(noteRepositoryViewModel.GetInitialNote()));
+            Navigation.PushModalAsync(new AddNotePage(noteRepositoryViewModel.GetInitialNote()));
         }
         
         private void DeleteNote(object sender, EventArgs e)

@@ -17,29 +17,40 @@
         <Label Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
         
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
-            <Label Text="No notes, please add one" />
+            <Label Text="No notes, please add one…" />
         </StackLayout>
         
         <ScrollView Padding="0, 10, 0, 30">
-            <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
-                <BindableLayout.ItemTemplate>
+            <CollectionView Margin="0,20,0,0" ItemsSource="{Binding Notes}">
+                <CollectionView.Footer>
+                    <Grid IsVisible="{Binding NotesExist}">
+                        <Label
+                            FontAttributes="Italic"
+                            FontSize="14"
+                            Text="Swipe right to delete…"
+                            TextColor="#9E9E9E"
+                            Padding="0,10,0,0"
+                            HorizontalOptions="Center" />
+                    </Grid>
+                </CollectionView.Footer>
+                <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
                         <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem Text="Delete" BackgroundColor="Tomato" Clicked="DeleteNote" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Frame Style="{StaticResource NoteStyle}">
-                                <Frame.GestureRecognizers>
-                                    <TapGestureRecognizer Tapped="GoToDetails" />
-                                </Frame.GestureRecognizers>
-                                <Label Text="{Binding Description}" TextColor="White" />
-                            </Frame>
-                        </SwipeView>
-                    </DataTemplate>
-                </BindableLayout.ItemTemplate>
-            </StackLayout>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem Text="Delete" BackgroundColor="Tomato" Clicked="DeleteNote" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Frame Style="{StaticResource NoteStyle}">
+                                    <Frame.GestureRecognizers>
+                                        <TapGestureRecognizer Tapped="GoToDetails" />
+                                    </Frame.GestureRecognizers>
+                                    <Label Text="{Binding Description}" TextColor="White" />
+                                </Frame>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
         </ScrollView>
         
         <Button Text="Add New Note" Clicked="AddNotes" Style="{StaticResource NoteButton}" VerticalOptions="EndAndExpand" />

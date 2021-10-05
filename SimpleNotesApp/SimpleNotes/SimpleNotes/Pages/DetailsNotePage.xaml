@@ -11,7 +11,6 @@
         <StackLayout Padding="10">
             <Label Text="Edit Note" Style="{StaticResource HeaderStyle}" />
             <Entry Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
-            <Button Text="Delete" Style="{StaticResource NoteButton}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
