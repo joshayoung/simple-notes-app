@@ -62,5 +62,7 @@ namespace SimpleNotes.ViewModels
         public async void Save() => await this.repository.Save(note);
 
         public async void Delete() => await this.repository.Delete(note);
+
+        public async void SaveEdits() => await this.repository.SaveEdits(note);
     }
 }

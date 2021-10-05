@@ -43,6 +43,16 @@ namespace SimpleNotes.Models
             await data.Save("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
+
+        public async Task SaveEdits(Note note)
+        {
+            var nt = this.Notes.Find(n => n.Id == note.Id);
+            nt.Title = note.Title;
+            nt.Description = note.Description;
+            var serializeNotes = JsonConvert.SerializeObject(Notes);
+            await data.Save("notes", serializeNotes);
+            NotifyPropertyChanged(nameof(Notes));
+        }
         
         public async Task Delete(Note note)
         {
