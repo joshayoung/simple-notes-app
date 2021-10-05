@@ -4,7 +4,7 @@
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              xmlns:converters="clr-namespace:SimpleNotes.Converters;assembly=SimpleNotes"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="{StaticResource Five}"
+             BackgroundColor="{StaticResource BackgroundColor}"
              x:DataType="viewModels:NoteRepositoryViewModel"
              x:Class="SimpleNotes.Pages.MainPage">
     <ContentPage.Resources>
@@ -14,7 +14,7 @@
     </ContentPage.Resources>
 
     <StackLayout Padding="10">
-        <Label Text="Simple Notes" FontAttributes="Bold" Margin="0,0,0,20" TextColor="#2C2C2C" FontFamily="ArimaMadurai-Black" HorizontalOptions="CenterAndExpand" FontSize="32" />
+        <Label Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
         
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
             <Label Text="No notes, please add one" />
@@ -24,12 +24,19 @@
             <StackLayout BindableLayout.ItemsSource="{Binding Notes}">
                 <BindableLayout.ItemTemplate>
                     <DataTemplate x:DataType="viewModels:NoteViewModel">
-                        <Frame BackgroundColor="#79B79E" BorderColor="#747474">
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Tapped="GoToDetails" />
-                            </Frame.GestureRecognizers>
-                            <Label Text="{Binding Description}" TextColor="White" />
-                        </Frame>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem Text="Delete" BackgroundColor="Tomato" Clicked="DeleteNote" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Frame Style="{StaticResource NoteStyle}">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="GoToDetails" />
+                                </Frame.GestureRecognizers>
+                                <Label Text="{Binding Description}" TextColor="White" />
+                            </Frame>
+                        </SwipeView>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
             </StackLayout>

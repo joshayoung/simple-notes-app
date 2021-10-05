@@ -4,11 +4,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="{StaticResource Five}"
+             BackgroundColor="{StaticResource BackgroundColor}"
              x:Class="SimpleNotes.Pages.AddNotePage">
     <ContentPage.Content>
     <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
-        <Label Text="Add Note" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
+        <Label Text="Add Note" Style="{StaticResource HeaderStyle}" />
         <Editor Placeholder="Add new note..." Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
         <Button Style="{StaticResource NoteButton}" Text="Save" Clicked="SaveNote" />
     </StackLayout>

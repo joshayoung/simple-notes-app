@@ -5,13 +5,13 @@
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              x:DataType="viewModels:NoteViewModel"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="{StaticResource Five}"
+             BackgroundColor="{StaticResource BackgroundColor}"
              x:Class="SimpleNotes.Pages.DetailsNotePage">
     <ContentPage.Content>
         <StackLayout Padding="10">
-            <Label Text="Edit Note" FontAttributes="Bold" HorizontalOptions="CenterAndExpand" FontSize="30" />
+            <Label Text="Edit Note" Style="{StaticResource HeaderStyle}" />
             <Entry Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
-            <Button Text="Delete" Style="{StaticResource NoteButton}" Clicked="DeleteNote" />
+            <Button Text="Delete" Style="{StaticResource NoteButton}" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

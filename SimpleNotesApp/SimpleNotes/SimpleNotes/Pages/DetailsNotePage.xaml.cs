@@ -15,10 +15,6 @@ namespace SimpleNotes.Pages
             this.BindingContext = this.noteViewModel = noteViewModel;
         }
 
-        private void DeleteNote(object sender, EventArgs e)
-        {
-            this.noteViewModel.Delete();
-            Navigation.PopModalAsync();
-        }
+
     }
 }

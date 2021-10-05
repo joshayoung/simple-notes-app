@@ -1,6 +1,4 @@
-﻿using System;
-using SimpleNotes.Models;
-using SimpleNotes.Pages;
+﻿using SimpleNotes.Pages;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;

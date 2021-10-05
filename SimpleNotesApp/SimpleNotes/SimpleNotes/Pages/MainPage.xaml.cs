@@ -18,6 +18,13 @@ namespace SimpleNotes.Pages
         {
             Navigation.PushAsync(new AddNotePage(noteRepositoryViewModel.GetInitialNote()));
         }
+        
+        private void DeleteNote(object sender, EventArgs e)
+        {
+            var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
+            noteViewModel.Delete();
+            Navigation.PopModalAsync();
+        }
 
         private void GoToDetails(object sender, EventArgs e)
         {

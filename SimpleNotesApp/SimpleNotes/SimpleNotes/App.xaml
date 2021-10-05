@@ -4,14 +4,28 @@
              x:Class="SimpleNotes.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="One">#5EA8A6</Color> 
-            <Color x:Key="Two">#7DF5F1</Color>
-            <Color x:Key="Three">#F59371</Color>
-            <Color x:Key="Four">#3DA87D</Color>
-            <Color x:Key="Five">#E9EEEC</Color>
+            <Color x:Key="NoteColor">#37C469</Color>
+            <Color x:Key="ButtonColor">#199AD5</Color>
+            <Color x:Key="BackgroundColor">#F2F2F2</Color>
+            <Color x:Key="AccentColor">#0095d5</Color>
+            
+            <Style x:Key="HeaderStyle" TargetType="Button">
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0,0,0,20" />
+                <Setter Property="TextColor" Value="{StaticResource AccentColor}" />
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="FontSize" Value="32" />
+            </Style>
+            
             <Style x:Key="NoteButton" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource Four}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
                 <Setter Property="TextColor" Value="#FFFFFF" />
+            </Style>
+            
+            <Style x:Key="NoteStyle" TargetType="Frame">
+                <Setter Property="CornerRadius" Value="4" />
+                <Setter Property="BackgroundColor" Value="{StaticResource NoteColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource AccentColor}" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
