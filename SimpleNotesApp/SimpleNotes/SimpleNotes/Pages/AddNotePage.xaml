@@ -3,11 +3,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
+             xmlns:views="clr-namespace:SimpleNotes.Views;assembly=SimpleNotes"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{StaticResource BackgroundColor}"
              x:Class="SimpleNotes.Pages.AddNotePage">
     <ContentPage.Content>
     <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
+        <views:CloseModal />
         <Label Text="Add Note" Style="{StaticResource HeaderStyle}" />
         <Editor Placeholder="Add new note..." Text="{Binding Description}" VerticalOptions="CenterAndExpand" />
         <Button Style="{StaticResource NoteButton}" Text="Save" Clicked="SaveNote" />

@@ -14,7 +14,5 @@ namespace SimpleNotes.Pages
             InitializeComponent();
             this.BindingContext = this.noteViewModel = noteViewModel;
         }
-
-
     }
 }

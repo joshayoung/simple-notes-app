@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SimpleNotes.Views.CloseModal">
+    <Button Text="X" Clicked="Close" FontSize="26" HorizontalOptions="End" TextColor="Red" BackgroundColor="Transparent" />
+</ContentView>
