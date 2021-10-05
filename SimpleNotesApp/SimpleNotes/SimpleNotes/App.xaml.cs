@@ -15,7 +15,7 @@ namespace SimpleNotes
             Bootstrap.Init();
 
             var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
-            MainPage = new NavigationPage(new NotePage(noteRepositoryViewModel));
+            MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
         }
 
         protected override void OnStart() { }

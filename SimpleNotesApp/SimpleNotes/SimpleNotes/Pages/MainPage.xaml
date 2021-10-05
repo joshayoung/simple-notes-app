@@ -6,7 +6,7 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{StaticResource BackgroundColor}"
              x:DataType="viewModels:NoteRepositoryViewModel"
-             x:Class="SimpleNotes.Pages.NotePage">
+             x:Class="SimpleNotes.Pages.MainPage">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:InverseBooleanConverter x:Key="InverseConverter" />
