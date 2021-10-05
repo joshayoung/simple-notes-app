@@ -40,7 +40,7 @@ namespace SimpleNotes.Models
         {
             this.Notes.Add(note);
             var serializeNotes = JsonConvert.SerializeObject(Notes);
-            await data.Save("notes", serializeNotes);
+            await data.SaveAsync("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
 
@@ -50,7 +50,7 @@ namespace SimpleNotes.Models
             nt.Title = note.Title;
             nt.Description = note.Description;
             var serializeNotes = JsonConvert.SerializeObject(Notes);
-            await data.Save("notes", serializeNotes);
+            await data.SaveAsync("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
         
@@ -64,7 +64,7 @@ namespace SimpleNotes.Models
             this.Notes.RemoveAt(noteIndex.Value);
             deserializeNotes?.RemoveAt(noteIndex.Value);
             var serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            await data.Save("notes", serializeNotes);
+            await data.SaveAsync("notes", serializeNotes);
             NotifyPropertyChanged(nameof(Notes));
         }
         

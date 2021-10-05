@@ -6,7 +6,7 @@ namespace SimpleNotes.Storage
 {
     public class Data : IData
     {
-        public async Task Save(string id, string value)
+        public async Task SaveAsync(string id, string value)
         {
             Application.Current.Properties[id] = value;
             await Application.Current.SavePropertiesAsync();
