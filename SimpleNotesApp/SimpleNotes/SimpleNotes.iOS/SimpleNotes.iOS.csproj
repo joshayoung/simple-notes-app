@@ -87,32 +87,53 @@
         <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="Main.cs"/>
-        <Compile Include="AppDelegate.cs"/>
-        <None Include="Entitlements.plist"/>
-        <None Include="Info.plist"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="Main.cs" />
+        <Compile Include="AppDelegate.cs" />
+        <None Include="Entitlements.plist" />
+        <None Include="Info.plist" />
+        <Compile Include="Properties\AssemblyInfo.cs" />
     </ItemGroup>
     <ItemGroup>
-        <InterfaceDefinition Include="Resources\LaunchScreen.storyboard"/>
+        <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
             <Visible>false</Visible>
         </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon256.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon512.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon512-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024-1.png" />
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024-2.png" />
     </ItemGroup>
     <ItemGroup>
-        <Reference Include="System"/>
-        <Reference Include="System.Xml"/>
-        <Reference Include="System.Core"/>
-        <Reference Include="Xamarin.iOS"/>
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Core" />
+        <Reference Include="Xamarin.iOS" />
     </ItemGroup>
     <ItemGroup>
-        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012"/>
+        <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\SimpleNotes\SimpleNotes.csproj">
-            <Project>{5639D482-965A-4A8F-B4A0-C86BAAD1366F}</Project>
+            <Project>{0009422B-77EB-4091-A9F0-3C98552B7D34}</Project>
             <Name>SimpleNotes</Name>
         </ProjectReference>
     </ItemGroup>
-    <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets"/>
+    <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
