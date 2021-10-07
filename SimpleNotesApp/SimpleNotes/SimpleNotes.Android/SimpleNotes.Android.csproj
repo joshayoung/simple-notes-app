@@ -58,8 +58,23 @@
         <None Include="Properties\AndroidManifest.xml" />
     </ItemGroup>
     <ItemGroup>
+        <AndroidResource Include="Resources\drawable\icon.png">
+          <SubType>Designer</SubType>
+          <Generator>MSBuild:UpdateGeneratedFiles</Generator>
+        </AndroidResource>
+        <AndroidResource Include="Resources\drawable\icon_round.png" />
         <AndroidResource Include="Resources\layout\Tabbar.axml" />
         <AndroidResource Include="Resources\layout\Toolbar.axml" />
+        <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
+        <AndroidResource Include="Resources\mipmap-hdpi\icon_round.png" />
+        <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
+        <AndroidResource Include="Resources\mipmap-mdpi\icon_round.png" />
+        <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
+        <AndroidResource Include="Resources\mipmap-xhdpi\icon_round.png" />
+        <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
+        <AndroidResource Include="Resources\mipmap-xxhdpi\icon_round.png" />
+        <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
+        <AndroidResource Include="Resources\mipmap-xxxhdpi\icon_round.png" />
         <AndroidResource Include="Resources\values\styles.xml" />
         <AndroidResource Include="Resources\values\colors.xml" />
     </ItemGroup>

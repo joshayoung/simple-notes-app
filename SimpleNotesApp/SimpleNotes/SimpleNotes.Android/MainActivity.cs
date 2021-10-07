@@ -8,7 +8,12 @@ using Android.OS;
 
 namespace SimpleNotes.Android
 {
-    [Activity(Label = "SimpleNotes", Theme = "@style/MainTheme", MainLauncher = true,
+    [Activity(
+        Label = "SimpleNotes", 
+        Icon = "@mipmap/icon", 
+        RoundIcon = "@mipmap/icon_round", 
+        Theme = "@style/MainTheme", 
+        MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
