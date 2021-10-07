@@ -14,14 +14,11 @@
             <converters:InverseBooleanConverter x:Key="InverseConverter" />
         </ResourceDictionary>
     </ContentPage.Resources>
-
     <StackLayout Padding="10">
         <Label Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
-        
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
             <Label Text="No notes, please add one…" HorizontalOptions="CenterAndExpand" />
         </StackLayout>
-        
             <CollectionView Margin="0,20,0,0" ItemsSource="{Binding Notes}">
                 <CollectionView.Footer>
                     <Grid IsVisible="{Binding NotesExist}">
@@ -51,27 +48,15 @@
                                     </SwipeItemView>
                                 </SwipeItems>
                             </SwipeView.RightItems>
-                            <Frame Padding="0" BackgroundColor="{StaticResource HighlightColor}" CornerRadius="8" HasShadow="True" Margin="0,0,0,16">
+                            <Frame Style="{StaticResource NoteStyle}" Padding="1" Margin="0,0,0,14">
                                 <Frame.GestureRecognizers>
                                     <TapGestureRecognizer Tapped="GoToDetails" />
                                 </Frame.GestureRecognizers>
-                                <Frame Style="{StaticResource NoteStyle}" Margin="0,0,0,2">
+                                <Frame CornerRadius="6" HasShadow="False" BackgroundColor="#DCDCDC" Padding="10">
                                     <StackLayout>
-                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="GoToDetails" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
-                                        <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100">
-                                            <BoxView.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="GoToDetails" />
-                                            </BoxView.GestureRecognizers>
-                                        </BoxView>
-                                        <Label Text="{Binding Description}" FontAttributes="Italic">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="GoToDetails" />
-                                            </Label.GestureRecognizers>
-                                        </Label>
+                                        <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20" />
+                                        <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100" />
+                                        <Label Text="{Binding Description}" FontAttributes="Italic" />
                                     </StackLayout>
                                 </Frame>
                             </Frame>
@@ -79,8 +64,6 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        
         <Button Text="Add New Note" Clicked="AddNotes" Style="{StaticResource NoteButton}" VerticalOptions="EndAndExpand" />
     </StackLayout>
-
 </ContentPage>

@@ -11,7 +11,7 @@ namespace SimpleNotes.ViewModels
         
         private readonly NotesRepository notesRepository;
 
-        public bool NotesExist => false;// notesRepository.NotesExist;
+        public bool NotesExist => notesRepository.NotesExist;
 
         public List<NoteViewModel> Notes { get; set; } = new List<NoteViewModel>();
 
