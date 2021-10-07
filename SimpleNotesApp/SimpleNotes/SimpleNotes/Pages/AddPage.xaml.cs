@@ -18,8 +18,15 @@ namespace SimpleNotes.Pages
 
         private async void SaveNote(object sender, EventArgs e)
         {
-            await noteViewModel.SaveAsync();
-            await Navigation.PopModalAsync();
+            try
+            {
+                await noteViewModel.SaveAsync();
+                await Navigation.PopModalAsync();
+            }
+            catch (Exception exception)
+            {
+                // TODO: Add Logging
+            }
         }
     }
 }

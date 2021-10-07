@@ -16,7 +16,14 @@ namespace SimpleNotes.Pages
 
         private void AddNotes(object sender, EventArgs e)
         {
-            Navigation.PushModalAsync(new AddPage(noteRepositoryViewModel.GetInitialNote()));
+            try
+            {
+                Navigation.PushModalAsync(new AddPage(noteRepositoryViewModel.GetInitialNote()));
+            }
+            catch (Exception exception)
+            {
+                // TODO: Add Logging
+            }
         }
 
         private void EditNote(object sender, EventArgs e)
@@ -36,8 +43,15 @@ namespace SimpleNotes.Pages
 
         private void GoToDetails(object sender, EventArgs e)
         {
-            var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            Navigation.PushModalAsync(new DetailPage(noteViewModel));
+            try
+            {
+                var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
+                Navigation.PushModalAsync(new DetailPage(noteViewModel));
+            }
+            catch (Exception exception)
+            {
+                // TODO: Add Logging
+            }
         }
     }
 }
