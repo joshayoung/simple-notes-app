@@ -27,4 +27,10 @@
   <style name="AppCompatDialogStyle" parent="Theme.AppCompat.Light.Dialog">
     <item name="colorAccent">#FF4081</item>
   </style>
+
+  <style name="NoteTheme" parent="MainTheme">
+    <item name="colorPrimary">#F0F0F0</item>
+    <item name="colorPrimaryDark">#000000</item>
+  </style>
+  
 </resources>

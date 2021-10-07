@@ -12,7 +12,7 @@ namespace SimpleNotes.Android
         Label = "SimpleNotes", 
         Icon = "@mipmap/icon", 
         RoundIcon = "@mipmap/icon_round", 
-        Theme = "@style/MainTheme", 
+        Theme = "@style/NoteTheme", 
         MainLauncher = true,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
