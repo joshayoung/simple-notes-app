@@ -13,11 +13,7 @@
         <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
             <views:CloseModal />
             <Label Text="Add Note" Style="{StaticResource HeaderStyle}" />
-            <StackLayout VerticalOptions="CenterAndExpand">
-                <Editor Placeholder="note title…" Text="{Binding Title}" />
-                <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />
-            </StackLayout>
-            <Button Style="{StaticResource NoteButton}" Text="Save" Clicked="SaveNote" />
+            <views:NoteForm x:Name="NoteForm" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

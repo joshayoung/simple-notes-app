@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using SimpleNotes.Models;
 
@@ -57,16 +58,7 @@ namespace SimpleNotes.ViewModels
 
         private void Refresh()
         {
-            var noteList = new List<NoteViewModel>();
-            if (this.notesRepository.Notes == null)
-            {
-                return;
-            }
-
-            foreach (var note in this.notesRepository.Notes)
-            {
-                noteList.Add(new NoteViewModel(note, this.notesRepository));
-            }
+            var noteList = this.notesRepository.Notes.Select(note => new NoteViewModel(note, this.notesRepository)).ToList();
 
             this.Notes = noteList;
             this.notesRepository.UpdateNotesExist();

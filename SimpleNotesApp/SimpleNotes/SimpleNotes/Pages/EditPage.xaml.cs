@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,9 +16,11 @@ namespace SimpleNotes.Pages
         {
             this.InitializeComponent();
             this.BindingContext = this.noteViewModel = noteViewModel;
+
+            this.NoteForm.SaveAction = async () => await this.SaveNote();
         }
 
-        private async void SaveNote(object sender, EventArgs e)
+        private async Task SaveNote()
         {
             try
             {

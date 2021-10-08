@@ -20,7 +20,6 @@ namespace SimpleNotes
             serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IData, Data>();
             serviceCollection.AddSingleton<NotesRepository>();
-
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
     }
