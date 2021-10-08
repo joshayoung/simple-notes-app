@@ -9,8 +9,6 @@ namespace SimpleNotes.Models
 {
     public class NotesRepository : INotifyPropertyChanged
     {
-        public List<Note> Notes { get; set; } = new List<Note>();
-
         private readonly IData data;
 
         public NotesRepository(IData data)
@@ -20,6 +18,8 @@ namespace SimpleNotes.Models
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public List<Note> Notes { get; set; } = new List<Note>();
 
         public bool NotesExist { get; private set; }
 

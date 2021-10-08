@@ -35,7 +35,7 @@ namespace SimpleNotes.Pages
 
         private async void DeleteNote(object sender, EventArgs e)
         {
-            var deleteNote = await this.DisplayAlert("Continue", "Permanently delete this note?", "Yes", "No");
+            bool deleteNote = await this.DisplayAlert("Continue", "Permanently delete this note?", "Yes", "No");
             if (!deleteNote)
             {
                 return;
