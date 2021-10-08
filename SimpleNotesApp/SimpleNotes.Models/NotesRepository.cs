@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,38 +9,26 @@ namespace SimpleNotes.Models
 {
     public class NotesRepository : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        
-        public List<Note> Notes = new List<Note>();
-
-        public bool NotesExist { get; private set; }
+        public List<Note> Notes { get; set; } = new List<Note>();
 
         private readonly IData data;
 
         public NotesRepository(IData data)
         {
             this.data = data;
-            PopulateNotes();
+            this.PopulateNotes();
         }
 
-        private void PopulateNotes()
-        {
-            var notes = data.Retrieve("notes");
-            if (notes == String.Empty) return;
-            
-            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
-            if (deserializedNotes != null)
-            {
-                this.Notes = deserializedNotes;
-            }
-        }
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public bool NotesExist { get; private set; }
 
         public async Task Save(Note note)
         {
             this.Notes.Add(note);
-            var serializeNotes = JsonConvert.SerializeObject(Notes);
-            await data.SaveAsync("notes", serializeNotes);
-            NotifyPropertyChanged(nameof(Notes));
+            string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
+            await this.data.SaveAsync("notes", serializeNotes);
+            this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
         public async Task SaveEdits(Note note)
@@ -49,34 +36,52 @@ namespace SimpleNotes.Models
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.Title;
             nt.Description = note.Description;
-            var serializeNotes = JsonConvert.SerializeObject(Notes);
-            await data.SaveAsync("notes", serializeNotes);
-            NotifyPropertyChanged(nameof(Notes));
+            string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
+            await this.data.SaveAsync("notes", serializeNotes);
+            this.NotifyPropertyChanged(nameof(this.Notes));
         }
-        
+
         public async Task Delete(Note note)
         {
-            var lsNotes = data.Retrieve("notes");
+            string? lsNotes = this.data.Retrieve("notes");
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
-            var noteIndex = deserializeNotes?.FindIndex(n => n.Id == note.Id);
-            if (noteIndex == null) return;
-            
+            int? noteIndex = deserializeNotes?.FindIndex(n => n.Id == note.Id);
+            if (noteIndex == null)
+            {
+                return;
+            }
+
             this.Notes.RemoveAt(noteIndex.Value);
             deserializeNotes?.RemoveAt(noteIndex.Value);
-            var serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            await data.SaveAsync("notes", serializeNotes);
-            NotifyPropertyChanged(nameof(Notes));
-        }
-        
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            string? serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
+            await this.data.SaveAsync("notes", serializeNotes);
+            this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
         public void UpdateNotesExist()
         {
-            this.NotesExist = Notes.Count > 0;
-            NotifyPropertyChanged(nameof(NotesExist));
+            this.NotesExist = this.Notes.Count > 0;
+            this.NotifyPropertyChanged(nameof(this.NotesExist));
+        }
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void PopulateNotes()
+        {
+            string? notes = this.data.Retrieve("notes");
+            if (notes == string.Empty)
+            {
+                return;
+            }
+
+            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
+            if (deserializedNotes != null)
+            {
+                this.Notes = deserializedNotes;
+            }
         }
     }
 }

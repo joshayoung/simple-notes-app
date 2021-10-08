@@ -2,6 +2,7 @@ using System;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+#pragma warning disable 168
 
 namespace SimpleNotes.Pages
 {
@@ -9,10 +10,10 @@ namespace SimpleNotes.Pages
     public partial class EditPage : ContentPage
     {
         private readonly NoteViewModel noteViewModel;
-        
+
         public EditPage(NoteViewModel noteViewModel)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.BindingContext = this.noteViewModel = noteViewModel;
         }
 
@@ -20,8 +21,8 @@ namespace SimpleNotes.Pages
         {
             try
             {
-                await noteViewModel.SaveEditsAsync();
-                await Navigation.PopModalAsync();
+                await this.noteViewModel.SaveEditsAsync();
+                await this.Navigation.PopModalAsync();
             }
             catch (Exception exception)
             {

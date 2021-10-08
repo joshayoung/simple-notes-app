@@ -11,15 +11,26 @@ namespace SimpleNotes
     {
         public App()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             Bootstrap.Init();
 
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
-            MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
+            if (Bootstrap.NotesRepository != null)
+            {
+                var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
+                this.MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
+            }
         }
 
-        protected override void OnStart() { }
-        protected override void OnSleep() { }
-        protected override void OnResume() { }
+        protected override void OnStart()
+        {
+        }
+
+        protected override void OnSleep()
+        {
+        }
+
+        protected override void OnResume()
+        {
+        }
     }
 }

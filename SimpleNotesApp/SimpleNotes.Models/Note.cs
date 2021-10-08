@@ -8,36 +8,6 @@ namespace SimpleNotes.Models
         private int id;
         private string? title;
         private string? description;
-        
-        public int Id
-        {
-            get => id;
-            set
-            {
-                this.id = value;
-                NotifyPropertyChanged();
-            }
-        }
-        
-        public string? Title
-        {
-            get => title;
-            set
-            {
-                this.title = value;
-                NotifyPropertyChanged();
-            }
-        }
-        
-        public string? Description
-        {
-            get => description;
-            set
-            {
-                this.description = value;
-                NotifyPropertyChanged();
-            }
-        }
 
         public Note(int id, string? title = null, string? description = null)
         {
@@ -48,9 +18,39 @@ namespace SimpleNotes.Models
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        public int Id
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            get => this.id;
+            set
+            {
+                this.id = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        public string? Title
+        {
+            get => this.title;
+            set
+            {
+                this.title = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        public string? Description
+        {
+            get => this.description;
+            set
+            {
+                this.description = value;
+                this.NotifyPropertyChanged();
+            }
+        }
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

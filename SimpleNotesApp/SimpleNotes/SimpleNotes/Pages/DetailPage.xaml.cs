@@ -8,10 +8,10 @@ namespace SimpleNotes.Pages
     public partial class DetailPage : ContentPage
     {
         private readonly NoteViewModel noteViewModel;
-        
+
         public DetailPage(NoteViewModel noteViewModel)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.BindingContext = this.noteViewModel = noteViewModel;
         }
     }

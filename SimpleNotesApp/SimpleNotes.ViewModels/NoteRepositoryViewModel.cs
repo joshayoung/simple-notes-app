@@ -7,55 +7,69 @@ namespace SimpleNotes.ViewModels
 {
     public class NoteRepositoryViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        
         private readonly NotesRepository notesRepository;
-
-        public bool NotesExist => notesRepository.NotesExist;
-
-        public List<NoteViewModel> Notes { get; set; } = new List<NoteViewModel>();
 
         public NoteRepositoryViewModel(NotesRepository notesRepository)
         {
             this.notesRepository = notesRepository;
-            
-            Refresh();
-            
-            notesRepository.PropertyChanged += NotesRepositoryOnPropertyChanged;
+
+            this.Refresh();
+
+            notesRepository.PropertyChanged += this.NotesRepositoryOnPropertyChanged;
             notesRepository.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(NotesRepository.Notes)) NotifyPropertyChanged(nameof(Notes));
+                if (args.PropertyName == nameof(NotesRepository.Notes))
+                {
+                    this.NotifyPropertyChanged(nameof(this.Notes));
+                }
             };
+        }
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public bool NotesExist => this.notesRepository.NotesExist;
+
+        public List<NoteViewModel> Notes { get; set; } = new List<NoteViewModel>();
+
+        public NoteViewModel GetInitialNote()
+        {
+            int id = this.notesRepository.Notes.Count + 1;
+            return new NoteViewModel(new Note(id), this.notesRepository);
+        }
+
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void NotesRepositoryOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(NotesRepository.Notes)) Refresh();
-            if (e.PropertyName == nameof(NotesRepository.NotesExist)) NotifyPropertyChanged(nameof(NotesExist));
+            if (e.PropertyName == nameof(NotesRepository.Notes))
+            {
+                this.Refresh();
+            }
+
+            if (e.PropertyName == nameof(NotesRepository.NotesExist))
+            {
+                this.NotifyPropertyChanged(nameof(this.NotesExist));
+            }
         }
 
         private void Refresh()
         {
             var noteList = new List<NoteViewModel>();
-            if (this.notesRepository.Notes == null) return;
-            
+            if (this.notesRepository.Notes == null)
+            {
+                return;
+            }
+
             foreach (var note in this.notesRepository.Notes)
             {
                 noteList.Add(new NoteViewModel(note, this.notesRepository));
             }
-            this.Notes = noteList;
-            notesRepository.UpdateNotesExist();
-        }
 
-        public NoteViewModel GetInitialNote()
-        {
-            var id = notesRepository.Notes.Count + 1;
-            return new NoteViewModel(new Note(id), this.notesRepository);
-        }
-        
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.Notes = noteList;
+            this.notesRepository.UpdateNotesExist();
         }
     }
 }

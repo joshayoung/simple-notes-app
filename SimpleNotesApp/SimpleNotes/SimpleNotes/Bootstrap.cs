@@ -9,18 +9,19 @@ namespace SimpleNotes
     public static class Bootstrap
     {
         private static IServiceCollection? serviceCollection;
-        private static IServiceProvider? serviceProvider { get; set; }
-        
+
         public static NotesRepository? NotesRepository =>
-            serviceProvider?.GetRequiredService<NotesRepository>();
+            ServiceProvider?.GetRequiredService<NotesRepository>();
+
+        private static IServiceProvider? ServiceProvider { get; set; }
 
         public static void Init()
         {
             serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IData, Data>();
             serviceCollection.AddSingleton<NotesRepository>();
-            
-            serviceProvider = serviceCollection.BuildServiceProvider();
+
+            ServiceProvider = serviceCollection.BuildServiceProvider();
         }
     }
 }

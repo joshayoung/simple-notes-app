@@ -1,16 +1,17 @@
 ﻿using System;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
+#pragma warning disable 168
 
 namespace SimpleNotes.Pages
 {
     public partial class MainPage : ContentPage
     {
         private readonly NoteRepositoryViewModel noteRepositoryViewModel;
-        
+
         public MainPage(NoteRepositoryViewModel noteRepositoryViewModel)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.BindingContext = this.noteRepositoryViewModel = noteRepositoryViewModel;
         }
 
@@ -18,7 +19,7 @@ namespace SimpleNotes.Pages
         {
             try
             {
-                Navigation.PushModalAsync(new AddPage(noteRepositoryViewModel.GetInitialNote()));
+                this.Navigation.PushModalAsync(new AddPage(this.noteRepositoryViewModel.GetInitialNote()));
             }
             catch (Exception exception)
             {
@@ -29,14 +30,17 @@ namespace SimpleNotes.Pages
         private void EditNote(object sender, EventArgs e)
         {
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy()));
+            this.Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy()));
         }
-        
+
         private async void DeleteNote(object sender, EventArgs e)
         {
-            var deleteNote = await DisplayAlert("Continue", "Permanently delete this note?", "Yes", "No");
-            if (!deleteNote) return;
-            
+            var deleteNote = await this.DisplayAlert("Continue", "Permanently delete this note?", "Yes", "No");
+            if (!deleteNote)
+            {
+                return;
+            }
+
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
             await noteViewModel.DeleteAsync();
         }
@@ -46,7 +50,7 @@ namespace SimpleNotes.Pages
             try
             {
                 var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-                Navigation.PushModalAsync(new DetailPage(noteViewModel));
+                this.Navigation.PushModalAsync(new DetailPage(noteViewModel));
             }
             catch (Exception exception)
             {

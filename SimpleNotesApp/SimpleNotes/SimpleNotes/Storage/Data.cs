@@ -14,7 +14,7 @@ namespace SimpleNotes.Storage
 
         public string Retrieve(string id)
         {
-            return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : "";
+            return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : string.Empty;
         }
     }
 }

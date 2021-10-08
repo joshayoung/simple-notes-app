@@ -7,28 +7,8 @@ namespace SimpleNotes.ViewModels
 {
     public class NoteViewModel : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        
         private readonly Note note;
         private readonly NotesRepository repository;
-        
-        public int Id
-        {
-            get => note.Id;
-            set => note.Id = value;
-        }
-        
-        public string? Title
-        {
-            get => note.Title;
-            set => note.Title = value;
-        }
-
-        public string? Description
-        {
-            get => note.Description;
-            set => note.Description = value;
-        }
 
         public NoteViewModel(Note note, NotesRepository notesRepository)
         {
@@ -40,30 +20,59 @@ namespace SimpleNotes.ViewModels
                 switch (args.PropertyName)
                 {
                     case nameof(Note.Title):
-                        NotifyPropertyChanged(nameof(NoteViewModel.Title));
+                        this.NotifyPropertyChanged(nameof(this.Title));
                         break;
                     case nameof(Note.Description):
-                        NotifyPropertyChanged(nameof(NoteViewModel.Description));
+                        this.NotifyPropertyChanged(nameof(this.Description));
                         break;
                 }
             };
         }
 
+        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public int Id
+        {
+            get => this.note.Id;
+            set => this.note.Id = value;
+        }
+
+        public string? Title
+        {
+            get => this.note.Title;
+            set => this.note.Title = value;
+        }
+
+        public string? Description
+        {
+            get => this.note.Description;
+            set => this.note.Description = value;
+        }
+
         public NoteViewModel EditNoteCopy()
         {
-            var newNote = new Note(note.Id, note.Title, note.Description);
-            return new NoteViewModel(newNote, repository);
+            var newNote = new Note(this.note.Id, this.note.Title, this.note.Description);
+            return new NoteViewModel(newNote, this.repository);
         }
 
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null)
+        public async Task SaveAsync()
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            await this.repository.Save(this.note);
         }
 
-        public async Task SaveAsync() => await this.repository.Save(note);
+        public async Task DeleteAsync()
+        {
+            await this.repository.Delete(this.note);
+        }
 
-        public async Task DeleteAsync() => await this.repository.Delete(note);
+        public async Task SaveEditsAsync()
+        {
+            await this.repository.SaveEdits(this.note);
+        }
 
-        public async Task SaveEditsAsync() => await this.repository.SaveEdits(note);
+        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
