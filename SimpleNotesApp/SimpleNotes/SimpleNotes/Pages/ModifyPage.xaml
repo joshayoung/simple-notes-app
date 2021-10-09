@@ -2,14 +2,17 @@
 
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
              xmlns:views="clr-namespace:SimpleNotes.Views;assembly=SimpleNotes"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
              ios:Page.UseSafeArea="true"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{StaticResource BackgroundColor}"
-             x:Class="SimpleNotes.Pages.EditPage">
-        <StackLayout Padding="10">
+             x:Class="SimpleNotes.Pages.ModifyPage">
+    <ContentPage.Content>
+        <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
             <views:CloseModal />
             <views:NoteForm x:Name="NoteForm" />
         </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

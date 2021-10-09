@@ -3,10 +3,26 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:SimpleNotes.ViewModels;assembly=SimpleNotes.ViewModels"
+             xmlns:models="clr-namespace:SimpleNotes.Models;assembly=SimpleNotes.Models"
              x:DataType="viewModels:NoteViewModel"
              x:Class="SimpleNotes.Views.NoteForm">
         <StackLayout>
-            <Label Text="{Binding PageTitle}" Style="{StaticResource HeaderStyle}" />
+            <Label Style="{StaticResource HeaderStyle}">
+                <Label.Triggers>
+                    <DataTrigger
+                        Binding="{Binding NoteAction}"
+                        TargetType="Label"
+                        Value="{x:Static models:NoteActionType.AddNote}">
+                        <Setter Property="Text" Value="Add Note" />
+                    </DataTrigger>
+                    <DataTrigger
+                        Binding="{Binding NoteAction}"
+                        TargetType="Label"
+                        Value="{x:Static models:NoteActionType.EditNote}">
+                        <Setter Property="Text" Value="Edit Note" />
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <StackLayout VerticalOptions="CenterAndExpand">
                 <Editor Placeholder="note title…" Text="{Binding Title}" />
                 <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />

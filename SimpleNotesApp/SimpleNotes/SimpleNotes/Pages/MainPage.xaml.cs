@@ -1,4 +1,5 @@
 ﻿using System;
+using SimpleNotes.Models;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
 #pragma warning disable 168
@@ -19,7 +20,7 @@ namespace SimpleNotes.Pages
         {
             try
             {
-                this.Navigation.PushModalAsync(new AddPage(this.noteRepositoryViewModel.GetInitialNote(), "Add Note"));
+                this.Navigation.PushModalAsync(new ModifyPage(this.noteRepositoryViewModel.GetInitialNote(), NoteActionType.AddNote));
             }
             catch (Exception exception)
             {
@@ -30,7 +31,7 @@ namespace SimpleNotes.Pages
         private void EditNote(object sender, EventArgs e)
         {
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            this.Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy(), "Edit Note"));
+            this.Navigation.PushModalAsync(new ModifyPage(noteViewModel.EditNoteCopy(), NoteActionType.EditNote));
         }
 
         private async void DeleteNote(object sender, EventArgs e)
