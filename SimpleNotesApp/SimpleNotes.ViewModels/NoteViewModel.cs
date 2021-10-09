@@ -10,6 +10,8 @@ namespace SimpleNotes.ViewModels
         private readonly Note note;
         private readonly NotesRepository repository;
 
+        public string? PageTitle { get; set; }
+
         public NoteViewModel(Note note, NotesRepository notesRepository)
         {
             this.note = note;

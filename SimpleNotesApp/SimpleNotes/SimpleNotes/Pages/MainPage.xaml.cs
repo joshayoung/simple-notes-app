@@ -19,7 +19,7 @@ namespace SimpleNotes.Pages
         {
             try
             {
-                this.Navigation.PushModalAsync(new AddPage(this.noteRepositoryViewModel.GetInitialNote()));
+                this.Navigation.PushModalAsync(new AddPage(this.noteRepositoryViewModel.GetInitialNote(), "Add Note"));
             }
             catch (Exception exception)
             {
@@ -30,7 +30,7 @@ namespace SimpleNotes.Pages
         private void EditNote(object sender, EventArgs e)
         {
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            this.Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy()));
+            this.Navigation.PushModalAsync(new EditPage(noteViewModel.EditNoteCopy(), "Edit Note"));
         }
 
         private async void DeleteNote(object sender, EventArgs e)

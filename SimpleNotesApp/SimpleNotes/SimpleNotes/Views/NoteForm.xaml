@@ -6,6 +6,7 @@
              x:DataType="viewModels:NoteViewModel"
              x:Class="SimpleNotes.Views.NoteForm">
         <StackLayout>
+            <Label Text="{Binding PageTitle}" Style="{StaticResource HeaderStyle}" />
             <StackLayout VerticalOptions="CenterAndExpand">
                 <Editor Placeholder="note title…" Text="{Binding Title}" />
                 <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />

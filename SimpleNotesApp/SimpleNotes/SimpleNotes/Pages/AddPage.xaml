@@ -12,7 +12,6 @@
     <ContentPage.Content>
         <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
             <views:CloseModal />
-            <Label Text="Add Note" Style="{StaticResource HeaderStyle}" />
             <views:NoteForm x:Name="NoteForm" />
         </StackLayout>
     </ContentPage.Content>

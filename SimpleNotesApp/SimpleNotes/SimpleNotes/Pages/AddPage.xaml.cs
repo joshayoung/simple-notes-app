@@ -12,10 +12,15 @@ namespace SimpleNotes.Pages
     {
         private readonly NoteViewModel noteViewModel;
 
-        public AddPage(NoteViewModel noteViewModel)
+        public AddPage(NoteViewModel noteViewModel, string pageTitle)
         {
             this.InitializeComponent();
-            this.BindingContext = this.noteViewModel = noteViewModel;
+            this.noteViewModel = noteViewModel;
+
+            // TODO: Find a better way to do this:
+            this.noteViewModel.PageTitle = pageTitle;
+
+            this.BindingContext = this.noteViewModel;
             this.NoteForm.SaveAction = async () => await this.SaveNote();
         }
 
