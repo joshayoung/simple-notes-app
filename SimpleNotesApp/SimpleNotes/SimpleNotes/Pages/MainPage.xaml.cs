@@ -51,7 +51,7 @@ namespace SimpleNotes.Pages
             try
             {
                 var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-                this.Navigation.PushModalAsync(new DetailPage(noteViewModel));
+                this.Navigation.PushModalAsync(new ModifyPage(noteViewModel, NoteActionType.DetailNote));
             }
             catch (Exception exception)
             {

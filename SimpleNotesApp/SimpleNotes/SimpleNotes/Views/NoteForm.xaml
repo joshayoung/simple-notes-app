@@ -6,7 +6,8 @@
              xmlns:models="clr-namespace:SimpleNotes.Models;assembly=SimpleNotes.Models"
              x:DataType="viewModels:NoteViewModel"
              x:Class="SimpleNotes.Views.NoteForm">
-        <StackLayout>
+    <StackLayout>
+        <StackLayout IsVisible="True">
             <Label Style="{StaticResource HeaderStyle}">
                 <Label.Triggers>
                     <DataTrigger
@@ -28,5 +29,28 @@
                 <Editor Placeholder="note description…" HeightRequest="200" Text="{Binding Description}" />
             </StackLayout>
             <Button Text="Save" Clicked="SaveButtonPressed" Style="{StaticResource NoteButton}" />
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding NoteAction}"
+                    TargetType="StackLayout"
+                    Value="{x:Static models:NoteActionType.DetailNote}">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </StackLayout.Triggers>
         </StackLayout>
+        <StackLayout Padding="10" IsVisible="False">
+            <Label Text="{Binding Title}" Style="{StaticResource HeaderStyle}" />
+            <StackLayout>
+                <Label FontSize="20" Text="{Binding Description}" />
+            </StackLayout>
+            <StackLayout.Triggers>
+                <DataTrigger
+                    Binding="{Binding NoteAction}"
+                    TargetType="StackLayout"
+                    Value="{x:Static models:NoteActionType.DetailNote}">
+                    <Setter Property="IsVisible" Value="True" />
+                </DataTrigger>
+            </StackLayout.Triggers>
+        </StackLayout>
+    </StackLayout>
 </ContentView>
