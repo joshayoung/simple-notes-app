@@ -11,7 +11,8 @@
              x:Class="SimpleNotes.Pages.ModifyPage">
     <ContentPage.Content>
         <StackLayout Padding="10" x:DataType="viewModels:NoteViewModel">
-            <views:CloseModal />
+            <Button Text="X" Clicked="Close" FontSize="26" HorizontalOptions="End" TextColor="{StaticResource AccentColor}"
+                    BackgroundColor="Transparent" />
             <views:NoteForm x:Name="NoteForm" />
         </StackLayout>
     </ContentPage.Content>

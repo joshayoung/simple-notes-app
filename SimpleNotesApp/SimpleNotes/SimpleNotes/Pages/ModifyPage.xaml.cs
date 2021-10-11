@@ -31,6 +31,8 @@ namespace SimpleNotes.Pages
             this.BindingContext = this.noteViewModel;
         }
 
+        private void Close(object sender, EventArgs e) => this.Navigation.PopModalAsync();
+
         private async Task AddNote()
         {
             try
