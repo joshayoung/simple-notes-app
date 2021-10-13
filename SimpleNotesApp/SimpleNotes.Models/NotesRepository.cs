@@ -72,7 +72,7 @@ namespace SimpleNotes.Models
         private void PopulateNotes()
         {
             string? notes = this.data.Retrieve("notes");
-            if (notes == string.Empty)
+            if (notes == null)
             {
                 return;
             }
