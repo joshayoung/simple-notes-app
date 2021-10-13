@@ -49,17 +49,16 @@
                                 </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Frame Style="{StaticResource NoteStyle}" Padding="1" Margin="0,0,0,14">
+                        <Frame  BorderColor="{StaticResource AccentColor}" Margin="0,0,0,20" 
+                               CornerRadius="6" HasShadow="False">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="GoToDetails" />
                             </Frame.GestureRecognizers>
-                            <Frame CornerRadius="6" HasShadow="False" BackgroundColor="#DCDCDC" Padding="10">
-                                <StackLayout>
-                                    <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20" />
-                                    <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100" />
-                                    <Label Text="{Binding Description}" FontAttributes="Italic" />
-                                </StackLayout>
-                            </Frame>
+                            <StackLayout>
+                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20"/>
+                                <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100" />
+                                <Label Text="{Binding Description}" FontAttributes="Italic"/>
+                            </StackLayout>
                         </Frame>
                     </SwipeView>
                 </DataTemplate>

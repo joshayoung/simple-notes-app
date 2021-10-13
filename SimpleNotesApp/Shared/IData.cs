@@ -6,6 +6,6 @@ namespace Shared
     {
         Task SaveAsync(string id, string value);
 
-        string Retrieve(string id);
+        string? Retrieve(string id);
     }
 }

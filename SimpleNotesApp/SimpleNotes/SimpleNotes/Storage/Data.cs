@@ -8,13 +8,21 @@ namespace SimpleNotes.Storage
     {
         public async Task SaveAsync(string id, string value)
         {
-            Application.Current.Properties[id] = value;
+            if (Application.Current.Properties.ContainsKey(id))
+            {
+                Application.Current.Properties[id] = value;
+            }
+            else
+            {
+                Application.Current.Properties.Add(id, value);
+            }
+
             await Application.Current.SavePropertiesAsync();
         }
 
-        public string Retrieve(string id)
+        public string? Retrieve(string id)
         {
-            return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : string.Empty;
+            return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : null;
         }
     }
 }
