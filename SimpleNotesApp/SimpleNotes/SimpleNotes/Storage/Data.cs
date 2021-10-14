@@ -20,7 +20,7 @@ namespace SimpleNotes.Storage
             await Application.Current.SavePropertiesAsync();
         }
 
-        public string? Retrieve(string id)
+        public virtual string? Retrieve(string id)
         {
             return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : null;
         }

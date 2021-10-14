@@ -10,6 +10,7 @@ namespace SimpleNotes.Models
     public class NotesRepository : INotifyPropertyChanged
     {
         private readonly IData data;
+        public List<Note> Notes = new List<Note>();
 
         public NotesRepository(IData data)
         {
@@ -18,8 +19,6 @@ namespace SimpleNotes.Models
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-
-        public List<Note> Notes { get; set; } = new List<Note>();
 
         public bool NotesExist { get; private set; }
 
@@ -44,21 +43,24 @@ namespace SimpleNotes.Models
         public async Task Delete(Note note)
         {
             string? lsNotes = this.data.Retrieve("notes");
+
+            // TODO: Check for null and add a test
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
-            int? noteIndex = deserializeNotes?.FindIndex(n => n.Id == note.Id);
-            if (noteIndex == null)
+
+            int noteIndex = deserializeNotes.FindIndex(n => n.Id == note.Id);
+            if (noteIndex == -1)
             {
                 return;
             }
 
-            this.Notes.RemoveAt(noteIndex.Value);
-            deserializeNotes?.RemoveAt(noteIndex.Value);
+            this.Notes.RemoveAt(noteIndex);
+            deserializeNotes?.RemoveAt(noteIndex);
             string? serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
-        public void UpdateNotesExist()
+        private void UpdateNotesExist()
         {
             this.NotesExist = this.Notes.Count > 0;
             this.NotifyPropertyChanged(nameof(this.NotesExist));
@@ -82,6 +84,8 @@ namespace SimpleNotes.Models
             {
                 this.Notes = deserializedNotes;
             }
+
+            this.UpdateNotesExist();
         }
     }
 }
