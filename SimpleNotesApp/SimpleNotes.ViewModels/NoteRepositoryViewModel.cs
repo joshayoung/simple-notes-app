@@ -8,18 +8,18 @@ namespace SimpleNotes.ViewModels
 {
     public class NoteRepositoryViewModel : INotifyPropertyChanged
     {
-        private readonly NotesRepository notesRepository;
+        private readonly NoteRepository noteRepository;
 
-        public NoteRepositoryViewModel(NotesRepository notesRepository)
+        public NoteRepositoryViewModel(NoteRepository noteRepository)
         {
-            this.notesRepository = notesRepository;
+            this.noteRepository = noteRepository;
 
             this.Refresh();
 
-            notesRepository.PropertyChanged += this.NotesRepositoryOnPropertyChanged;
-            notesRepository.PropertyChanged += (sender, args) =>
+            noteRepository.PropertyChanged += this.NotesRepositoryOnPropertyChanged;
+            noteRepository.PropertyChanged += (sender, args) =>
             {
-                if (args.PropertyName == nameof(NotesRepository.Notes))
+                if (args.PropertyName == nameof(NoteRepository.Notes))
                 {
                     this.NotifyPropertyChanged(nameof(this.Notes));
                 }
@@ -28,14 +28,14 @@ namespace SimpleNotes.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool NotesExist => this.notesRepository.NotesExist;
+        public bool NotesExist => this.noteRepository.NotesExist;
 
         public List<NoteViewModel> Notes { get; set; } = new List<NoteViewModel>();
 
         public NoteViewModel GetInitialNote()
         {
-            int id = this.notesRepository.Notes.Count + 1;
-            return new NoteViewModel(new Note(id), this.notesRepository);
+            int id = this.noteRepository.Notes.Count + 1;
+            return new NoteViewModel(new Note(id), this.noteRepository);
         }
 
         protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
@@ -45,12 +45,12 @@ namespace SimpleNotes.ViewModels
 
         private void NotesRepositoryOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(NotesRepository.Notes))
+            if (e.PropertyName == nameof(NoteRepository.Notes))
             {
                 this.Refresh();
             }
 
-            if (e.PropertyName == nameof(NotesRepository.NotesExist))
+            if (e.PropertyName == nameof(NoteRepository.NotesExist))
             {
                 this.NotifyPropertyChanged(nameof(this.NotesExist));
             }
@@ -58,10 +58,10 @@ namespace SimpleNotes.ViewModels
 
         private void Refresh()
         {
-            var noteList = this.notesRepository.Notes.Select(note => new NoteViewModel(note, this.notesRepository)).ToList();
+            var noteList = this.noteRepository.Notes.Select(note => new NoteViewModel(note, this.noteRepository)).ToList();
 
             this.Notes = noteList;
-            this.notesRepository.UpdateNotesExist();
+            // this.noteRepository.UpdateNotesExist();
         }
     }
 }

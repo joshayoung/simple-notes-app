@@ -8,14 +8,14 @@ namespace SimpleNotes.ViewModels
     public class NoteViewModel : INotifyPropertyChanged
     {
         private readonly Note note;
-        private readonly NotesRepository repository;
+        private readonly NoteRepository repository;
 
         public NoteActionType? NoteAction { get; set; }
 
-        public NoteViewModel(Note note, NotesRepository notesRepository)
+        public NoteViewModel(Note note, NoteRepository noteRepository)
         {
             this.note = note;
-            this.repository = notesRepository;
+            this.repository = noteRepository;
 
             this.note.PropertyChanged += (sender, args) =>
             {

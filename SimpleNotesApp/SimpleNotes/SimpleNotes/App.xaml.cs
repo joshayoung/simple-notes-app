@@ -14,9 +14,9 @@ namespace SimpleNotes
             this.InitializeComponent();
             Bootstrap.Init();
 
-            if (Bootstrap.NotesRepository != null)
+            if (Bootstrap.NoteRepository != null)
             {
-                var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NotesRepository);
+                var noteRepositoryViewModel = new NoteRepositoryViewModel(Bootstrap.NoteRepository);
                 this.MainPage = new NavigationPage(new MainPage(noteRepositoryViewModel));
             }
         }

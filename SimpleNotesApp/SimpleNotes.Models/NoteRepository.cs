@@ -7,12 +7,12 @@ using Shared;
 
 namespace SimpleNotes.Models
 {
-    public class NotesRepository : INotifyPropertyChanged
+    public class NoteRepository : INotifyPropertyChanged
     {
         private readonly IData data;
         public List<Note> Notes = new List<Note>();
 
-        public NotesRepository(IData data)
+        public NoteRepository(IData data)
         {
             this.data = data;
             this.PopulateNotes();

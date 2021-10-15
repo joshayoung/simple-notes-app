@@ -10,8 +10,8 @@ namespace SimpleNotes
     {
         private static IServiceCollection? serviceCollection;
 
-        public static NotesRepository? NotesRepository =>
-            ServiceProvider?.GetRequiredService<NotesRepository>();
+        public static NoteRepository? NoteRepository =>
+            ServiceProvider?.GetRequiredService<NoteRepository>();
 
         private static IServiceProvider? ServiceProvider { get; set; }
 
@@ -19,7 +19,7 @@ namespace SimpleNotes
         {
             serviceCollection = new ServiceCollection();
             serviceCollection.AddSingleton<IData, Data>();
-            serviceCollection.AddSingleton<NotesRepository>();
+            serviceCollection.AddSingleton<NoteRepository>();
             ServiceProvider = serviceCollection.BuildServiceProvider();
         }
     }
