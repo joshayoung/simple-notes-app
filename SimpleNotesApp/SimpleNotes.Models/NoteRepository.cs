@@ -22,7 +22,7 @@ namespace SimpleNotes.Models
 
         public bool NotesExist { get; private set; }
 
-        public async Task Save(Note note)
+        public virtual async Task Save(Note note)
         {
             this.Notes.Add(note);
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
@@ -30,7 +30,7 @@ namespace SimpleNotes.Models
             this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
-        public async Task SaveEdits(Note note)
+        public virtual async Task SaveEdits(Note note)
         {
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.Title;
@@ -40,7 +40,7 @@ namespace SimpleNotes.Models
             this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
-        public async Task Delete(Note note)
+        public virtual async Task Delete(Note note)
         {
             string? lsNotes = this.data.Retrieve("notes");
 

@@ -33,11 +33,7 @@ namespace SimpleNotes.ViewModels
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public int Id
-        {
-            get => this.note.Id;
-            set => this.note.Id = value;
-        }
+        public int Id => this.note.Id;
 
         public string? Title
         {
