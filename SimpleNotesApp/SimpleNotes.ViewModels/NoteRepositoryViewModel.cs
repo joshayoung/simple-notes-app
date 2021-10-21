@@ -58,7 +58,9 @@ namespace SimpleNotes.ViewModels
 
         private void Refresh()
         {
-            var noteList = this.noteRepository.Notes.Select(note => new NoteViewModel(note, this.noteRepository)).ToList();
+            var noteList = this.noteRepository.Notes.Select(
+                note => new NoteViewModel(note, this.noteRepository))
+                               .ToList();
 
             this.Notes = noteList;
             // this.noteRepository.UpdateNotesExist();
