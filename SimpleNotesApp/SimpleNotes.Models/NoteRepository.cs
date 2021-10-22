@@ -60,7 +60,7 @@ namespace SimpleNotes.Models
             this.NotifyPropertyChanged(nameof(this.Notes));
         }
 
-        private void UpdateNotesExist()
+        public void UpdateNotesExist()
         {
             this.NotesExist = this.Notes.Count > 0;
             this.NotifyPropertyChanged(nameof(this.NotesExist));

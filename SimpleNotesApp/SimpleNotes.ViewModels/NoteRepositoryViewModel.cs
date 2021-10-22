@@ -63,7 +63,7 @@ namespace SimpleNotes.ViewModels
                                .ToList();
 
             this.Notes = noteList;
-            // this.noteRepository.UpdateNotesExist();
+            this.noteRepository.UpdateNotesExist();
         }
     }
 }
