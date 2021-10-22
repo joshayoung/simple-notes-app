@@ -24,7 +24,7 @@ namespace SimpleNotes.Models
 
         public virtual async Task Save(Note note)
         {
-            this.Notes.Add(note);
+            this.Notes.Add(note.TrimWhitespace());
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.NotifyPropertyChanged(nameof(this.Notes));
@@ -33,8 +33,8 @@ namespace SimpleNotes.Models
         public virtual async Task SaveEdits(Note note)
         {
             var nt = this.Notes.Find(n => n.Id == note.Id);
-            nt.Title = note.Title;
-            nt.Description = note.Description;
+            nt.Title = note.TrimWhitespace().Title;
+            nt.Description = note.TrimWhitespace().Description;
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.NotifyPropertyChanged(nameof(this.Notes));

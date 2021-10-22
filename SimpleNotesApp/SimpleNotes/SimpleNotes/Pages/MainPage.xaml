@@ -55,9 +55,25 @@
                                 <TapGestureRecognizer Tapped="GoToDetails" />
                             </Frame.GestureRecognizers>
                             <StackLayout>
-                                <Label Text="{Binding Title}" FontAttributes="Bold" FontSize="20"/>
+                                <Label FontAttributes="Bold" FontSize="20">
+                                    <Label.Text>
+                                        <Binding Path="Title">
+                                            <Binding.Converter>
+                                                <converters:StringTruncationConverter Length="10" />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Label.Text>
+                                </Label>
                                 <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100" />
-                                <Label Text="{Binding Description}" FontAttributes="Italic"/>
+                                <Label FontAttributes="Italic">
+                                    <Label.Text>
+                                        <Binding Path="Description">
+                                            <Binding.Converter>
+                                                <converters:StringTruncationConverter Length="50" />
+                                            </Binding.Converter>
+                                        </Binding>
+                                    </Label.Text>
+                                </Label>
                             </StackLayout>
                         </Frame>
                     </SwipeView>
