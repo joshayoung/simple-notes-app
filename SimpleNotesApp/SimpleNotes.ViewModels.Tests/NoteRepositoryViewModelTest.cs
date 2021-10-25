@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.Extensions;
 using Shared;
 using SimpleNotes.Models;
 using Xunit;

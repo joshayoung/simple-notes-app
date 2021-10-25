@@ -35,6 +35,7 @@ namespace SimpleNotes.ViewModels.Tests
             noteViewModel.Description.Should().Be(description);
         }
 
+        #region Property_Changes
         [Fact]
         public void Title_Changes_PropertyChangedEvent()
         {
@@ -72,6 +73,7 @@ namespace SimpleNotes.ViewModels.Tests
 
             descriptionWasChanged.Should().BeTrue();
         }
+        #endregion
 
         [Fact]
         public void EditNoteCopy_Called_ReturnsNewVMWithModelData()

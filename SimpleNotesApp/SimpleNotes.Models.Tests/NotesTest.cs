@@ -4,6 +4,7 @@ namespace SimpleNotes.Models.Tests
 {
     public class NotesTest
     {
+        #region Constructor_Test
         [Fact]
         public void Constructor_WithAllParams_AssignsValues()
         {
@@ -29,7 +30,9 @@ namespace SimpleNotes.Models.Tests
             Assert.Null(note.Title);
             Assert.Null(note.Description);
         }
+        #endregion
 
+        #region PropertyChanged_Tests
         [Fact]
         public void Id_Changed_PropertyChangedEvent()
         {
@@ -83,5 +86,6 @@ namespace SimpleNotes.Models.Tests
             
             Assert.True(wasChanged);
         }
+        #endregion
     }
 }

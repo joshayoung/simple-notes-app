@@ -45,7 +45,6 @@ namespace SimpleNotes.Models.Tests
             var note = new Note(1);
             var notes = new List<Note> { note };
             var mockIData = Substitute.For<IData>();
-            
             var notesRepository = new NoteRepository(mockIData);
 
             notesRepository.Save(note);
