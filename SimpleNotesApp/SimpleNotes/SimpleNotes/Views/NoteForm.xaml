@@ -38,19 +38,22 @@
                 </DataTrigger>
             </StackLayout.Triggers>
         </StackLayout>
-        <StackLayout Padding="10" IsVisible="False">
-            <Label Text="{Binding Title}" Style="{StaticResource HeaderStyle}" />
+        
+        <ScrollView Padding="10" IsVisible="False">
             <StackLayout>
-                <Label FontSize="20" Text="{Binding Description}" />
+                <Label Text="{Binding Title}" Style="{StaticResource HeaderStyle}" />
+                <StackLayout>
+                    <Label FontSize="20" Text="{Binding Description}" />
+                </StackLayout>
             </StackLayout>
-            <StackLayout.Triggers>
+            <ScrollView.Triggers>
                 <DataTrigger
                     Binding="{Binding NoteAction}"
-                    TargetType="StackLayout"
+                    TargetType="ScrollView"
                     Value="{x:Static models:NoteActionType.DetailNote}">
                     <Setter Property="IsVisible" Value="True" />
                 </DataTrigger>
-            </StackLayout.Triggers>
-        </StackLayout>
+            </ScrollView.Triggers>
+        </ScrollView>
     </StackLayout>
 </ContentView>
