@@ -9,12 +9,12 @@ namespace SimpleNotes.ViewModels.Tests
 {
     public class NoteRepositoryViewModelTest
     {
-        private readonly NoteRepository NoteRepository;
+        private readonly NoteRepository NoteRepositoryMock;
         
         public NoteRepositoryViewModelTest()
         {
-            var mockIData = Substitute.For<IData>();
-            this.NoteRepository = Substitute.ForPartsOf<NoteRepository>(mockIData);
+            var iDataMock = Substitute.For<IData>();
+            this.NoteRepositoryMock = Substitute.ForPartsOf<NoteRepository>(iDataMock);
         }
         
         [Fact]
@@ -27,12 +27,12 @@ namespace SimpleNotes.ViewModels.Tests
                 note1,
                 note2,
             };
-            this.NoteRepository.Notes = new List<Note>(notes);
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.NoteRepository);
+            this.NoteRepositoryMock.Notes = new List<Note>(notes);
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.NoteRepositoryMock);
             var noteVMs = new List<NoteViewModel>()
             {
-                new NoteViewModel(note1, this.NoteRepository),
-                new NoteViewModel(note2, this.NoteRepository),
+                new NoteViewModel(note1, this.NoteRepositoryMock),
+                new NoteViewModel(note2, this.NoteRepositoryMock),
             };
 
             noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
@@ -50,16 +50,16 @@ namespace SimpleNotes.ViewModels.Tests
                 note1,
                 note2,
             };
-            this.NoteRepository.Notes = new List<Note>(notes);
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.NoteRepository);
+            this.NoteRepositoryMock.Notes = new List<Note>(notes);
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.NoteRepositoryMock);
             var noteVMs = new List<NoteViewModel>()
             {
-                new NoteViewModel(note1, this.NoteRepository),
-                new NoteViewModel(note2, this.NoteRepository),
-                new NoteViewModel(note3, this.NoteRepository),
+                new NoteViewModel(note1, this.NoteRepositoryMock),
+                new NoteViewModel(note2, this.NoteRepositoryMock),
+                new NoteViewModel(note3, this.NoteRepositoryMock),
             };
             
-            this.NoteRepository.Save(note3);
+            this.NoteRepositoryMock.Save(note3);
 
             noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
         }

@@ -10,13 +10,12 @@ namespace SimpleNotes.ViewModels.Tests
 {
     public class NoteViewModelTest
     {
-        private readonly IData iData;
-        private readonly NoteRepository NoteRepository;
+        private readonly NoteRepository NoteRepositoryMock;
 
         public NoteViewModelTest()
         {
-            this.iData = Substitute.For<IData>();
-            this.NoteRepository = Substitute.ForPartsOf<NoteRepository>(this.iData);
+            var iDataMock = Substitute.For<IData>();
+            this.NoteRepositoryMock = Substitute.ForPartsOf<NoteRepository>(iDataMock);
         }
         
         [Fact]
@@ -27,7 +26,7 @@ namespace SimpleNotes.ViewModels.Tests
             var description = "description";
             var note = new Note(id, title, description);
             
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
 
             noteViewModel.NoteAction.Should().BeNull();
             noteViewModel.Id.Should().Be(id);
@@ -40,7 +39,7 @@ namespace SimpleNotes.ViewModels.Tests
         public void Title_Changes_PropertyChangedEvent()
         {
             var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
             var titleWasChanged = false;
             noteViewModel.PropertyChanged += (sender, args) =>
             {
@@ -59,7 +58,7 @@ namespace SimpleNotes.ViewModels.Tests
         public void Description_Changes_PropertyChangedEvent()
         {
             var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
             var descriptionWasChanged = false;
             noteViewModel.PropertyChanged += (sender, args) =>
             {
@@ -80,8 +79,8 @@ namespace SimpleNotes.ViewModels.Tests
         {
             var note = new Note(1);
             var newNote = new Note(note.Id, note.Title, note.Description);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
-            var newVm = new NoteViewModel(newNote, this.NoteRepository);
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
+            var newVm = new NoteViewModel(newNote, this.NoteRepositoryMock);
 
             var results = noteViewModel.EditNoteCopy();
 
@@ -93,36 +92,36 @@ namespace SimpleNotes.ViewModels.Tests
         public async Task SaveAsync_Called_CallsSaveOnRepository()
         {
             var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
-            this.NoteRepository.Configure().Save(note).Returns(Task.FromResult(1));
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
+            this.NoteRepositoryMock.Configure().Save(note).Returns(Task.FromResult(1));
 
             await noteViewModel.SaveAsync();
 
-            await this.NoteRepository.Received().Save(Arg.Is(note));
+            await this.NoteRepositoryMock.Received().Save(Arg.Is(note));
         }
         
         [Fact]
         public async Task DeleteAsync_Called_CallsSaveOnRepository()
         {
             var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
-            this.NoteRepository.Configure().Delete(note).Returns(Task.FromResult);
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
+            this.NoteRepositoryMock.Configure().Delete(note).Returns(Task.FromResult);
 
             await noteViewModel.DeleteAsync();
 
-            await this.NoteRepository.Received().Delete(Arg.Is(note));
+            await this.NoteRepositoryMock.Received().Delete(Arg.Is(note));
         }
         
         [Fact]
         public async Task SaveEditsAsync_Called_CallsSaveEditsOnRepository()
         {
             var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.NoteRepository);
-            this.NoteRepository.Configure().SaveEdits(note).Returns(Task.FromResult(1));
+            var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
+            this.NoteRepositoryMock.Configure().SaveEdits(note).Returns(Task.FromResult(1));
             
             await noteViewModel.SaveEditsAsync();
 
-            await this.NoteRepository.Configure().Received().SaveEdits(note);
+            await this.NoteRepositoryMock.Configure().Received().SaveEdits(note);
         }
     }
 }

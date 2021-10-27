@@ -10,16 +10,21 @@ namespace SimpleNotes.Models.Tests
 {
     public class NoteRepositoryTest
     {
+        private readonly IData IDataMock;
+        public NoteRepositoryTest()
+        {
+            this.IDataMock = Substitute.For<IData>();
+        }
+        
         #region Constructor_Tests
         [Fact]
         public void Constructor_WithValidData_AssignsValues()
         {
-            var mockIData = Substitute.For<IData>();
             var noteData = "[{\"id\": 1, \"title\": \"Title1\", \"description\": \"Description1\"}]";
             var notes = new List<Note>() { new Note(1, "Title1", "Description1") };
-            mockIData.Retrieve("notes").Returns(noteData);
+            this.IDataMock.Retrieve("notes").Returns(noteData);
             
-            var notesRepository = new NoteRepository(mockIData);
+            var notesRepository = new NoteRepository(this.IDataMock);
             
             notesRepository.Notes.Should().BeEquivalentTo(notes);
             notesRepository.NotesExist.Should().BeTrue();
@@ -28,11 +33,9 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Constructor_NoData_DoesNotAssignsValues()
         {
-            var mockIData = Substitute.For<IData>();
-            mockIData.Retrieve("notes").ReturnsNull();
+            this.IDataMock.Retrieve("notes").ReturnsNull();
             
-            var notesRepository = new NoteRepository(mockIData);
-
+            var notesRepository = new NoteRepository(this.IDataMock); 
             notesRepository.Notes.Should().BeEmpty();
             notesRepository.NotesExist.Should().BeFalse();
         }
@@ -44,8 +47,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var notes = new List<Note> { note };
-            var mockIData = Substitute.For<IData>();
-            var notesRepository = new NoteRepository(mockIData);
+            var notesRepository = new NoteRepository(this.IDataMock);
 
             notesRepository.Save(note);
 
@@ -56,20 +58,18 @@ namespace SimpleNotes.Models.Tests
         public void Save_Called_SavesDataToLocalStorage()
         {
             var note = new Note(1);
-            var mockIData = Substitute.For<IData>();
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            var notesRepository = new NoteRepository(mockIData);
+            var notesRepository = new NoteRepository(this.IDataMock);
 
             notesRepository.Save(note);
 
-            mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is(serializedNotes));
+            this.IDataMock.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is(serializedNotes));
         }
         
         [Fact]
         public void Save_Called_NotesPropertyChangeEvent()
         {
-            var mockIData = Substitute.For<IData>();
-            var noteRepository = new NoteRepository(mockIData);
+            var noteRepository = new NoteRepository(this.IDataMock);
             var note = new Note(1);
             var wasChanged = false;
             noteRepository.PropertyChanged += (sender, args) =>
@@ -92,8 +92,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var title = "my title";
-            var mockIData = Substitute.For<IData>();
-            var notesRepository = new NoteRepository(mockIData)
+            var notesRepository = new NoteRepository(this.IDataMock)
             {
                 Notes = new List<Note>
                 {
@@ -111,8 +110,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var description = "my description";
-            var mockIData = Substitute.For<IData>();
-            var notesRepository = new NoteRepository(mockIData)
+            var notesRepository = new NoteRepository(this.IDataMock)
             {
                 Notes = new List<Note>
                 {
@@ -129,9 +127,8 @@ namespace SimpleNotes.Models.Tests
         public void SaveEdits_Called_SavesNote()
         {
             var note = new Note(1);
-            var mockIData = Substitute.For<IData>();
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            var notesRepository = new NoteRepository(mockIData)
+            var notesRepository = new NoteRepository(this.IDataMock)
             {
                 Notes = new List<Note>
                 {
@@ -141,16 +138,15 @@ namespace SimpleNotes.Models.Tests
 
             notesRepository.SaveEdits(note);
 
-            mockIData.Received().SaveAsync(Arg.Is("notes"), Arg.Is(serializedNotes));
+            this.IDataMock.Received().SaveAsync(Arg.Is("notes"), Arg.Is(serializedNotes));
         }
 
         [Fact]
         public void SaveEdits_Called_NotesPropertyChangedEvent()
         {
-            var mockIData = Substitute.For<IData>();
             var note = new Note(1);
             var wasChanged = false;
-            var notesRepository = new NoteRepository(mockIData)
+            var notesRepository = new NoteRepository(this.IDataMock)
             {
                 Notes = new List<Note>
                 {
@@ -174,13 +170,12 @@ namespace SimpleNotes.Models.Tests
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(2);
-            var mockIData = Substitute.For<IData>();
-            mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(mockIData);
+            this.IDataMock.Retrieve("notes").Returns(serializedNotes);
+            var notesRepository = new NoteRepository(this.IDataMock);
 
             notesRepository.Delete(note);
 
-            mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+            this.IDataMock.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Fact]
@@ -188,9 +183,8 @@ namespace SimpleNotes.Models.Tests
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
-            var mockIData = Substitute.For<IData>();
-            mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(mockIData);
+            this.IDataMock.Retrieve("notes").Returns(serializedNotes);
+            var notesRepository = new NoteRepository(this.IDataMock);
 
             notesRepository.Delete(note);
 
@@ -203,13 +197,12 @@ namespace SimpleNotes.Models.Tests
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
             var serializedAfterDeletion = "[{\"Id\":2,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
-            var mockIData = Substitute.For<IData>();
-            mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(mockIData);
+            this.IDataMock.Retrieve("notes").Returns(serializedNotes);
+            var notesRepository = new NoteRepository(this.IDataMock);
 
             notesRepository.Delete(note);
 
-            mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedAfterDeletion));
+            this.IDataMock.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedAfterDeletion));
         }
 
         [Fact]
@@ -218,9 +211,8 @@ namespace SimpleNotes.Models.Tests
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
             var wasChanged = false;
-            var mockIData = Substitute.For<IData>();
-            mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(mockIData)
+            this.IDataMock.Retrieve("notes").Returns(serializedNotes);
+            var notesRepository = new NoteRepository(this.IDataMock)
             {
                 Notes = new List<Note>
                 {
