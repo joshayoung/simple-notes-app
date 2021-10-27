@@ -10,8 +10,6 @@ namespace SimpleNotes.ViewModels
         private readonly Note note;
         private readonly NoteRepository repository;
 
-        public NoteActionType? NoteAction { get; set; }
-
         public NoteViewModel(Note note, NoteRepository noteRepository)
         {
             this.note = note;
@@ -32,6 +30,8 @@ namespace SimpleNotes.ViewModels
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
+
+        public NoteActionType? NoteAction { get; set; }
 
         public int Id => this.note.Id;
 
