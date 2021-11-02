@@ -3,7 +3,7 @@ using Xunit;
 
 namespace SimpleNotes.Models.Tests
 {
-    public class NotesTest
+    public class NoteTest
     {
         #region Constructor_Test
         [Fact]
