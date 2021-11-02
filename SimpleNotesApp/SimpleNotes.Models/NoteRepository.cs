@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared;
@@ -27,7 +26,7 @@ namespace SimpleNotes.Models
             this.Notes.Add(note.TrimWhitespace());
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
-            this.NotifyPropertyChanged(nameof(this.Notes));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public virtual async Task SaveEdits(Note note)
@@ -37,7 +36,7 @@ namespace SimpleNotes.Models
             nt.Description = note.TrimWhitespace().Description;
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
-            this.NotifyPropertyChanged(nameof(this.Notes));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public virtual async Task Delete(Note note)
@@ -57,20 +56,15 @@ namespace SimpleNotes.Models
             deserializeNotes?.RemoveAt(noteIndex);
             string? serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
             await this.data.SaveAsync("notes", serializeNotes);
-            this.NotifyPropertyChanged(nameof(this.Notes));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public void UpdateNotesExist()
         {
             this.NotesExist = this.Notes.Count > 0;
-            this.NotifyPropertyChanged(nameof(this.NotesExist));
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.NotesExist)));
         }
-
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
+        
         private void PopulateNotes()
         {
             string? notes = this.data.Retrieve("notes");

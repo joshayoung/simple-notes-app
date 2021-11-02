@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using SimpleNotes.Models;
 
 namespace SimpleNotes.ViewModels
@@ -21,7 +20,7 @@ namespace SimpleNotes.ViewModels
             {
                 if (args.PropertyName == nameof(NoteRepository.Notes))
                 {
-                    this.NotifyPropertyChanged(nameof(this.Notes));
+                    this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
                 }
             };
         }
@@ -38,11 +37,6 @@ namespace SimpleNotes.ViewModels
             return new NoteViewModel(new Note(id), this.noteRepository);
         }
 
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         private void NotesRepositoryOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(NoteRepository.Notes))
@@ -52,7 +46,7 @@ namespace SimpleNotes.ViewModels
 
             if (e.PropertyName == nameof(NoteRepository.NotesExist))
             {
-                this.NotifyPropertyChanged(nameof(this.NotesExist));
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.NotesExist)));
             }
         }
 

@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace SimpleNotes.Models
 {
@@ -24,7 +23,7 @@ namespace SimpleNotes.Models
             set
             {
                 this.id = value;
-                this.NotifyPropertyChanged();
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Id)));
             }
         }
 
@@ -34,7 +33,7 @@ namespace SimpleNotes.Models
             set
             {
                 this.title = value;
-                this.NotifyPropertyChanged();
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Title)));
             }
         }
 
@@ -44,13 +43,8 @@ namespace SimpleNotes.Models
             set
             {
                 this.description = value;
-                this.NotifyPropertyChanged();
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Description)));
             }
-        }
-
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

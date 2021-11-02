@@ -1,5 +1,4 @@
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using SimpleNotes.Models;
 
@@ -20,10 +19,10 @@ namespace SimpleNotes.ViewModels
                 switch (args.PropertyName)
                 {
                     case nameof(Note.Title):
-                        this.NotifyPropertyChanged(nameof(this.Title));
+                        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Title)));
                         break;
                     case nameof(Note.Description):
-                        this.NotifyPropertyChanged(nameof(this.Description));
+                        this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Description)));
                         break;
                 }
             };
@@ -66,11 +65,6 @@ namespace SimpleNotes.ViewModels
         public async Task SaveEditsAsync()
         {
             await this.repository.SaveEdits(this.note);
-        }
-
-        protected virtual void NotifyPropertyChanged([CallerMemberName] string propertyName = null!)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
