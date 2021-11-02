@@ -1,3 +1,4 @@
+using FluentAssertions;
 using Xunit;
 
 namespace SimpleNotes.Models.Tests
@@ -14,9 +15,9 @@ namespace SimpleNotes.Models.Tests
                 
             var note = new Note(id, title, description);
             
-            Assert.Equal(id, note.Id);
-            Assert.Equal(title, note.Title);
-            Assert.Equal(description, note.Description);
+            note.Id.Should().Be(id);
+            note.Title.Should().Be(title);
+            note.Description.Should().Be(description);
         }
         
         [Fact]
@@ -26,9 +27,9 @@ namespace SimpleNotes.Models.Tests
                 
             var note = new Note(id);
             
-            Assert.Equal(id, note.Id);
-            Assert.Null(note.Title);
-            Assert.Null(note.Description);
+            note.Id.Should().Be(id);
+            note.Title.Should().BeNull();
+            note.Description.Should().BeNull();
         }
         #endregion
 
@@ -48,7 +49,7 @@ namespace SimpleNotes.Models.Tests
 
             note.Id = 2;
             
-            Assert.True(wasChanged);
+            wasChanged.Should().BeTrue();
         }
         
         [Fact]
@@ -66,7 +67,7 @@ namespace SimpleNotes.Models.Tests
 
             note.Title = "new title";
             
-            Assert.True(wasChanged);
+            wasChanged.Should().BeTrue();
         }
         
         [Fact]
@@ -84,7 +85,7 @@ namespace SimpleNotes.Models.Tests
 
             note.Description = "new description";
             
-            Assert.True(wasChanged);
+            wasChanged.Should().BeTrue();
         }
         #endregion
     }

@@ -9,7 +9,6 @@ namespace SimpleNotes.Models
     public class NoteRepository : INotifyPropertyChanged
     {
         private readonly IData data;
-        public List<Note> Notes = new List<Note>();
 
         public NoteRepository(IData data)
         {
@@ -19,7 +18,9 @@ namespace SimpleNotes.Models
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public bool NotesExist { get; private set; }
+        public List<Note> Notes { get; set; } = new List<Note>();
+
+        public bool NotesExist => this.Notes.Count > 0;
 
         public virtual async Task Save(Note note)
         {
@@ -43,10 +44,20 @@ namespace SimpleNotes.Models
         {
             string? lsNotes = this.data.Retrieve("notes");
 
-            // TODO: Check for null and add a test
+            if (lsNotes == null)
+            {
+                return;
+            }
+
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
 
+            if (deserializeNotes == null)
+            {
+                return;
+            }
+
             int noteIndex = deserializeNotes.FindIndex(n => n.Id == note.Id);
+
             if (noteIndex == -1)
             {
                 return;
@@ -61,10 +72,9 @@ namespace SimpleNotes.Models
 
         public void UpdateNotesExist()
         {
-            this.NotesExist = this.Notes.Count > 0;
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.NotesExist)));
         }
-        
+
         private void PopulateNotes()
         {
             string? notes = this.data.Retrieve("notes");

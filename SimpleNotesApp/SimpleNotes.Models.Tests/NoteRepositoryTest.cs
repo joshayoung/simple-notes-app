@@ -36,6 +36,7 @@ namespace SimpleNotes.Models.Tests
             this.IDataMock.Retrieve("notes").ReturnsNull();
             
             var notesRepository = new NoteRepository(this.IDataMock); 
+            
             notesRepository.Notes.Should().BeEmpty();
             notesRepository.NotesExist.Should().BeFalse();
         }
@@ -96,7 +97,7 @@ namespace SimpleNotes.Models.Tests
             {
                 Notes = new List<Note>
                 {
-                    new Note(1, title: title)
+                    new Note(1, title)
                 }
             };
 
@@ -114,7 +115,7 @@ namespace SimpleNotes.Models.Tests
             {
                 Notes = new List<Note>
                 {
-                    new Note(1, "title", description: description)
+                    new Note(1, "title", description)
                 }
             };
 
@@ -130,10 +131,7 @@ namespace SimpleNotes.Models.Tests
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var notesRepository = new NoteRepository(this.IDataMock)
             {
-                Notes = new List<Note>
-                {
-                    note
-                }
+                Notes = new List<Note> { note, }
             };
 
             notesRepository.SaveEdits(note);
@@ -148,14 +146,14 @@ namespace SimpleNotes.Models.Tests
             var wasChanged = false;
             var notesRepository = new NoteRepository(this.IDataMock)
             {
-                Notes = new List<Note>
-                {
-                    note
-                }
+                Notes = new List<Note> { note, }
             };
             notesRepository.PropertyChanged += (sender, args) =>
             {
-                wasChanged = true;
+                if (args.PropertyName == nameof(NoteRepository.Notes))
+                {
+                    wasChanged = true;
+                }
             };
 
             notesRepository.SaveEdits(note);
@@ -165,6 +163,30 @@ namespace SimpleNotes.Models.Tests
         #endregion
 
         #region Delete_Tests
+        [Fact]
+        public void Delete_NoteRetrievalReturnsNull_Returns()
+        {
+            var note = new Note(2);
+            this.IDataMock.Retrieve("notes").ReturnsNull();
+            var notesRepository = new NoteRepository(this.IDataMock);
+
+            notesRepository.Delete(note);
+
+            this.IDataMock.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+        }
+        
+        [Fact]
+        public void Delete_DeserializationReturnsNull_Returns()
+        {
+            var note = new Note(2);
+            this.IDataMock.Retrieve("notes").Returns("");
+            var notesRepository = new NoteRepository(this.IDataMock);
+
+            notesRepository.Delete(note);
+
+            this.IDataMock.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+        }
+        
         [Fact]
         public void Delete_NoteIndexNegativeOne_Returns()
         {
@@ -214,17 +236,37 @@ namespace SimpleNotes.Models.Tests
             this.IDataMock.Retrieve("notes").Returns(serializedNotes);
             var notesRepository = new NoteRepository(this.IDataMock)
             {
-                Notes = new List<Note>
-                {
-                    note
-                }
+                Notes = new List<Note> { note, }
             };
             notesRepository.PropertyChanged += (sender, args) =>
             {
-                wasChanged = true;
+                if (args.PropertyName == nameof(NoteRepository.Notes))
+                {
+                    wasChanged = true;
+                }
             };
 
             notesRepository.Delete(note);
+
+            wasChanged.Should().BeTrue();
+        }
+        #endregion
+        
+        #region UpdateNotesExist
+        [Fact]
+        public void UpdateNotesExist_Called_PropertyChangedEventForNotesExist()
+        {
+            var wasChanged = false;
+            var notesRepository = new NoteRepository(this.IDataMock);
+            notesRepository.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == nameof(NoteRepository.NotesExist))
+                {
+                    wasChanged = true;
+                }
+            };
+
+            notesRepository.UpdateNotesExist();
 
             wasChanged.Should().BeTrue();
         }
