@@ -19,7 +19,7 @@ namespace SimpleNotes.ViewModels.Tests
         }
         
         [Fact]
-        public void Constructor_OnlyRequiredParams_Assignment()
+        public void Constructor_Params_Assignment()
         {
             var id = 1;
             var title = "title";
@@ -101,7 +101,7 @@ namespace SimpleNotes.ViewModels.Tests
         }
         
         [Fact]
-        public async Task DeleteAsync_Called_CallsSaveOnRepository()
+        public async Task DeleteAsync_Called_CallsDeleteOnRepository()
         {
             var note = new Note(1);
             var noteViewModel = new NoteViewModel(note, this.NoteRepositoryMock);
@@ -121,7 +121,7 @@ namespace SimpleNotes.ViewModels.Tests
             
             await noteViewModel.SaveEditsAsync();
 
-            await this.NoteRepositoryMock.Configure().Received().SaveEdits(note);
+            await this.NoteRepositoryMock.Configure().Received().SaveEdits(Arg.Is(note));
         }
     }
 }

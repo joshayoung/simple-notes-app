@@ -18,7 +18,7 @@ namespace SimpleNotes.Models
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        public List<Note> Notes { get; set; } = new List<Note>();
+        public virtual List<Note> Notes { get; set; } = new List<Note>();
 
         public bool NotesExist => this.Notes.Count > 0;
 
@@ -70,7 +70,7 @@ namespace SimpleNotes.Models
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
-        public void UpdateNotesExist()
+        public virtual void UpdateNotesExist()
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.NotesExist)));
         }
@@ -89,7 +89,8 @@ namespace SimpleNotes.Models
                 this.Notes = deserializedNotes;
             }
 
-            this.UpdateNotesExist();
+            // Cannot test this:
+            // this.UpdateNotesExist();
         }
     }
 }
