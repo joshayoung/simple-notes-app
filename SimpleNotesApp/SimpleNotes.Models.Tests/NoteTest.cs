@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using FluentAssertions;
 using Xunit;
 
@@ -37,55 +38,40 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Id_Changed_PropertyChangedEvent()
         {
-            var wasChanged = false;
-            var note = new Note(1, "title", "description");
-            note.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(Note.Id))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteMonitored = new Note(1, "title", "description").Monitor();
 
-            note.Id = 2;
+            noteMonitored.Subject.Id = 2;
             
-            wasChanged.Should().BeTrue();
+            noteMonitored.Should()
+                         .Raise("PropertyChanged")
+                         .WithSender(noteMonitored.Subject)
+                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(Note.Id));
         }
         
         [Fact]
-        public void Title_Changed_PropertyChangedEvent()
+        public void Title_Changes_PropertyChangedEvent()
         {
-            var wasChanged = false;
-            var note = new Note(1, "title", "description");
-            note.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(Note.Title))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteMonitored = new Note(1).Monitor();
 
-            note.Title = "new title";
-            
-            wasChanged.Should().BeTrue();
+            noteMonitored.Subject.Title = "new title";
+
+            noteMonitored.Should()
+                         .Raise("PropertyChanged")
+                         .WithSender(noteMonitored.Subject)
+                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(Note.Title));
         }
         
         [Fact]
         public void Description_Changed_PropertyChangedEvent()
         {
-            var wasChanged = false;
-            var note = new Note(1, "title", "description");
-            note.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(Note.Description))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteMonitored = new Note(1, "title", "description").Monitor();
 
-            note.Description = "new description";
+            noteMonitored.Subject.Description = "new description";
             
-            wasChanged.Should().BeTrue();
+            noteMonitored.Should()
+                         .Raise("PropertyChanged")
+                         .WithSender(noteMonitored.Subject)
+                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(Note.Description));
         }
         #endregion
     }

@@ -15,7 +15,7 @@ namespace SimpleNotes.Models
             this.description = description;
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public virtual event PropertyChangedEventHandler? PropertyChanged;
 
         public int Id
         {

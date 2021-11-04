@@ -1,6 +1,8 @@
+using System.ComponentModel;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.ClearExtensions;
 using NSubstitute.Extensions;
 using Shared;
 using SimpleNotes.Models;
@@ -36,41 +38,31 @@ namespace SimpleNotes.ViewModels.Tests
 
         #region Property_Changes
         [Fact]
-        public void Title_Changes_PropertyChangedEvent()
+        public void NoteTitle_Changes_PropertyChangedEvent()
         {
-            var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-            var titleWasChanged = false;
-            noteViewModel.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteViewModel.Title))
-                {
-                    titleWasChanged = true;
-                }
-            };
+            var noteMock = Substitute.ForPartsOf<Note>(1, "title", "description");
+            var noteViewModelMonitored = new NoteViewModel(noteMock, this.mockNoteRepository).Monitor();
+            
+            noteMock.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(Note.Title)));
 
-            noteViewModel.Title = "new title";
-
-            titleWasChanged.Should().BeTrue();
+            noteViewModelMonitored.Should()
+                         .Raise("PropertyChanged")
+                         .WithSender(noteViewModelMonitored.Subject)
+                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteViewModel.Title));
         }
         
         [Fact]
-        public void Description_Changes_PropertyChangedEvent()
+        public void NoteDescription_Changes_PropertyChangedEvent()
         {
-            var note = new Note(1);
-            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-            var descriptionWasChanged = false;
-            noteViewModel.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteViewModel.Description))
-                {
-                    descriptionWasChanged = true;
-                }
-            };
+            var noteMock = Substitute.ForPartsOf<Note>(1, "title", "description");
+            var noteViewModelMonitored = new NoteViewModel(noteMock, this.mockNoteRepository).Monitor();
+            
+            noteMock.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(Note.Description)));
 
-            noteViewModel.Description = "new description";
-
-            descriptionWasChanged.Should().BeTrue();
+            noteViewModelMonitored.Should()
+                         .Raise("PropertyChanged")
+                         .WithSender(noteViewModelMonitored.Subject)
+                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteViewModel.Description));
         }
         #endregion
 
