@@ -84,11 +84,11 @@ namespace SimpleNotes.ViewModels.Tests
         {
             var note = new Note(1);
             var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-            this.mockNoteRepository.Configure().Save(note).Returns(Task.FromResult(1));
+            this.mockNoteRepository.Configure().SaveAsync(note).Returns(Task.FromResult(1));
 
             await noteViewModel.SaveAsync();
 
-            await this.mockNoteRepository.Received().Save(Arg.Is(note));
+            await this.mockNoteRepository.Received().SaveAsync(Arg.Is(note));
         }
         
         [Fact]
@@ -96,11 +96,11 @@ namespace SimpleNotes.ViewModels.Tests
         {
             var note = new Note(1);
             var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-            this.mockNoteRepository.Configure().Delete(note).Returns(Task.FromResult);
+            this.mockNoteRepository.Configure().DeleteAsync(note).Returns(Task.FromResult);
 
             await noteViewModel.DeleteAsync();
 
-            await this.mockNoteRepository.Received().Delete(Arg.Is(note));
+            await this.mockNoteRepository.Received().DeleteAsync(Arg.Is(note));
         }
         
         [Fact]
@@ -108,11 +108,11 @@ namespace SimpleNotes.ViewModels.Tests
         {
             var note = new Note(1);
             var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-            this.mockNoteRepository.Configure().SaveEdits(note).Returns(Task.FromResult(1));
+            this.mockNoteRepository.Configure().SaveEditsAsync(note).Returns(Task.FromResult(1));
             
             await noteViewModel.SaveEditsAsync();
 
-            await this.mockNoteRepository.Configure().Received().SaveEdits(Arg.Is(note));
+            await this.mockNoteRepository.Configure().Received().SaveEditsAsync(Arg.Is(note));
         }
     }
 }

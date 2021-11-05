@@ -51,7 +51,7 @@ namespace SimpleNotes.Models.Tests
             var notes = new List<Note> { note };
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Save(note);
+            notesRepository.SaveAsync(note);
 
             notesRepository.Notes.Should().BeEquivalentTo(notes);
         }
@@ -63,7 +63,7 @@ namespace SimpleNotes.Models.Tests
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Save(note);
+            notesRepository.SaveAsync(note);
 
             this.mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is(serializedNotes));
         }
@@ -74,7 +74,7 @@ namespace SimpleNotes.Models.Tests
             var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
             var note = new Note(1);
 
-            noteRepositoryMonitored.Subject.Save(note);
+            noteRepositoryMonitored.Subject.SaveAsync(note);
         
             noteRepositoryMonitored.Should()
                            .Raise("PropertyChanged")
@@ -97,7 +97,7 @@ namespace SimpleNotes.Models.Tests
                 }
             };
 
-            notesRepository.Save(note);
+            notesRepository.SaveAsync(note);
 
             notesRepository.Notes.First().Title.Should().Be(title);
         }
@@ -115,7 +115,7 @@ namespace SimpleNotes.Models.Tests
                 }
             };
 
-            notesRepository.Save(note);
+            notesRepository.SaveAsync(note);
 
             notesRepository.Notes.First().Description.Should().Be(description);
         }
@@ -130,7 +130,7 @@ namespace SimpleNotes.Models.Tests
                 Notes = new List<Note> { note, }
             };
 
-            notesRepository.SaveEdits(note);
+            notesRepository.SaveEditsAsync(note);
 
             this.mockIData.Received().SaveAsync(Arg.Is("notes"), Arg.Is(serializedNotes));
         }
@@ -152,7 +152,7 @@ namespace SimpleNotes.Models.Tests
                 }
             };
 
-            notesRepository.SaveEdits(note);
+            notesRepository.SaveEditsAsync(note);
         
             wasChanged.Should().BeTrue();
         }
@@ -166,7 +166,7 @@ namespace SimpleNotes.Models.Tests
             this.mockIData.Retrieve("notes").ReturnsNull();
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
         }
@@ -178,7 +178,7 @@ namespace SimpleNotes.Models.Tests
             this.mockIData.Retrieve("notes").Returns("");
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
         }
@@ -191,7 +191,7 @@ namespace SimpleNotes.Models.Tests
             this.mockIData.Retrieve("notes").Returns(serializedNotes);
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
         }
@@ -204,7 +204,7 @@ namespace SimpleNotes.Models.Tests
             this.mockIData.Retrieve("notes").Returns(serializedNotes);
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             notesRepository.Notes.Should().BeEmpty();
         }
@@ -218,7 +218,7 @@ namespace SimpleNotes.Models.Tests
             this.mockIData.Retrieve("notes").Returns(serializedNotes);
             var notesRepository = new NoteRepository(this.mockIData);
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             this.mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedAfterDeletion));
         }
@@ -242,7 +242,7 @@ namespace SimpleNotes.Models.Tests
                 }
             };
 
-            notesRepository.Delete(note);
+            notesRepository.DeleteAsync(note);
 
             wasChanged.Should().BeTrue();
         }

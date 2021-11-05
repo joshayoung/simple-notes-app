@@ -66,7 +66,7 @@ namespace SimpleNotes.ViewModels.Tests
                 new NoteViewModel(note3, this.mockNoteRepository),
             };
             
-            this.mockNoteRepository.Save(note3);
+            this.mockNoteRepository.SaveAsync(note3);
 
             noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
         }
@@ -80,7 +80,7 @@ namespace SimpleNotes.ViewModels.Tests
             this.mockNoteRepository.Notes = new List<Note>(notes);
             new NoteRepositoryViewModel(this.mockNoteRepository);
             
-            this.mockNoteRepository.Save(note2);
+            this.mockNoteRepository.SaveAsync(note2);
 
             this.mockNoteRepository.Received().UpdateNotesExist();
         }

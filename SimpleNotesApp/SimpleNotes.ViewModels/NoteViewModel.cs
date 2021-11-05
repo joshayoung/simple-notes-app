@@ -54,17 +54,17 @@ namespace SimpleNotes.ViewModels
 
         public async Task SaveAsync()
         {
-            await this.repository.Save(this.note);
+            await this.repository.SaveAsync(this.note);
         }
 
         public async Task DeleteAsync()
         {
-            await this.repository.Delete(this.note);
+            await this.repository.DeleteAsync(this.note);
         }
 
         public async Task SaveEditsAsync()
         {
-            await this.repository.SaveEdits(this.note);
+            await this.repository.SaveEditsAsync(this.note);
         }
     }
 }

@@ -22,7 +22,7 @@ namespace SimpleNotes.Models
 
         public bool NotesExist => this.Notes.Count > 0;
 
-        public virtual async Task Save(Note note)
+        public virtual async Task SaveAsync(Note note)
         {
             this.Notes.Add(note.TrimWhitespace());
             string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
@@ -30,7 +30,7 @@ namespace SimpleNotes.Models
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
-        public virtual async Task SaveEdits(Note note)
+        public virtual async Task SaveEditsAsync(Note note)
         {
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.TrimWhitespace().Title;
@@ -40,7 +40,7 @@ namespace SimpleNotes.Models
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
-        public virtual async Task Delete(Note note)
+        public virtual async Task DeleteAsync(Note note)
         {
             string? lsNotes = this.data.Retrieve("notes");
 
