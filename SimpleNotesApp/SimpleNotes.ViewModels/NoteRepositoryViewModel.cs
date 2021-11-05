@@ -34,8 +34,8 @@ namespace SimpleNotes.ViewModels
         {
             if (e.PropertyName == nameof(NoteRepository.Notes))
             {
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
                 this.Refresh();
+                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
             }
 
             if (e.PropertyName == nameof(NoteRepository.NotesExist))
