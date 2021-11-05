@@ -88,9 +88,6 @@ namespace SimpleNotes.Models
             {
                 this.Notes = deserializedNotes;
             }
-
-            // Cannot test this:
-            // this.UpdateNotesExist();
         }
     }
 }

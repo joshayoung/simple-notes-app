@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using FluentAssertions;
 using NSubstitute;
@@ -70,20 +71,15 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Save_Called_NotesPropertyChangeEvent()
         {
-            var noteRepository = new NoteRepository(this.mockIData);
+            var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
             var note = new Note(1);
-            var wasChanged = false;
-            noteRepository.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.Notes))
-                {
-                    wasChanged = true;
-                }
-            };
 
-            noteRepository.Save(note);
+            noteRepositoryMonitored.Subject.Save(note);
         
-            wasChanged.Should().BeTrue();
+            noteRepositoryMonitored.Should()
+                           .Raise("PropertyChanged")
+                           .WithSender(noteRepositoryMonitored.Subject)
+                           .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
         }
         #endregion
 
