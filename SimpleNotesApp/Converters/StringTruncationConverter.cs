@@ -20,7 +20,6 @@ namespace Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // TODO: Write a test to verify that this is working correctly
             return this.originalValue ?? (string)value;
         }
     }
