@@ -9,7 +9,7 @@ namespace SimpleNotes.Views
     {
         public NoteForm() => this.InitializeComponent();
 
-        public Action SaveAction { get; set; } = () => throw new NotImplementedException();
+        public Action SaveAction { get; set; } = () => { };
 
         private void SaveButtonPressed(object sender, EventArgs e) => this.SaveAction?.Invoke();
     }
