@@ -24,11 +24,9 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Constructor_WithOnlyRequiredParams_AssignsValues()
         {
-            var id = 1;
-                
-            var note = new Note(id);
+            var note = new Note(1);
             
-            note.Id.Should().Be(id);
+            note.Id.Should().Be(1);
             note.Title.Should().BeNull();
             note.Description.Should().BeNull();
         }

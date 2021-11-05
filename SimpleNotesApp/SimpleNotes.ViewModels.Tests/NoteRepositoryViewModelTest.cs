@@ -23,13 +23,13 @@ namespace SimpleNotes.ViewModels.Tests
         [Fact]
         public void Constructor_Params_SetsValues()
         {
-            var note1 = new Note(1);
-            var notes = new List<Note>() { note1, };
+            var note = new Note(1);
+            var notes = new List<Note>() { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
             var noteVMs = new List<NoteViewModel>()
             {
-                new NoteViewModel(note1, this.mockNoteRepository),
+                new NoteViewModel(note, this.mockNoteRepository),
             };
 
             noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
@@ -52,21 +52,18 @@ namespace SimpleNotes.ViewModels.Tests
         [Fact]
         public void RepositoryNotes_Change_UpdatedNotes()
         {
-            var note1 = new Note(1);
-            var note3 = new Note(3);
-            var notes = new List<Note>()
-            {
-                note1,
-            };
+            var note = new Note(1);
+            var note2 = new Note(3);
+            var notes = new List<Note>() { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
             var noteVMs = new List<NoteViewModel>()
             {
-                new NoteViewModel(note1, this.mockNoteRepository),
-                new NoteViewModel(note3, this.mockNoteRepository),
+                new NoteViewModel(note, this.mockNoteRepository),
+                new NoteViewModel(note2, this.mockNoteRepository),
             };
             
-            this.mockNoteRepository.SaveAsync(note3);
+            this.mockNoteRepository.SaveAsync(note2);
 
             noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
         }
@@ -74,13 +71,11 @@ namespace SimpleNotes.ViewModels.Tests
         [Fact]
         public void RepositoryNotes_Changes_CallsCorrectMethod()
         {
-            var note = new Note(1);
-            var note2 = new Note(2);
-            var notes = new List<Note>() { note, };
+            var notes = new List<Note>() { new Note(1), };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             new NoteRepositoryViewModel(this.mockNoteRepository);
             
-            this.mockNoteRepository.SaveAsync(note2);
+            this.mockNoteRepository.SaveAsync(new Note(2));
 
             this.mockNoteRepository.Received().UpdateNotesExist();
         }
@@ -88,9 +83,8 @@ namespace SimpleNotes.ViewModels.Tests
         [Fact]
         public void RepositoryNotes_Change_PropertyChangeForNotes()
         {
-            var note1 = new Note(1);
-            var note2 = new Note(2);
-            var notes = new List<Note> { note1, note2, };
+            var note = new Note(1);
+            var notes = new List<Note> { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
             this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
@@ -109,8 +103,6 @@ namespace SimpleNotes.ViewModels.Tests
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
             this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.NotesExist)));
             
-            this.mockNoteRepository.Notes.Add(new Note(1));
-
             noteRepositoryViewModel.Should()
                                    .Raise("PropertyChanged")
                                    .WithSender(noteRepositoryViewModel.Subject)
@@ -122,8 +114,7 @@ namespace SimpleNotes.ViewModels.Tests
         [Fact]
         public void GetInitialNote_Called_ReturnsNoteVMWithIncrementedNoteId()
         {
-            var note = new Note(1);
-            this.mockNoteRepository.Notes.Returns(new List<Note> { note });
+            this.mockNoteRepository.Notes.Returns(new List<Note> { new Note(1) });
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
             var noteRepositoryVM = new NoteViewModel(new Note(2), this.mockNoteRepository);
 

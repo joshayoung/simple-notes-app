@@ -13,7 +13,17 @@ namespace SimpleNotes.Models
         public NoteRepository(IData data)
         {
             this.data = data;
-            this.PopulateNotes();
+            string? notes = this.data.Retrieve("notes");
+            if (notes == null)
+            {
+                return;
+            }
+
+            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
+            if (deserializedNotes != null)
+            {
+                this.Notes = deserializedNotes;
+            }
         }
 
         public virtual event PropertyChangedEventHandler? PropertyChanged;
@@ -25,7 +35,7 @@ namespace SimpleNotes.Models
         public virtual async Task SaveAsync(Note note)
         {
             this.Notes.Add(note.TrimWhitespace());
-            string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
+            string serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
@@ -35,7 +45,7 @@ namespace SimpleNotes.Models
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.TrimWhitespace().Title;
             nt.Description = note.TrimWhitespace().Description;
-            string? serializeNotes = JsonConvert.SerializeObject(this.Notes);
+            string serializeNotes = JsonConvert.SerializeObject(this.Notes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
@@ -65,7 +75,7 @@ namespace SimpleNotes.Models
 
             this.Notes.RemoveAt(noteIndex);
             deserializeNotes?.RemoveAt(noteIndex);
-            string? serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
+            string serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
             await this.data.SaveAsync("notes", serializeNotes);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
@@ -73,21 +83,6 @@ namespace SimpleNotes.Models
         public virtual void UpdateNotesExist()
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.NotesExist)));
-        }
-
-        private void PopulateNotes()
-        {
-            string? notes = this.data.Retrieve("notes");
-            if (notes == null)
-            {
-                return;
-            }
-
-            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
-            if (deserializedNotes != null)
-            {
-                this.Notes = deserializedNotes;
-            }
         }
     }
 }

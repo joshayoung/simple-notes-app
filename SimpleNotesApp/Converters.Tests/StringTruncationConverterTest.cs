@@ -8,7 +8,7 @@ namespace Converters.Tests
         [Theory]
         [InlineData(3, "testing", "tes…")]
         [InlineData(4, "test", "test…")]
-        [InlineData(4, "tes", "tes")]
+        [InlineData(10, "testing", "testing")]
         public void Convert_Called_ReturnsCorrectString(int length, string input, string expectation)
         {
             var converter = new StringTruncationConverter { Length = length, };

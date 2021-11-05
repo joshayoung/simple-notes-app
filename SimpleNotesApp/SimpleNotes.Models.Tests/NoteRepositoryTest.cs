@@ -41,11 +41,22 @@ namespace SimpleNotes.Models.Tests
             notesRepository.Notes.Should().BeEmpty();
             notesRepository.NotesExist.Should().BeFalse();
         }
+        
+        [Fact]
+        public void Constructor_DeserializationReturnsNull_DoesNotAssignsValues()
+        {
+            this.mockIData.Retrieve("notes").Returns("");
+            
+            var notesRepository = new NoteRepository(this.mockIData); 
+            
+            notesRepository.Notes.Should().BeEmpty();
+            notesRepository.NotesExist.Should().BeFalse();
+        }
         #endregion
         
-        #region Save_Tests
+        #region SaveAsync_Tests
         [Fact]
-        public void Save_Called_AddsNoteToList()
+        public void SaveAsync_Called_AddsNoteToList()
         {
             var note = new Note(1);
             var notes = new List<Note> { note };
@@ -57,7 +68,7 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void Save_Called_SavesDataToLocalStorage()
+        public void SaveAsync_Called_SavesDataToLocalStorage()
         {
             var note = new Note(1);
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
@@ -69,7 +80,7 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void Save_Called_NotesPropertyChangeEvent()
+        public void SaveAsync_Called_NotesPropertyChangeEvent()
         {
             var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
             var note = new Note(1);
@@ -83,18 +94,15 @@ namespace SimpleNotes.Models.Tests
         }
         #endregion
 
-        #region SaveEdits
+        #region SaveEditsAsync
         [Fact]
-        public void SaveEdits_Called_SetsTitle()
+        public void SaveEditsAsync_Called_SetsTitle()
         {
             var note = new Note(1);
             var title = "my title";
             var notesRepository = new NoteRepository(this.mockIData)
             {
-                Notes = new List<Note>
-                {
-                    new Note(1, title)
-                }
+                Notes = new List<Note> { new Note(1, title) }
             };
 
             notesRepository.SaveAsync(note);
@@ -103,16 +111,13 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void SaveEdits_Called_SetsDescription()
+        public void SaveEditsAsync_Called_SetsDescription()
         {
             var note = new Note(1);
             var description = "my description";
             var notesRepository = new NoteRepository(this.mockIData)
             {
-                Notes = new List<Note>
-                {
-                    new Note(1, "title", description)
-                }
+                Notes = new List<Note> { new Note(1, "title", description) }
             };
 
             notesRepository.SaveAsync(note);
@@ -121,7 +126,7 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void SaveEdits_Called_SavesNote()
+        public void SaveEditsAsync_Called_SavesNote()
         {
             var note = new Note(1);
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
@@ -136,31 +141,26 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void SaveEdits_Called_NotesPropertyChangedEvent()
+        public void SaveEditsAsync_Called_NotesPropertyChangedEvent()
         {
             var note = new Note(1);
-            var wasChanged = false;
-            var notesRepository = new NoteRepository(this.mockIData)
+            var noteRepositoryMonitored = new NoteRepository(this.mockIData)
             {
                 Notes = new List<Note> { note, }
-            };
-            notesRepository.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.Notes))
-                {
-                    wasChanged = true;
-                }
-            };
+            }.Monitor();
 
-            notesRepository.SaveEditsAsync(note);
+            noteRepositoryMonitored.Subject.SaveEditsAsync(note);
         
-            wasChanged.Should().BeTrue();
+            noteRepositoryMonitored.Should()
+                                   .Raise("PropertyChanged")
+                                   .WithSender(noteRepositoryMonitored.Subject)
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
         }
         #endregion
 
-        #region Delete_Tests
+        #region DeleteAsync_Tests
         [Fact]
-        public void Delete_NoteRetrievalReturnsNull_Returns()
+        public void DeleteAsync_NoteRetrievalReturnsNull_Returns()
         {
             var note = new Note(2);
             this.mockIData.Retrieve("notes").ReturnsNull();
@@ -172,7 +172,7 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void Delete_DeserializationReturnsNull_Returns()
+        public void DeleteAsync_DeserializationReturnsNull_Returns()
         {
             var note = new Note(2);
             this.mockIData.Retrieve("notes").Returns("");
@@ -184,7 +184,7 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void Delete_NoteIndexNegativeOne_Returns()
+        public void DeleteAsync_NoteIndexNegativeOne_Returns()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(2);
@@ -197,7 +197,7 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void Delete_CalledWithNote_NoteRemoveFromList()
+        public void DeleteAsync_CalledWithNote_NoteRemoveFromList()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
@@ -210,7 +210,7 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void Delete_CalledWithNotes_SavesData()
+        public void DeleteAsync_CalledWithNotes_SavesData()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
             var serializedAfterDeletion = "[{\"Id\":2,\"Title\":null,\"Description\":null}]";
@@ -224,48 +224,36 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void Delete_CalledWithNotes_PropertyChangedEventForNotes()
+        public void DeleteAsync_CalledWithNotes_PropertyChangedEventForNotes()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
-            var wasChanged = false;
             this.mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(this.mockIData)
+            var noteRepositoryMonitored = new NoteRepository(this.mockIData)
             {
                 Notes = new List<Note> { note, }
-            };
-            notesRepository.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.Notes))
-                {
-                    wasChanged = true;
-                }
-            };
+            }.Monitor();
 
-            notesRepository.DeleteAsync(note);
+            noteRepositoryMonitored.Subject.DeleteAsync(note);
 
-            wasChanged.Should().BeTrue();
+            noteRepositoryMonitored.Should()
+                                   .Raise("PropertyChanged")
+                                   .WithSender(noteRepositoryMonitored.Subject)
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
         }
         #endregion
         
-        #region UpdateNotesExist
         [Fact]
         public void UpdateNotesExist_Called_PropertyChangedEventForNotesExist()
         {
-            var wasChanged = false;
-            var notesRepository = new NoteRepository(this.mockIData);
-            notesRepository.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.NotesExist))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
 
-            notesRepository.UpdateNotesExist();
+            noteRepositoryMonitored.Subject.UpdateNotesExist();
 
-            wasChanged.Should().BeTrue();
+            noteRepositoryMonitored.Should()
+                                   .Raise("PropertyChanged")
+                                   .WithSender(noteRepositoryMonitored.Subject)
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.NotesExist));
         }
-        #endregion
     }
 }
