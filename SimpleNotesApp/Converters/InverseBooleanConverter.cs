@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace SimpleNotes.Converters
+namespace Converters
 {
     public class InverseBooleanConverter : IValueConverter
     {

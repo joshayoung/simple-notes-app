@@ -2,7 +2,7 @@ using System;
 using System.Globalization;
 using Xamarin.Forms;
 
-namespace SimpleNotes.Converters
+namespace Converters
 {
     // TODO: Add a converter test
     public class StringTruncationConverter : IValueConverter
