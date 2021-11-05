@@ -1,42 +1,29 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Shared;
 
 namespace SimpleNotes.Models
 {
     public class NoteRepository : INotifyPropertyChanged
     {
-        private readonly IData data;
+        private readonly NoteDataService noteDataService;
 
-        public NoteRepository(IData data)
+        public NoteRepository(NoteDataService noteDataService)
         {
-            this.data = data;
-            string? notes = this.data.Retrieve("notes");
-            if (notes == null)
-            {
-                return;
-            }
-
-            var deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
-            if (deserializedNotes != null)
-            {
-                this.Notes = deserializedNotes;
-            }
+            this.noteDataService = noteDataService;
+            this.Notes = this.noteDataService.GetNotes();
         }
 
         public virtual event PropertyChangedEventHandler? PropertyChanged;
 
-        public virtual List<Note> Notes { get; set; } = new List<Note>();
+        public virtual List<Note> Notes { get; set; }
 
         public virtual bool NotesExist => this.Notes.Count > 0;
 
         public virtual async Task SaveAsync(Note note)
         {
             this.Notes.Add(note.TrimWhitespace());
-            string serializeNotes = JsonConvert.SerializeObject(this.Notes);
-            await this.data.SaveAsync("notes", serializeNotes);
+            await this.noteDataService.SaveAsync(this.Notes, note);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
@@ -45,38 +32,13 @@ namespace SimpleNotes.Models
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.TrimWhitespace().Title;
             nt.Description = note.TrimWhitespace().Description;
-            string serializeNotes = JsonConvert.SerializeObject(this.Notes);
-            await this.data.SaveAsync("notes", serializeNotes);
+            await this.noteDataService.SaveAsync(this.Notes, note);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public virtual async Task DeleteAsync(Note note)
         {
-            string? lsNotes = this.data.Retrieve("notes");
-
-            if (lsNotes == null)
-            {
-                return;
-            }
-
-            var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
-
-            if (deserializeNotes == null)
-            {
-                return;
-            }
-
-            int noteIndex = deserializeNotes.FindIndex(n => n.Id == note.Id);
-
-            if (noteIndex == -1)
-            {
-                return;
-            }
-
-            this.Notes.RemoveAt(noteIndex);
-            deserializeNotes?.RemoveAt(noteIndex);
-            string serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            await this.data.SaveAsync("notes", serializeNotes);
+            await this.noteDataService.DeleteAsync(this.Notes, note);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 

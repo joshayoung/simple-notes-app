@@ -28,7 +28,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\Converters\Converters.csproj" />
+        <ProjectReference Include="..\..\SimpleNotes.Converters\SimpleNotes.Converters.csproj" />
         <ProjectReference Include="..\..\Shared\Shared.csproj" />
         <ProjectReference Include="..\..\SimpleNotes.ViewModels\SimpleNotes.ViewModels.csproj" />
     </ItemGroup>

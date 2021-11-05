@@ -20,9 +20,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{F5A6A375-CFE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B10C83B9-6BB2-4E5B-87F4-4B78B3C068B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters", "Converters\Converters.csproj", "{858B2E4C-82F8-4E25-A8F2-B0D782D5946C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNotes.Converters", "SimpleNotes.Converters\SimpleNotes.Converters.csproj", "{858B2E4C-82F8-4E25-A8F2-B0D782D5946C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Converters.Tests", "Converters.Tests\Converters.Tests.csproj", "{A6E3749C-DB8C-4BF5-94C7-DB450F6C253C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleNotes.Converters.Tests", "SimpleNotes.Converters.Tests\SimpleNotes.Converters.Tests.csproj", "{A6E3749C-DB8C-4BF5-94C7-DB450F6C253C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
