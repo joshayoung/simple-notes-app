@@ -34,6 +34,44 @@ namespace SimpleNotes.ViewModels.Tests
             noteViewModel.Title.Should().Be(title);
             noteViewModel.Description.Should().Be(description);
         }
+        
+        #region Setter_Tests
+        [Fact]
+        public void NoteAction_Set_CorrectValue()
+        {
+            var note = new Note(1, "title", "description");
+            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository)
+            {
+                NoteAction = NoteActionType.AddNote
+            };
+
+            noteViewModel.NoteAction.Should().Be(NoteActionType.AddNote);
+        }
+        
+        [Fact]
+        public void Title_Set_CorrectValue()
+        {
+            var note = new Note(1, "title", "description");
+            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository)
+            {
+                Title = "new title"
+            };
+
+            noteViewModel.Title.Should().Be("new title");
+        }
+        
+        [Fact]
+        public void Description_Set_CorrectValue()
+        {
+            var note = new Note(1, "title", "description");
+            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository)
+            {
+                Description = "new description"
+            };
+
+            noteViewModel.Description.Should().Be("new description");
+        }
+        #endregion
 
         #region Property_Changes
         [Fact]

@@ -30,7 +30,7 @@ namespace SimpleNotes.Models
 
         public virtual List<Note> Notes { get; set; } = new List<Note>();
 
-        public bool NotesExist => this.Notes.Count > 0;
+        public virtual bool NotesExist => this.Notes.Count > 0;
 
         public virtual async Task SaveAsync(Note note)
         {
