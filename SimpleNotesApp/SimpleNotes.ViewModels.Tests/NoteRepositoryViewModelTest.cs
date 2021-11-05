@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using System.ComponentModel;
 using FluentAssertions;
 using NSubstitute;
+using NSubstitute.Extensions;
 using Shared;
 using SimpleNotes.Models;
 using Xunit;
@@ -88,44 +90,31 @@ namespace SimpleNotes.ViewModels.Tests
         {
             var note1 = new Note(1);
             var note2 = new Note(2);
-            var notes = new List<Note>()
-            {
-                note1,
-                note2,
-            };
+            var notes = new List<Note> { note1, note2, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
-            var wasChanged = false;
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
-            noteRepositoryViewModel.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.Notes))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
+            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
 
-            this.mockNoteRepository.Save(new Note(2));
+            this.mockNoteRepository.Notes.Add(new Note(2));
             
-            wasChanged.Should().BeTrue();
+            noteRepositoryViewModel.Should()
+                                   .Raise("PropertyChanged")
+                                   .WithSender(noteRepositoryViewModel.Subject)
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepositoryViewModel.Notes));
         }
         
         [Fact]
         public void RepositoryNotesExist_Changes_PropertyChangeForNotesExist()
         {
-            var note = new Note(1);
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
-            var wasChanged = false;
-            noteRepositoryViewModel.PropertyChanged += (sender, args) =>
-            {
-                if (args.PropertyName == nameof(NoteRepository.NotesExist))
-                {
-                    wasChanged = true;
-                }
-            };
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
+            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.NotesExist)));
             
-            this.mockNoteRepository.Save(note);
+            this.mockNoteRepository.Notes.Add(new Note(1));
 
-            wasChanged.Should().BeTrue();
+            noteRepositoryViewModel.Should()
+                                   .Raise("PropertyChanged")
+                                   .WithSender(noteRepositoryViewModel.Subject)
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepositoryViewModel.NotesExist));
         }
         #endregion
         

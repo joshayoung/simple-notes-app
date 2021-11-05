@@ -2,7 +2,6 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.ClearExtensions;
 using NSubstitute.Extensions;
 using Shared;
 using SimpleNotes.Models;

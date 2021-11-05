@@ -16,7 +16,7 @@ namespace SimpleNotes.Models
             this.PopulateNotes();
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+        public virtual event PropertyChangedEventHandler? PropertyChanged;
 
         public virtual List<Note> Notes { get; set; } = new List<Note>();
 
