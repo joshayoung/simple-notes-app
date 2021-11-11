@@ -16,7 +16,8 @@ namespace SimpleNotes.ViewModels.Tests
         public NoteRepositoryViewModelTest()
         {
             var mockIData = Substitute.For<IData>();
-            this.mockNoteRepository = Substitute.ForPartsOf<NoteRepository>(mockIData);
+            var noteDataService = Substitute.ForPartsOf<NoteDataService>(mockIData);
+            this.mockNoteRepository = Substitute.ForPartsOf<NoteRepository>(noteDataService);
         }
         
         #region Constructor_tests

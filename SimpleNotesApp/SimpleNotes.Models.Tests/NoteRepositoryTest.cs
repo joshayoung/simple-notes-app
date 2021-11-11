@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq;
 using FluentAssertions;
 using NSubstitute;
-using NSubstitute.ReturnsExtensions;
+using NSubstitute.Extensions;
 using Shared;
 using Xunit;
 
@@ -11,21 +11,21 @@ namespace SimpleNotes.Models.Tests
 {
     public class NoteRepositoryTest
     {
-        private readonly IData mockIData;
+        private readonly NoteDataService mockNoteDataService;
+        
         public NoteRepositoryTest()
         {
-            this.mockIData = Substitute.For<IData>();
+            this.mockNoteDataService = Substitute.ForPartsOf<NoteDataService>(Substitute.For<IData>());
         }
         
         #region Constructor_Tests
         [Fact]
         public void Constructor_WithValidData_AssignsValues()
         {
-            var noteData = "[{\"id\": 1, \"title\": \"Title1\", \"description\": \"Description1\"}]";
             var notes = new List<Note>() { new Note(1, "Title1", "Description1") };
-            this.mockIData.Retrieve("notes").Returns(noteData);
+            this.mockNoteDataService.Configure().GetNotes().Returns(notes);
             
-            var notesRepository = new NoteRepository(this.mockIData);
+            var notesRepository = new NoteRepository(this.mockNoteDataService);
             
             notesRepository.Notes.Should().BeEquivalentTo(notes);
             notesRepository.NotesExist.Should().BeTrue();
@@ -34,20 +34,9 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Constructor_NoData_DoesNotAssignsValues()
         {
-            this.mockIData.Retrieve("notes").ReturnsNull();
+            this.mockNoteDataService.Configure().GetNotes().Returns(new List<Note>());
             
-            var notesRepository = new NoteRepository(this.mockIData); 
-            
-            notesRepository.Notes.Should().BeEmpty();
-            notesRepository.NotesExist.Should().BeFalse();
-        }
-        
-        [Fact]
-        public void Constructor_DeserializationReturnsNull_DoesNotAssignsValues()
-        {
-            this.mockIData.Retrieve("notes").Returns("");
-            
-            var notesRepository = new NoteRepository(this.mockIData); 
+            var notesRepository = new NoteRepository(this.mockNoteDataService);
             
             notesRepository.Notes.Should().BeEmpty();
             notesRepository.NotesExist.Should().BeFalse();
@@ -60,7 +49,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var notes = new List<Note> { note };
-            var notesRepository = new NoteRepository(this.mockIData);
+            var notesRepository = new NoteRepository(this.mockNoteDataService);
 
             notesRepository.SaveAsync(note);
 
@@ -68,21 +57,9 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
-        public void SaveAsync_Called_SavesDataToLocalStorage()
-        {
-            var note = new Note(1);
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            var notesRepository = new NoteRepository(this.mockIData);
-
-            notesRepository.SaveAsync(note);
-
-            this.mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is(serializedNotes));
-        }
-        
-        [Fact]
         public void SaveAsync_Called_NotesPropertyChangeEvent()
         {
-            var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
+            var noteRepositoryMonitored = new NoteRepository(this.mockNoteDataService).Monitor();
             var note = new Note(1);
 
             noteRepositoryMonitored.Subject.SaveAsync(note);
@@ -100,7 +77,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var title = "my title";
-            var notesRepository = new NoteRepository(this.mockIData)
+            var notesRepository = new NoteRepository(this.mockNoteDataService)
             {
                 Notes = new List<Note> { new Note(1, title) }
             };
@@ -115,7 +92,7 @@ namespace SimpleNotes.Models.Tests
         {
             var note = new Note(1);
             var description = "my description";
-            var notesRepository = new NoteRepository(this.mockIData)
+            var notesRepository = new NoteRepository(this.mockNoteDataService)
             {
                 Notes = new List<Note> { new Note(1, "title", description) }
             };
@@ -129,22 +106,22 @@ namespace SimpleNotes.Models.Tests
         public void SaveEditsAsync_Called_SavesNote()
         {
             var note = new Note(1);
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            var notesRepository = new NoteRepository(this.mockIData)
+            var notes = new List<Note> { note, };
+            var notesRepository = new NoteRepository(this.mockNoteDataService)
             {
-                Notes = new List<Note> { note, }
+                Notes = notes
             };
 
             notesRepository.SaveEditsAsync(note);
 
-            this.mockIData.Received().SaveAsync(Arg.Is("notes"), Arg.Is(serializedNotes));
+            this.mockNoteDataService.Received().SaveAsync(Arg.Is(notes), Arg.Is(note));
         }
 
         [Fact]
         public void SaveEditsAsync_Called_NotesPropertyChangedEvent()
         {
             var note = new Note(1);
-            var noteRepositoryMonitored = new NoteRepository(this.mockIData)
+            var noteRepositoryMonitored = new NoteRepository(this.mockNoteDataService)
             {
                 Notes = new List<Note> { note, }
             }.Monitor();
@@ -160,76 +137,21 @@ namespace SimpleNotes.Models.Tests
 
         #region DeleteAsync_Tests
         [Fact]
-        public void DeleteAsync_NoteRetrievalReturnsNull_Returns()
+        public void DeleteAsync_CalledWithNotes_CallsDeleteMethod()
         {
-            var note = new Note(2);
-            this.mockIData.Retrieve("notes").ReturnsNull();
-            var notesRepository = new NoteRepository(this.mockIData);
-
-            notesRepository.DeleteAsync(note);
-
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
-        }
-        
-        [Fact]
-        public void DeleteAsync_DeserializationReturnsNull_Returns()
-        {
-            var note = new Note(2);
-            this.mockIData.Retrieve("notes").Returns("");
-            var notesRepository = new NoteRepository(this.mockIData);
-
-            notesRepository.DeleteAsync(note);
-
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
-        }
-        
-        [Fact]
-        public void DeleteAsync_NoteIndexNegativeOne_Returns()
-        {
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            var note = new Note(2);
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(this.mockIData);
-
-            notesRepository.DeleteAsync(note);
-
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
-        }
-
-        [Fact]
-        public void DeleteAsync_CalledWithNote_NoteRemoveFromList()
-        {
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(this.mockIData);
+            var notesRepository = new NoteRepository(this.mockNoteDataService);
 
             notesRepository.DeleteAsync(note);
 
-            notesRepository.Notes.Should().BeEmpty();
-        }
-
-        [Fact]
-        public void DeleteAsync_CalledWithNotes_SavesData()
-        {
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
-            var serializedAfterDeletion = "[{\"Id\":2,\"Title\":null,\"Description\":null}]";
-            var note = new Note(1);
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
-            var notesRepository = new NoteRepository(this.mockIData);
-
-            notesRepository.DeleteAsync(note);
-
-            this.mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedAfterDeletion));
+            this.mockNoteDataService.Configure().Received().DeleteAsync(Arg.Is(notesRepository.Notes), Arg.Is(note));
         }
 
         [Fact]
         public void DeleteAsync_CalledWithNotes_PropertyChangedEventForNotes()
         {
-            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
             var note = new Note(1);
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
-            var noteRepositoryMonitored = new NoteRepository(this.mockIData)
+            var noteRepositoryMonitored = new NoteRepository(this.mockNoteDataService)
             {
                 Notes = new List<Note> { note, }
             }.Monitor();
@@ -246,7 +168,7 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void UpdateNotesExist_Called_PropertyChangedEventForNotesExist()
         {
-            var noteRepositoryMonitored = new NoteRepository(this.mockIData).Monitor();
+            var noteRepositoryMonitored = new NoteRepository(this.mockNoteDataService).Monitor();
 
             noteRepositoryMonitored.Subject.UpdateNotesExist();
 

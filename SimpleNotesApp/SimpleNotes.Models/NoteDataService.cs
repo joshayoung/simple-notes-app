@@ -16,7 +16,7 @@ namespace SimpleNotes.Models
             this.data = data;
         }
 
-        public List<Note> GetNotes()
+        public virtual List<Note> GetNotes()
         {
             string? notes = this.data.Retrieve(LocalStorageString);
 
@@ -32,14 +32,14 @@ namespace SimpleNotes.Models
             return deserializedNotes ?? new List<Note>();
         }
 
-        public async Task SaveAsync(List<Note> notes, Note note)
+        public virtual async Task SaveAsync(List<Note> notes, Note note)
         {
             // TODO: wrap in try-catch
             string serializeNotes = JsonConvert.SerializeObject(notes);
             await this.data.SaveAsync(LocalStorageString, serializeNotes);
         }
 
-        public async Task DeleteAsync(List<Note> notes, Note note)
+        public virtual async Task DeleteAsync(List<Note> notes, Note note)
         {
             string? lsNotes = this.data.Retrieve(LocalStorageString);
 
