@@ -114,7 +114,7 @@ namespace SimpleNotes.Models.Tests
 
             notesRepository.SaveEditsAsync(note);
 
-            this.mockNoteDataService.Received().SaveAsync(Arg.Is(notes), Arg.Is(note));
+            this.mockNoteDataService.Received().SaveAsync(Arg.Is(notes));
         }
 
         [Fact]

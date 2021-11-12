@@ -32,7 +32,7 @@ namespace SimpleNotes.Models
             return deserializedNotes ?? new List<Note>();
         }
 
-        public virtual async Task SaveAsync(List<Note> notes, Note note)
+        public virtual async Task SaveAsync(List<Note> notes)
         {
             // TODO: wrap in try-catch
             string serializeNotes = JsonConvert.SerializeObject(notes);

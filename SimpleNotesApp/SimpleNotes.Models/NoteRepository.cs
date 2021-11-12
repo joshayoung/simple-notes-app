@@ -23,7 +23,7 @@ namespace SimpleNotes.Models
         public virtual async Task SaveAsync(Note note)
         {
             this.Notes.Add(note.TrimWhitespace());
-            await this.noteDataService.SaveAsync(this.Notes, note);
+            await this.noteDataService.SaveAsync(this.Notes);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
@@ -32,7 +32,7 @@ namespace SimpleNotes.Models
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.TrimWhitespace().Title;
             nt.Description = note.TrimWhitespace().Description;
-            await this.noteDataService.SaveAsync(this.Notes, note);
+            await this.noteDataService.SaveAsync(this.Notes);
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
