@@ -17,6 +17,5 @@ namespace SimpleNotes.Models.Tests
             result.Title.Should().Be("title");
             result.Description.Should().Be("description");
         }
-        
     }
 }

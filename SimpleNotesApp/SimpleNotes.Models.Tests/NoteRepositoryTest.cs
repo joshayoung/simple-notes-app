@@ -22,7 +22,7 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Constructor_WithValidData_AssignsValues()
         {
-            var notes = new List<Note>() { new Note(1, "Title1", "Description1") };
+            var notes = new List<Note>() { new Note(1, "title", "description") };
             this.mockNoteDataService.Configure().GetNotes().Returns(notes);
             
             var notesRepository = new NoteRepository(this.mockNoteDataService);
@@ -57,6 +57,17 @@ namespace SimpleNotes.Models.Tests
         }
 
         [Fact]
+        public void SaveAsync_Called_CallsDataService()
+        {
+            var noteRepository = new NoteRepository(this.mockNoteDataService);
+            var note = new Note(1);
+
+            noteRepository.SaveAsync(note);
+
+            this.mockNoteDataService.Configure().Received().SaveAsync(noteRepository.Notes);
+        }
+
+        [Fact]
         public void SaveAsync_Called_NotesPropertyChangeEvent()
         {
             var noteRepositoryMonitored = new NoteRepository(this.mockNoteDataService).Monitor();
@@ -75,14 +86,14 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void SaveEditsAsync_Called_SetsTitle()
         {
-            var note = new Note(1);
             var title = "my title";
+            var note = new Note(1, title);
             var notesRepository = new NoteRepository(this.mockNoteDataService)
             {
-                Notes = new List<Note> { new Note(1, title) }
+                Notes = new List<Note> { new Note(1) }
             };
 
-            notesRepository.SaveAsync(note);
+            notesRepository.SaveEditsAsync(note);
 
             notesRepository.Notes.First().Title.Should().Be(title);
         }
@@ -90,14 +101,14 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void SaveEditsAsync_Called_SetsDescription()
         {
-            var note = new Note(1);
             var description = "my description";
+            var note = new Note(1, "title", description);
             var notesRepository = new NoteRepository(this.mockNoteDataService)
             {
-                Notes = new List<Note> { new Note(1, "title", description) }
+                Notes = new List<Note> { new Note(1) }
             };
 
-            notesRepository.SaveAsync(note);
+            notesRepository.SaveEditsAsync(note);
 
             notesRepository.Notes.First().Description.Should().Be(description);
         }

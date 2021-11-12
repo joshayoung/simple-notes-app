@@ -114,8 +114,8 @@ namespace SimpleNotes.ViewModels.Tests
 
             var results = noteViewModel.EditNoteCopy();
 
+            // TODO: Is there a better way to test this
             results.Should().BeEquivalentTo(newVm);
-            results.Should().NotBeSameAs(noteViewModel);
         }
         
         [Fact]

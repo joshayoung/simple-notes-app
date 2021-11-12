@@ -28,12 +28,12 @@ namespace SimpleNotes.ViewModels.Tests
             var notes = new List<Note>() { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
-            var noteVMs = new List<NoteViewModel>()
+            var noteViewModelList = new List<NoteViewModel>()
             {
                 new NoteViewModel(note, this.mockNoteRepository),
             };
 
-            noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
+            noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteViewModelList);
         }
         
         [Fact]
@@ -69,26 +69,28 @@ namespace SimpleNotes.ViewModels.Tests
             var note2 = new Note(3);
             var notes = new List<Note>() { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
+            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
             var noteVMs = new List<NoteViewModel>()
             {
                 new NoteViewModel(note, this.mockNoteRepository),
                 new NoteViewModel(note2, this.mockNoteRepository),
             };
+            this.mockNoteRepository.Notes.Returns(new List<Note>() { note, note2, });
             
-            this.mockNoteRepository.SaveAsync(note2);
+            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
 
-            noteRepositoryViewModel.Notes.Should().BeEquivalentTo(noteVMs);
+            noteRepositoryViewModel.Subject.Notes.Should().BeEquivalentTo(noteVMs);
         }
         
         [Fact]
         public void RepositoryNotes_Changes_CallsCorrectMethod()
         {
-            var notes = new List<Note>() { new Note(1), };
+            var note = new Note(1);
+            var notes = new List<Note>() { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             new NoteRepositoryViewModel(this.mockNoteRepository);
             
-            this.mockNoteRepository.SaveAsync(new Note(2));
+            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
 
             this.mockNoteRepository.Received().UpdateNotesExist();
         }

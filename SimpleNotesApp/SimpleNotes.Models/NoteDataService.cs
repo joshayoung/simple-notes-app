@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
@@ -25,16 +26,22 @@ namespace SimpleNotes.Models
                 return new List<Note>();
             }
 
-            // TODO: Wrap in try-catch
-            List<Note>? deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
+            List<Note>? deserializedNotes;
+            try
+            {
+                deserializedNotes = JsonConvert.DeserializeObject<List<Note>>(notes);
+            }
+            catch (Exception e)
+            {
+                // TODO: Add log here
+                throw;
+            }
 
-            // TODO: Do something different here maybe
             return deserializedNotes ?? new List<Note>();
         }
 
         public virtual async Task SaveAsync(List<Note> notes)
         {
-            // TODO: wrap in try-catch
             string serializeNotes = JsonConvert.SerializeObject(notes);
             await this.data.SaveAsync(LocalStorageString, serializeNotes);
         }
@@ -48,6 +55,7 @@ namespace SimpleNotes.Models
                 return;
             }
 
+            // TODO: Wrap in try-catch and add test:
             var deserializeNotes = JsonConvert.DeserializeObject<List<Note>>(lsNotes);
 
             if (deserializeNotes == null)
@@ -64,8 +72,6 @@ namespace SimpleNotes.Models
 
             notes.RemoveAt(noteIndex);
             deserializeNotes?.RemoveAt(noteIndex);
-
-            // TODO: Wrap in try-catch:
             string serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
             await this.data.SaveAsync(LocalStorageString, serializeNotes);
         }

@@ -20,11 +20,7 @@ namespace SimpleNotes.Models
         public int Id
         {
             get => this.id;
-            set
-            {
-                this.id = value;
-                this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Id)));
-            }
+            private set => this.id = value;
         }
 
         public string? Title

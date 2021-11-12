@@ -17,7 +17,7 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void GetNotes_LocalStorageNoValues_ReturnsNewNotesList()
+        public void GetNotes_LocalStorageReturnsNull_ReturnsNewNotesList()
         {
             this.data.Retrieve("notes").ReturnsNull();
             var noteDataService = new NoteDataService(this.data);
@@ -26,6 +26,19 @@ namespace SimpleNotes.Models.Tests
 
             result.Should().BeEquivalentTo(new List<Note>());
         }
+        
+        // TODO: GetNotes - finish implementing logging
+        // [Fact]
+        // public void GetNotes_ExceptionThrown_LogsError()
+        // {
+        //     var serializedNotes = "[{\"Idddds\"}]";
+        //     this.data.Retrieve("notes").Returns(serializedNotes);
+        //     var noteDataService = new NoteDataService(this.data);
+        //
+        //     noteDataService.GetNotes();
+        //
+        //     // TODO: Add log assertion
+        // }
         
         [Fact]
         public void GetNotes_DeserializationReturnsNull_ReturnsNewNotesList()
@@ -50,8 +63,6 @@ namespace SimpleNotes.Models.Tests
             result.Should().BeEquivalentTo(new List<Note> { new Note(1)});
         }
         
-        // TODO: SaveAsync - add a test for the try/catch error
-
         [Fact]
         public void SaveAsync_Called_ReturnsDeserializedListOfNotes()
         {

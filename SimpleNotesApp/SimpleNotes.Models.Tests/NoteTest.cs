@@ -22,7 +22,7 @@ namespace SimpleNotes.Models.Tests
         }
         
         [Fact]
-        public void Constructor_WithOnlyRequiredParams_AssignsValues()
+        public void Constructor_WithOnlyRequiredParams_CorrectValues()
         {
             var note = new Note(1);
             
@@ -33,19 +33,6 @@ namespace SimpleNotes.Models.Tests
         #endregion
 
         #region PropertyChanged_Tests
-        [Fact]
-        public void Id_Changed_PropertyChangedEvent()
-        {
-            var noteMonitored = new Note(1, "title", "description").Monitor();
-
-            noteMonitored.Subject.Id = 2;
-            
-            noteMonitored.Should()
-                         .Raise("PropertyChanged")
-                         .WithSender(noteMonitored.Subject)
-                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(Note.Id));
-        }
-        
         [Fact]
         public void Title_Changes_PropertyChangedEvent()
         {
