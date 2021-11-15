@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Shared;
 using Xamarin.Forms;
@@ -6,18 +7,27 @@ namespace SimpleNotes.Storage
 {
     public class Data : IData
     {
-        public async Task SaveAsync(string id, string value)
+        public virtual async Task SaveAsync(string id, string value)
         {
-            if (Application.Current.Properties.ContainsKey(id))
+            try
             {
-                Application.Current.Properties[id] = value;
-            }
-            else
-            {
-                Application.Current.Properties.Add(id, value);
-            }
+                if (Application.Current.Properties.ContainsKey(id))
+                {
+                    Application.Current.Properties[id] = value;
+                }
+                else
+                {
+                    Application.Current.Properties.Add(id, value);
+                }
 
-            await Application.Current.SavePropertiesAsync();
+                await Application.Current.SavePropertiesAsync();
+            }
+            catch (Exception e)
+            {
+                // TODO: Improve error message
+                // TODO: Add logging here
+                throw new Exception("Saving Data Failed", e);
+            }
         }
 
         public virtual string? Retrieve(string id)

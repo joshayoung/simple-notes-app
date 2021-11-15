@@ -24,6 +24,7 @@ namespace SimpleNotes.Models
         {
             this.Notes.Add(note.TrimWhitespace());
             await this.noteDataService.SaveAsync(this.Notes);
+            // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Add" or "SyncAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
@@ -33,12 +34,14 @@ namespace SimpleNotes.Models
             nt.Title = note.TrimWhitespace().Title;
             nt.Description = note.TrimWhitespace().Description;
             await this.noteDataService.SaveAsync(this.Notes);
+            // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Edit" or "SaveEditsAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public virtual async Task DeleteAsync(Note note)
         {
             await this.noteDataService.DeleteAsync(this.Notes, note);
+            // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Delete" or "DeleteAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 

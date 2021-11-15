@@ -43,9 +43,19 @@ namespace SimpleNotes.Models
         public virtual async Task SaveAsync(List<Note> notes)
         {
             string serializeNotes = JsonConvert.SerializeObject(notes);
-            await this.data.SaveAsync(LocalStorageString, serializeNotes);
+            try
+            {
+                await this.data.SaveAsync(LocalStorageString, serializeNotes);
+            }
+            catch (Exception e)
+            {
+                // TODO: Improve error message
+                // TODO: Log the error here too?
+                throw new Exception("better error message here", e);
+            }
         }
 
+        // TODO: Consider using the SaveAsync method and passing a list with the note removed instead of this method
         public virtual async Task DeleteAsync(List<Note> notes, Note note)
         {
             string? lsNotes = this.data.Retrieve(LocalStorageString);

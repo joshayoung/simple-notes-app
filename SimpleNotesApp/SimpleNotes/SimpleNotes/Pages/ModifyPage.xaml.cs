@@ -42,6 +42,7 @@ namespace SimpleNotes.Pages
             }
             catch (Exception exception)
             {
+                // TODO: Handle Error Display for UI
                 // TODO: Add Logging
             }
         }
