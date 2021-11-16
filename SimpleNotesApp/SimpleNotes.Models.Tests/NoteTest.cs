@@ -7,7 +7,7 @@ namespace SimpleNotes.Models.Tests
     public class NoteTest
     {
         #region Constructor_Test
-        [Fact]
+        [Fact (DisplayName = "Constructor accepts all params and sets the values")]
         public void Constructor_WithAllParams_AssignsValues()
         {
             var id = 1;
@@ -21,7 +21,7 @@ namespace SimpleNotes.Models.Tests
             note.Description.Should().Be(description);
         }
         
-        [Fact]
+        [Fact (DisplayName = "Constructor accepts only required params and sets the values")]
         public void Constructor_WithOnlyRequiredParams_CorrectValues()
         {
             var note = new Note(1);
@@ -33,7 +33,7 @@ namespace SimpleNotes.Models.Tests
         #endregion
 
         #region PropertyChanged_Tests
-        [Fact]
+        [Fact (DisplayName = "Note's Title changes triggers a property change event for 'Title'")]
         public void Title_Changes_PropertyChangedEvent()
         {
             var noteMonitored = new Note(1).Monitor();
@@ -46,7 +46,7 @@ namespace SimpleNotes.Models.Tests
                          .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(Note.Title));
         }
         
-        [Fact]
+        [Fact (DisplayName = "Note's Description changes triggers a property change event for 'Description'")]
         public void Description_Changed_PropertyChangedEvent()
         {
             var noteMonitored = new Note(1, "title", "description").Monitor();
