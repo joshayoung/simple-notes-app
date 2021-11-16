@@ -51,7 +51,7 @@ namespace SimpleNotes.Models
             {
                 // TODO: Improve error message
                 // TODO: Log the error here too?
-                throw new Exception("better error message here", e);
+                throw new Exception(ErrorMessages.NotesSaveError, e);
             }
         }
 

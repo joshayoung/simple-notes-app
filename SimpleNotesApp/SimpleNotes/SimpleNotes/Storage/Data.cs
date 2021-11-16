@@ -26,7 +26,7 @@ namespace SimpleNotes.Storage
             {
                 // TODO: Improve error message
                 // TODO: Add logging here
-                throw new Exception("Saving Data Failed", e);
+                throw new Exception(ErrorMessages.SaveValueError, e);
             }
         }
 
