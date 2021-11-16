@@ -32,7 +32,8 @@ namespace SimpleNotes.ViewModels
 
         private void NotesRepositoryOnPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(NoteRepository.Notes))
+            var props = new[] { "NoteSaved", "NoteEdited", "NoteDeleted", };
+            if (props.Contains(e.PropertyName))
             {
                 this.Refresh();
                 this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));

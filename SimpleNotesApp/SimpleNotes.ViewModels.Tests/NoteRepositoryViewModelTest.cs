@@ -62,8 +62,11 @@ namespace SimpleNotes.ViewModels.Tests
         #endregion
 
         #region Property_Change_Tests
-        [Fact]
-        public void RepositoryNotes_Change_UpdatedNotes()
+        [Theory]
+        [InlineData("NoteSaved")]
+        [InlineData("NoteEdited")]
+        [InlineData("NoteDeleted")]
+        public void RepositoryEvent_Emitted_UpdatedNotes(string eventName)
         {
             var note = new Note(1);
             var note2 = new Note(3);
@@ -77,7 +80,8 @@ namespace SimpleNotes.ViewModels.Tests
             };
             this.mockNoteRepository.Notes.Returns(new List<Note>() { note, note2, });
             
-            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
+            this.mockNoteRepository.Configure().PropertyChanged += 
+                Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(eventName));
 
             noteRepositoryViewModel.Subject.Notes.Should().BeEquivalentTo(noteVMs);
         }
@@ -95,14 +99,17 @@ namespace SimpleNotes.ViewModels.Tests
             this.mockNoteRepository.Received().UpdateNotesExist();
         }
         
-        [Fact]
-        public void RepositoryNotes_Change_PropertyChangeForNotes()
+        [Theory]
+        [InlineData("NoteSaved")]
+        [InlineData("NoteEdited")]
+        [InlineData("NoteDeleted")]
+        public void RepositoryEvents_EventsRaised_PropertyChangeForNotes(string eventName)
         {
             var note = new Note(1);
             var notes = new List<Note> { note, };
             this.mockNoteRepository.Notes = new List<Note>(notes);
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
-            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.Notes)));
+            this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(eventName));
 
             this.mockNoteRepository.Notes.Add(new Note(2));
             

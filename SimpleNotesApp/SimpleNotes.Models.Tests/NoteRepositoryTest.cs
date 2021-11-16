@@ -78,7 +78,7 @@ namespace SimpleNotes.Models.Tests
             noteRepositoryMonitored.Should()
                            .Raise("PropertyChanged")
                            .WithSender(noteRepositoryMonitored.Subject)
-                           .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
+                           .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == "NoteSaved");
         }
         #endregion
 
@@ -142,7 +142,7 @@ namespace SimpleNotes.Models.Tests
             noteRepositoryMonitored.Should()
                                    .Raise("PropertyChanged")
                                    .WithSender(noteRepositoryMonitored.Subject)
-                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == "NoteEdited");
         }
         #endregion
 
@@ -172,7 +172,7 @@ namespace SimpleNotes.Models.Tests
             noteRepositoryMonitored.Should()
                                    .Raise("PropertyChanged")
                                    .WithSender(noteRepositoryMonitored.Subject)
-                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepository.Notes));
+                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == "NoteDeleted");
         }
         #endregion
         
