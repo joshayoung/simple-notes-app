@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FluentAssertions;
+using FluentAssertions.Specialized;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using NSubstitute.Extensions;
@@ -95,8 +96,10 @@ namespace SimpleNotes.Models.Tests
 
             Func<Task> testAction = async () => await noteDataService.SaveAsync(notes);
 
-            testAction.Should().Throw<Exception>().WithMessage("better error message here")
-                      .WithInnerException<Exception>().WithMessage("error");
+            testAction.Should()
+                      .ThrowAsync<Exception>()
+                      .WithInnerExceptionExactly<Exception, Exception>()
+                      .WithMessage("error");
         }
         
         [Fact]
