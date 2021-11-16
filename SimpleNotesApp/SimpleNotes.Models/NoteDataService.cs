@@ -17,9 +17,9 @@ namespace SimpleNotes.Models
             this.data = data;
         }
 
-        public virtual List<Note> GetNotes()
+        public virtual List<Note> RetrieveNotes()
         {
-            string? notes = this.data.Retrieve(LocalStorageString);
+            string? notes = this.data.RetrieveValue(LocalStorageString);
 
             if (notes == null)
             {
@@ -40,12 +40,12 @@ namespace SimpleNotes.Models
             return deserializedNotes ?? new List<Note>();
         }
 
-        public virtual async Task SaveAsync(List<Note> notes)
+        public virtual async Task SaveNotesAsync(List<Note> notes)
         {
             string serializeNotes = JsonConvert.SerializeObject(notes);
             try
             {
-                await this.data.SaveAsync(LocalStorageString, serializeNotes);
+                await this.data.SaveValueAsync(LocalStorageString, serializeNotes);
             }
             catch (Exception e)
             {
@@ -56,9 +56,9 @@ namespace SimpleNotes.Models
         }
 
         // TODO: Consider using the SaveAsync method and passing a list with the note removed instead of this method
-        public virtual async Task DeleteAsync(List<Note> notes, Note note)
+        public virtual async Task DeleteNotesAsync(List<Note> notes, Note note)
         {
-            string? lsNotes = this.data.Retrieve(LocalStorageString);
+            string? lsNotes = this.data.RetrieveValue(LocalStorageString);
 
             if (lsNotes == null)
             {
@@ -83,7 +83,7 @@ namespace SimpleNotes.Models
             notes.RemoveAt(noteIndex);
             deserializeNotes?.RemoveAt(noteIndex);
             string serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            await this.data.SaveAsync(LocalStorageString, serializeNotes);
+            await this.data.SaveValueAsync(LocalStorageString, serializeNotes);
         }
     }
 }

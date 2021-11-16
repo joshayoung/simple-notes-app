@@ -4,8 +4,8 @@ namespace Shared
 {
     public interface IData
     {
-        Task SaveAsync(string id, string value);
+        Task SaveValueAsync(string id, string value);
 
-        string? Retrieve(string id);
+        string? RetrieveValue(string id);
     }
 }

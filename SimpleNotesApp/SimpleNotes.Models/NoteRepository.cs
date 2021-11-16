@@ -11,7 +11,7 @@ namespace SimpleNotes.Models
         public NoteRepository(NoteDataService noteDataService)
         {
             this.noteDataService = noteDataService;
-            this.Notes = this.noteDataService.GetNotes();
+            this.Notes = this.noteDataService.RetrieveNotes();
         }
 
         public virtual event PropertyChangedEventHandler? PropertyChanged;
@@ -23,7 +23,7 @@ namespace SimpleNotes.Models
         public virtual async Task SaveAsync(Note note)
         {
             this.Notes.Add(note.TrimWhitespace());
-            await this.noteDataService.SaveAsync(this.Notes);
+            await this.noteDataService.SaveNotesAsync(this.Notes);
             // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Add" or "SyncAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
@@ -33,14 +33,14 @@ namespace SimpleNotes.Models
             var nt = this.Notes.Find(n => n.Id == note.Id);
             nt.Title = note.TrimWhitespace().Title;
             nt.Description = note.TrimWhitespace().Description;
-            await this.noteDataService.SaveAsync(this.Notes);
+            await this.noteDataService.SaveNotesAsync(this.Notes);
             // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Edit" or "SaveEditsAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }
 
         public virtual async Task DeleteAsync(Note note)
         {
-            await this.noteDataService.DeleteAsync(this.Notes, note);
+            await this.noteDataService.DeleteNotesAsync(this.Notes, note);
             // TODO: Since I am not setting the Notes property, I would be better off using a different string here, like "Delete" or "DeleteAsync"
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(this.Notes)));
         }

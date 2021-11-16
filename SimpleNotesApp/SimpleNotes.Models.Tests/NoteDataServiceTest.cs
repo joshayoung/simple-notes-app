@@ -24,10 +24,10 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void GetNotes_LocalStorageReturnsNull_ReturnsNewNotesList()
         {
-            this.mockIData.Retrieve("notes").ReturnsNull();
+            this.mockIData.RetrieveValue("notes").ReturnsNull();
             var noteDataService = new NoteDataService(this.mockIData);
 
-            var result = noteDataService.GetNotes();
+            var result = noteDataService.RetrieveNotes();
 
             result.Should().BeEquivalentTo(new List<Note>());
         }
@@ -48,10 +48,10 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void GetNotes_DeserializationReturnsNull_ReturnsNewNotesList()
         {
-            this.mockIData.Retrieve("notes").Returns("");
+            this.mockIData.RetrieveValue("notes").Returns("");
             var noteDataService = new NoteDataService(this.mockIData);
 
-            var result = noteDataService.GetNotes();
+            var result = noteDataService.RetrieveNotes();
 
             result.Should().BeEquivalentTo(new List<Note>());
         }
@@ -60,10 +60,10 @@ namespace SimpleNotes.Models.Tests
         public void GetNotes_Called_ReturnsDeserializedListOfNotes()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
             var noteDataService = new NoteDataService(this.mockIData);
 
-            var result = noteDataService.GetNotes();
+            var result = noteDataService.RetrieveNotes();
 
             result.Should().BeEquivalentTo(new List<Note> { new Note(1)});
         }
@@ -72,7 +72,7 @@ namespace SimpleNotes.Models.Tests
         public void SaveAsync_Called_ReturnsDeserializedListOfNotes()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
             var noteDataService = new NoteDataService(this.mockIData);
             var notes = new List<Note>()
             {
@@ -80,9 +80,9 @@ namespace SimpleNotes.Models.Tests
                 new Note(2),
             };
 
-            noteDataService.SaveAsync(notes);
+            noteDataService.SaveNotesAsync(notes);
 
-            this.mockIData.Received().SaveAsync("notes", serializedNotes);
+            this.mockIData.Received().SaveValueAsync("notes", serializedNotes);
         }
 
         [Fact]
@@ -90,11 +90,11 @@ namespace SimpleNotes.Models.Tests
         {
             var notes = new List<Note> { new Note(1), new Note(2), };
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
-            this.mockIData.When(d => d.SaveAsync(Arg.Is("notes"), Arg.Is(serializedNotes)))
+            this.mockIData.When(d => d.SaveValueAsync(Arg.Is("notes"), Arg.Is(serializedNotes)))
                 .Throw(new Exception("error"));
             var noteDataService = new NoteDataService(this.mockIData);
 
-            Func<Task> testAction = async () => await noteDataService.SaveAsync(notes);
+            Func<Task> testAction = async () => await noteDataService.SaveNotesAsync(notes);
 
             testAction.Should()
                       .ThrowAsync<Exception>()
@@ -105,35 +105,35 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void DeleteAsync_NoNotesFound_Returns()
         {
-            this.mockIData.Retrieve("notes").ReturnsNull();
+            this.mockIData.RetrieveValue("notes").ReturnsNull();
             var noteDataService = new NoteDataService(this.mockIData);
 
-            noteDataService.DeleteAsync(new List<Note>(), new Note(1));
+            noteDataService.DeleteNotesAsync(new List<Note>(), new Note(1));
 
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+            this.mockIData.DidNotReceive().SaveValueAsync(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Fact]
         public void DeleteAsync_DeserializationReturnsNull_Returns()
         {
-            this.mockIData.Retrieve("notes").Returns("");
+            this.mockIData.RetrieveValue("notes").Returns("");
             var noteDataService = new NoteDataService(this.mockIData);
 
-            noteDataService.DeleteAsync(new List<Note>(), new Note(1));
+            noteDataService.DeleteNotesAsync(new List<Note>(), new Note(1));
 
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+            this.mockIData.DidNotReceive().SaveValueAsync(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Fact]
         public void DeleteAsync_NoteNotFound_Returns()
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
             var noteDataService = new NoteDataService(this.mockIData);
 
-            noteDataService.DeleteAsync(new List<Note>(), new Note(2));
+            noteDataService.DeleteNotesAsync(new List<Note>(), new Note(2));
 
-            this.mockIData.DidNotReceive().SaveAsync(Arg.Any<string>(), Arg.Any<string>());
+            this.mockIData.DidNotReceive().SaveValueAsync(Arg.Any<string>(), Arg.Any<string>());
         }
 
         [Fact]
@@ -141,7 +141,7 @@ namespace SimpleNotes.Models.Tests
         {
             var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
             var serializedNotes2 = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
-            this.mockIData.Retrieve("notes").Returns(serializedNotes);
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
             var noteDataService = new NoteDataService(this.mockIData);
             var notes = new List<Note>()
             {
@@ -149,9 +149,9 @@ namespace SimpleNotes.Models.Tests
                 new Note(2),
             };
 
-            noteDataService.DeleteAsync(notes, new Note(2));
+            noteDataService.DeleteNotesAsync(notes, new Note(2));
 
-            this.mockIData.Received().SaveAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedNotes2));
+            this.mockIData.Received().SaveValueAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedNotes2));
         }
     }
 }

@@ -23,7 +23,7 @@ namespace SimpleNotes.Models.Tests
         public void Constructor_WithValidData_AssignsValues()
         {
             var notes = new List<Note>() { new Note(1, "title", "description") };
-            this.mockNoteDataService.Configure().GetNotes().Returns(notes);
+            this.mockNoteDataService.Configure().RetrieveNotes().Returns(notes);
             
             var notesRepository = new NoteRepository(this.mockNoteDataService);
             
@@ -34,7 +34,7 @@ namespace SimpleNotes.Models.Tests
         [Fact]
         public void Constructor_NoData_DoesNotAssignsValues()
         {
-            this.mockNoteDataService.Configure().GetNotes().Returns(new List<Note>());
+            this.mockNoteDataService.Configure().RetrieveNotes().Returns(new List<Note>());
             
             var notesRepository = new NoteRepository(this.mockNoteDataService);
             
@@ -64,7 +64,7 @@ namespace SimpleNotes.Models.Tests
 
             noteRepository.SaveAsync(note);
 
-            this.mockNoteDataService.Configure().Received().SaveAsync(noteRepository.Notes);
+            this.mockNoteDataService.Configure().Received().SaveNotesAsync(noteRepository.Notes);
         }
 
         [Fact]
@@ -125,7 +125,7 @@ namespace SimpleNotes.Models.Tests
 
             notesRepository.SaveEditsAsync(note);
 
-            this.mockNoteDataService.Received().SaveAsync(Arg.Is(notes));
+            this.mockNoteDataService.Received().SaveNotesAsync(Arg.Is(notes));
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace SimpleNotes.Models.Tests
 
             notesRepository.DeleteAsync(note);
 
-            this.mockNoteDataService.Configure().Received().DeleteAsync(Arg.Is(notesRepository.Notes), Arg.Is(note));
+            this.mockNoteDataService.Configure().Received().DeleteNotesAsync(Arg.Is(notesRepository.Notes), Arg.Is(note));
         }
 
         [Fact]

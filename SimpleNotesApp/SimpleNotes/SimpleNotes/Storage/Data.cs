@@ -7,7 +7,7 @@ namespace SimpleNotes.Storage
 {
     public class Data : IData
     {
-        public virtual async Task SaveAsync(string id, string value)
+        public virtual async Task SaveValueAsync(string id, string value)
         {
             try
             {
@@ -30,7 +30,7 @@ namespace SimpleNotes.Storage
             }
         }
 
-        public virtual string? Retrieve(string id)
+        public virtual string? RetrieveValue(string id)
         {
             return Application.Current.Properties.ContainsKey(id) ? Application.Current.Properties[id].ToString() : null;
         }
