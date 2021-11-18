@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Shared;
 using SimpleNotes.Models;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
@@ -27,7 +28,6 @@ namespace SimpleNotes.Pages
                 NoteActionType.EditNote => async () => await this.EditNote(),
                 _ => this.NoteForm.SaveAction
             };
-
             this.BindingContext = this.noteViewModel;
         }
 
@@ -38,13 +38,15 @@ namespace SimpleNotes.Pages
             try
             {
                 await this.noteViewModel.SaveAsync();
-                await this.Navigation.PopModalAsync();
             }
             catch (Exception exception)
             {
-                // TODO: Handle Error Display for UI
+                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesAddError);
+
                 // TODO: Add Logging
             }
+
+            await ViewErrorHandling.NavigateBackWhenSuccessful();
         }
 
         private async Task EditNote()
@@ -56,6 +58,8 @@ namespace SimpleNotes.Pages
             }
             catch (Exception exception)
             {
+                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesEditError);
+
                 // TODO: Add Logging
             }
         }

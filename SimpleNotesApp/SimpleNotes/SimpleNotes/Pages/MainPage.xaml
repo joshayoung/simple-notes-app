@@ -80,7 +80,7 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Add New Note" Clicked="AddNotes" Style="{StaticResource NoteButton}"
+        <Button Text="Add New Note" Clicked="LoadModifyPage" Style="{StaticResource NoteButton}"
                 VerticalOptions="EndAndExpand" />
     </StackLayout>
 </ContentPage>

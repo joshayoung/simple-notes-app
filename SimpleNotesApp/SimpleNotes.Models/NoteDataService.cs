@@ -56,6 +56,7 @@ namespace SimpleNotes.Models
         }
 
         // TODO: Consider using the SaveAsync method and passing a list with the note removed instead of this method
+        // TODO: Wrap with try/catch
         public virtual async Task DeleteNotesAsync(List<Note> notes, Note note)
         {
             string? lsNotes = this.data.RetrieveValue(LocalStorageString);

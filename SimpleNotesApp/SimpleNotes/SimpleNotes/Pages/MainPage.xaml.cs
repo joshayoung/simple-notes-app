@@ -1,4 +1,5 @@
 ﻿using System;
+using Shared;
 using SimpleNotes.Models;
 using SimpleNotes.ViewModels;
 using Xamarin.Forms;
@@ -16,7 +17,7 @@ namespace SimpleNotes.Pages
             this.BindingContext = this.noteRepositoryViewModel = noteRepositoryViewModel;
         }
 
-        private void AddNotes(object sender, EventArgs e)
+        private void LoadModifyPage(object sender, EventArgs e)
         {
             try
             {
@@ -43,7 +44,17 @@ namespace SimpleNotes.Pages
             }
 
             var noteViewModel = (NoteViewModel)((BindableObject)sender).BindingContext;
-            await noteViewModel.DeleteAsync();
+
+            try
+            {
+                await noteViewModel.DeleteAsync();
+            }
+            catch (Exception exception)
+            {
+                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesDeleteError);
+
+                // TODO: Log Exception
+            }
         }
 
         private void GoToDetails(object sender, EventArgs e)
