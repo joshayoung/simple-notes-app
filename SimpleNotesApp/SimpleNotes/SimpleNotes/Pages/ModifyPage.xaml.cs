@@ -38,15 +38,14 @@ namespace SimpleNotes.Pages
             try
             {
                 await this.noteViewModel.SaveAsync();
+                await this.Navigation.PopModalAsync();
             }
             catch (Exception exception)
             {
-                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesAddError);
+                await this.DisplayAlert("Alert", ErrorMessages.NotesAddError, "OK");
 
                 // TODO: Add Logging
             }
-
-            await ViewErrorHandling.NavigateBackWhenSuccessful();
         }
 
         private async Task EditNote()
@@ -58,7 +57,7 @@ namespace SimpleNotes.Pages
             }
             catch (Exception exception)
             {
-                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesEditError);
+                await this.DisplayAlert("Alert", ErrorMessages.NotesEditError, "OK");
 
                 // TODO: Add Logging
             }

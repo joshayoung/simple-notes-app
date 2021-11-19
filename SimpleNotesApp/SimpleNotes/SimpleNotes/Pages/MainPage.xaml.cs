@@ -51,7 +51,7 @@ namespace SimpleNotes.Pages
             }
             catch (Exception exception)
             {
-                await ViewErrorHandling.DisplayAndSetError(ErrorMessages.NotesDeleteError);
+                await this.DisplayAlert("Alert", ErrorMessages.NotesDeleteError, "OK");
 
                 // TODO: Log Exception
             }
