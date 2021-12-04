@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using Sentry;
 using Shared;
 using SimpleNotes.Models;
 using SimpleNotes.ViewModels;
@@ -14,6 +16,11 @@ namespace SimpleNotes.Pages
         public MainPage(NoteRepositoryViewModel noteRepositoryViewModel)
         {
             this.InitializeComponent();
+            var root = Directory.GetCurrentDirectory();
+            var dotenv = Path.Combine(root, ".env");
+            ProjectEnvironmentalVariables.Load(dotenv);
+
+            var dsn = System.Environment.GetEnvironmentVariable("DSN") ?? string.Empty;
             this.BindingContext = this.noteRepositoryViewModel = noteRepositoryViewModel;
         }
 
@@ -21,11 +28,13 @@ namespace SimpleNotes.Pages
         {
             try
             {
+                throw new Exception("test");
                 this.Navigation.PushModalAsync(new ModifyPage(this.noteRepositoryViewModel.GetInitialNote(), NoteActionType.AddNote));
             }
             catch (Exception exception)
             {
                 // TODO: Add Logging
+                SentrySdk.CaptureException(exception);
             }
         }
 

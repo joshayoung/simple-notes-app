@@ -131,6 +131,10 @@
         <PackageReference Include="Xamarin.Forms" Version="5.0.0.2012" />
     </ItemGroup>
     <ItemGroup>
+        <ProjectReference Include="..\..\Shared\Shared.csproj">
+          <Project>{ad05f396-b9a8-479f-a380-e4301e70cb09}</Project>
+          <Name>Shared</Name>
+        </ProjectReference>
         <ProjectReference Include="..\SimpleNotes\SimpleNotes.csproj">
             <Project>{0009422B-77EB-4091-A9F0-3C98552B7D34}</Project>
             <Name>SimpleNotes</Name>

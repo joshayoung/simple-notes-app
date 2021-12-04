@@ -1,11 +1,9 @@
-﻿using System;
+﻿using System.IO;
 using Android.App;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
 using Sentry;
+using Shared;
 
 namespace SimpleNotes.Android
 {
@@ -20,9 +18,15 @@ namespace SimpleNotes.Android
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            var root = Directory.GetCurrentDirectory();
+            var dotenv = Path.Combine(root, ".env");
+            ProjectEnvironmentalVariables.Load(dotenv);
+
+            var dsn = System.Environment.GetEnvironmentVariable("DSN") ?? string.Empty;
+            
             SentryXamarin.Init(options =>
             {
-                options.Dsn = "";
+                options.Dsn = dsn;
                 options.Debug = true;
                 options.TracesSampleRate = 1.0;
                 options.AddXamarinFormsIntegration();

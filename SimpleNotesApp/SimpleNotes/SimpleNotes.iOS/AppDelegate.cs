@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using Foundation;
 using Sentry;
+using Shared;
 using UIKit;
 
 namespace SimpleNotes.iOS
@@ -22,6 +22,12 @@ namespace SimpleNotes.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary opt)
         {
+            var root = Directory.GetCurrentDirectory();
+            var dotenv = Path.Combine(root, ".env");
+            ProjectEnvironmentalVariables.Load(dotenv);
+
+            var dsn = Environment.GetEnvironmentVariable("DSN") ?? string.Empty;
+            
             SentryXamarin.Init(options =>
             {
                 options.Dsn = "";

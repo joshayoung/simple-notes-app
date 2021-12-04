@@ -13,4 +13,8 @@
         </PackageReference>
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove=".env" />
+    </ItemGroup>
+
 </Project>
