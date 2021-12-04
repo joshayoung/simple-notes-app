@@ -5,6 +5,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Sentry;
 
 namespace SimpleNotes.Android
 {
@@ -19,6 +20,14 @@ namespace SimpleNotes.Android
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            SentryXamarin.Init(options =>
+            {
+                options.Dsn = "";
+                options.Debug = true;
+                options.TracesSampleRate = 1.0;
+                options.AddXamarinFormsIntegration();
+            });
+            
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
