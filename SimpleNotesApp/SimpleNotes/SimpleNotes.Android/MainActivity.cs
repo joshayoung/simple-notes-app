@@ -26,6 +26,8 @@ namespace SimpleNotes.Android
                 options.Debug = true;
                 options.TracesSampleRate = 1.0;
                 options.AddXamarinFormsIntegration();
+                // Caching was causing an error, disabline for now:
+                options.DisableOfflineCaching();
             });
             
             TabLayoutResource = Resource.Layout.Tabbar;

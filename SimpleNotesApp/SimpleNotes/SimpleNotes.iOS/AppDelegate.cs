@@ -28,6 +28,8 @@ namespace SimpleNotes.iOS
                 options.Debug = true;
                 options.TracesSampleRate = 1.0;
                 options.AddXamarinFormsIntegration();
+                // Caching was causing an error, disabline for now:
+                options.DisableOfflineCaching();
             });
             
             global::Xamarin.Forms.Forms.Init();
