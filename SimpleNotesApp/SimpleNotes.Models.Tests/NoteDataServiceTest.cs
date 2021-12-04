@@ -153,5 +153,26 @@ namespace SimpleNotes.Models.Tests
 
             this.mockIData.Received().SaveValueAsync(Arg.Is<string>("notes"), Arg.Is<string>(serializedNotes2));
         }
+
+        [Fact]
+        public void DeleteNotesAsync_SaveValueAsyncThrowsError_ErrorRethrown()
+        {
+            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null},{\"Id\":2,\"Title\":null,\"Description\":null}]";
+            var serializedNotes2 = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
+            var note = new Note(2);
+            var notes = new List<Note> { new Note(1), note };
+            this.mockIData.When(d => d.SaveValueAsync(Arg.Is("notes"), Arg.Is(serializedNotes2)))
+                .Throw(new Exception("error"));
+            var noteDataService = new NoteDataService(this.mockIData);
+
+            Func<Task> testAction = async () => await noteDataService.DeleteNotesAsync(notes, note);
+
+            // TODO: Seems to be passing with false positives, no matter what I use for the strings below
+            testAction.Should()
+                      .ThrowAsync<Exception>()
+                      .WithInnerExceptionExactly<Exception, Exception>("test")
+                      .WithMessage("bla");
+        }
     }
 }

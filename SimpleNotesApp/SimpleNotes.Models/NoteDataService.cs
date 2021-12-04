@@ -84,7 +84,16 @@ namespace SimpleNotes.Models
             notes.RemoveAt(noteIndex);
             deserializeNotes?.RemoveAt(noteIndex);
             string serializeNotes = JsonConvert.SerializeObject(deserializeNotes);
-            await this.data.SaveValueAsync(LocalStorageString, serializeNotes);
+            try
+            {
+                await this.data.SaveValueAsync(LocalStorageString, serializeNotes);
+            }
+            catch (Exception e)
+            {
+                // TODO: Improve error message
+                // TODO: Log the error here too?
+                throw new Exception(ErrorMessages.DeleteValueError, e);
+            }
         }
     }
 }
