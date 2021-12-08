@@ -22,7 +22,7 @@ namespace SimpleNotes.ViewModels.Tests
         
         #region Constructor_tests
         [Fact]
-        public void Constructor_Params_SetsValues()
+        public void Constructor_SetsNotes()
         {
             var note = new Note(1);
             var notes = new List<Note>() { note, };
@@ -37,7 +37,7 @@ namespace SimpleNotes.ViewModels.Tests
         }
         
         [Fact]
-        public void Constructor_Params_CallsCorrectMethod()
+        public void Constructor_CallsCorrectMethod()
         {
             var note = new Note(1);
             var notes = new List<Note>() { note, };
@@ -101,10 +101,7 @@ namespace SimpleNotes.ViewModels.Tests
 
             this.mockNoteRepository.Notes.Add(new Note(2));
             
-            noteRepositoryViewModel.Should()
-                                   .Raise("PropertyChanged")
-                                   .WithSender(noteRepositoryViewModel.Subject)
-                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepositoryViewModel.Notes));
+            noteRepositoryViewModel.Should().RaisePropertyChangeFor(n => n.Notes);
         }
         
         [Fact]
@@ -113,10 +110,7 @@ namespace SimpleNotes.ViewModels.Tests
             var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository).Monitor();
             this.mockNoteRepository.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(NoteRepository.NotesExist)));
             
-            noteRepositoryViewModel.Should()
-                                   .Raise("PropertyChanged")
-                                   .WithSender(noteRepositoryViewModel.Subject)
-                                   .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteRepositoryViewModel.NotesExist));
+            noteRepositoryViewModel.Should().RaisePropertyChangeFor(n => n.NotesExist);
         }
         #endregion
         

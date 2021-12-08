@@ -29,10 +29,7 @@ namespace SimpleNotes.ViewModels.Tests
             
             noteMock.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(Note.Title)));
 
-            noteViewModelMonitored.Should()
-                         .Raise("PropertyChanged")
-                         .WithSender(noteViewModelMonitored.Subject)
-                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteViewModel.Title));
+            noteViewModelMonitored.Should().RaisePropertyChangeFor(n => n.Title);
         }
         
         [Fact]
@@ -43,10 +40,7 @@ namespace SimpleNotes.ViewModels.Tests
             
             noteMock.Configure().PropertyChanged += Raise.Event<PropertyChangedEventHandler>(this, new PropertyChangedEventArgs(nameof(Note.Description)));
 
-            noteViewModelMonitored.Should()
-                         .Raise("PropertyChanged")
-                         .WithSender(noteViewModelMonitored.Subject)
-                         .WithArgs<PropertyChangedEventArgs>(args => args.PropertyName == nameof(NoteViewModel.Description));
+            noteViewModelMonitored.Should().RaisePropertyChangeFor(n => n.Description);
         }
         #endregion
 
