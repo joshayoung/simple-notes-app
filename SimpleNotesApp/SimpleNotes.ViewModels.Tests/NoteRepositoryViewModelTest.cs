@@ -49,18 +49,6 @@ namespace SimpleNotes.ViewModels.Tests
         }
         #endregion
 
-        #region Setter_Tests
-        [Fact]
-        public void NotesExist_Called_ReturnsCorrectValue()
-        {
-            this.mockNoteRepository.Configure().NotesExist.Returns(true);
-            
-            var noteRepositoryViewModel = new NoteRepositoryViewModel(this.mockNoteRepository);
-
-            noteRepositoryViewModel.NotesExist.Should().BeTrue();
-        }
-        #endregion
-
         #region Property_Change_Tests
         [Theory]
         [InlineData("NoteSaved")]
