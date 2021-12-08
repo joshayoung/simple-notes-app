@@ -18,31 +18,6 @@ namespace SimpleNotes.Models.Tests
             this.mockNoteDataService = Substitute.ForPartsOf<NoteDataService>(Substitute.For<IData>());
         }
         
-        #region Constructor_Tests
-        [Fact]
-        public void Constructor_WithValidData_AssignsValues()
-        {
-            var notes = new List<Note>() { new Note(1, "title", "description") };
-            this.mockNoteDataService.Configure().RetrieveNotes().Returns(notes);
-            
-            var notesRepository = new NoteRepository(this.mockNoteDataService);
-            
-            notesRepository.Notes.Should().BeEquivalentTo(notes);
-            notesRepository.NotesExist.Should().BeTrue();
-        }
-
-        [Fact]
-        public void Constructor_NoData_DoesNotAssignsValues()
-        {
-            this.mockNoteDataService.Configure().RetrieveNotes().Returns(new List<Note>());
-            
-            var notesRepository = new NoteRepository(this.mockNoteDataService);
-            
-            notesRepository.Notes.Should().BeEmpty();
-            notesRepository.NotesExist.Should().BeFalse();
-        }
-        #endregion
-        
         #region SaveAsync_Tests
         [Fact]
         public void SaveAsync_Called_AddsNoteToList()

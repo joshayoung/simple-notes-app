@@ -20,22 +20,6 @@ namespace SimpleNotes.ViewModels.Tests
             this.mockNoteRepository = Substitute.ForPartsOf<NoteRepository>(noteDataService);
         }
         
-        [Fact]
-        public void Constructor_Params_Assignment()
-        {
-            var id = 1;
-            var title = "title";
-            var description = "description";
-            var note = new Note(id, title, description);
-            
-            var noteViewModel = new NoteViewModel(note, this.mockNoteRepository);
-
-            noteViewModel.NoteAction.Should().BeNull();
-            noteViewModel.Id.Should().Be(id);
-            noteViewModel.Title.Should().Be(title);
-            noteViewModel.Description.Should().Be(description);
-        }
-        
         #region Setter_Tests
         [Fact]
         public void NoteAction_Set_CorrectValue()
