@@ -35,8 +35,35 @@ namespace SimpleNotes.IntegrationTests
             this.mockIData.Received().SaveValueAsync("notes", serializedNotes);
         }
         
-        // TODO: Add test for SaveEditsAsync
+        [Fact]
+        public void SaveEditsAsync_Called_SavesModifiedNoteToLocalStorage()
+        {
+            var note = new Note(1, "new title", "new description");
+            var noteRepository = Substitute.ForPartsOf<NoteRepository>(this.noteDataService);
+            noteRepository.Notes.Returns(new List<Note> { new(1) });
+            var serializedNotes = "[{\"Id\":1,\"Title\":\"new title\",\"Description\":\"new description\"}]";
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
+            var noteViewModel = new NoteViewModel(note, noteRepository);
+
+            noteViewModel.SaveEditsAsync();
+
+            this.mockIData.Received().SaveValueAsync("notes", serializedNotes);
+        }
         
-        // TODO: Add test for DeleteAsync
+        [Fact]
+        public void DeleteAsync_Called_SavesModifiedNotesToLocalStorage()
+        {
+            var note = new Note(1);
+            var noteRepository = Substitute.ForPartsOf<NoteRepository>(this.noteDataService);
+            noteRepository.Notes.Returns(new List<Note> { new(1) });
+            var serializedNotes = "[{\"Id\":1,\"Title\":null,\"Description\":null}]";
+            var serializedNotes2 = "[]";
+            this.mockIData.RetrieveValue("notes").Returns(serializedNotes);
+            var noteViewModel = new NoteViewModel(note, noteRepository);
+
+            noteViewModel.DeleteAsync();
+
+            this.mockIData.Received().SaveValueAsync("notes", serializedNotes2);
+        }
     }
 }
