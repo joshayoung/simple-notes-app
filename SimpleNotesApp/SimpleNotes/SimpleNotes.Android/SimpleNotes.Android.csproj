@@ -64,7 +64,7 @@
           <Generator>MSBuild:UpdateGeneratedFiles</Generator>
         </AndroidResource>
         <AndroidResource Include="Resources\drawable\icon_round.png" />
-        <AndroidResource Include="Resources\drawable\splash_screen.png" />
+        <AndroidResource Include="Resources\drawable\splash_screen.xml" />
         <AndroidResource Include="Resources\layout\Tabbar.axml" />
         <AndroidResource Include="Resources\layout\Toolbar.axml" />
         <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
