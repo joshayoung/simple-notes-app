@@ -14,38 +14,56 @@
         <ResourceDictionary>
             <converters:InverseBooleanConverter x:Key="InverseConverter" />
         </ResourceDictionary>
+        <Style x:Key="EditButton" TargetType="Button">
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="TextColor" Value="{StaticResource AlmostWhite}" />
+            <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
+
+        <Style x:Key="DeleteButton" TargetType="Button">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="BorderColor" Value="#FF4301" />
+            <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}" />
+            <Setter Property="VerticalOptions" Value="Center" />
+        </Style>
     </ContentPage.Resources>
     <StackLayout Padding="10">
-        <Label Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
+        <Label LineBreakMode="NoWrap" Text="Simple Notes" Style="{StaticResource HeaderStyle}" />
         <StackLayout IsVisible="{Binding NotesExist, Converter={StaticResource InverseConverter}}">
-            <Label Text="No notes, please add one…" HorizontalOptions="CenterAndExpand" />
+            <Label LineBreakMode="NoWrap" Text="No notes, please add one…" />
         </StackLayout>
         <CollectionView Margin="0,20,0,0" ItemsSource="{Binding Notes}">
             <CollectionView.Footer>
-                <Grid IsVisible="{Binding NotesExist}">
                     <Label
+                        LineBreakMode="NoWrap"
+                        IsVisible="{Binding NotesExist}"
                         FontAttributes="Italic"
                         FontSize="14"
                         Text="Swipe left to edit, right to delete…"
                         TextColor="#9E9E9E"
                         Padding="0,10,0,0"
-                        HorizontalOptions="Center" />
-                </Grid>
+                        />
             </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="viewModels:NoteViewModel">
                     <SwipeView>
                         <SwipeView.LeftItems>
                             <SwipeItems>
-                                <SwipeItemView Invoked="EditNote">
-                                    <Button Style="{StaticResource EditButton}" Text="Edit Note" />
+                                <SwipeItemView Invoked="DeleteNote">
+                                    <Button Style="{StaticResource DeleteButton}" Text="Delete Note" />
                                 </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.LeftItems>
                         <SwipeView.RightItems>
                             <SwipeItems>
-                                <SwipeItemView Invoked="DeleteNote">
-                                    <Button Style="{StaticResource DeleteButton}" Text="Delete Note" />
+                                <SwipeItemView Invoked="EditNote">
+                                    <Button Style="{StaticResource EditButton}" Text="Edit Note" />
                                 </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
@@ -55,7 +73,7 @@
                                 <TapGestureRecognizer Tapped="GoToDetails" />
                             </Frame.GestureRecognizers>
                             <StackLayout>
-                                <Label FontAttributes="Bold" FontSize="20">
+                                <Label LineBreakMode="NoWrap" FontAttributes="Bold" FontSize="20">
                                     <Label.Text>
                                         <Binding Path="Title">
                                             <Binding.Converter>
@@ -65,7 +83,7 @@
                                     </Label.Text>
                                 </Label>
                                 <BoxView BackgroundColor="#BFBFBF" HeightRequest="1" WidthRequest="100" />
-                                <Label FontAttributes="Italic">
+                                <Label LineBreakMode="NoWrap" FontAttributes="Italic">
                                     <Label.Text>
                                         <Binding Path="Description">
                                             <Binding.Converter>
@@ -80,7 +98,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-        <Button Text="Add New Note" Clicked="LoadModifyPage" Style="{StaticResource NoteButton}"
-                VerticalOptions="EndAndExpand" />
+        <Button Text="Add New Note" Clicked="LoadModifyPage" Style="{StaticResource NoteButton}" />
     </StackLayout>
 </ContentPage>

@@ -5,7 +5,6 @@
              x:Class="SimpleNotes.App">
     <Application.Resources>
         <ResourceDictionary>
-            <Color x:Key="NoteColor">#37C469</Color>
             <Color x:Key="ButtonColor">#199AD5</Color>
             <Color x:Key="BackgroundColor">#F2F2F2</Color>
             <Color x:Key="AccentColor">#0095d5</Color>
@@ -20,35 +19,10 @@
                 <Setter Property="FontSize" Value="32" />
             </Style>
 
-            <Style x:Key="EditButton" TargetType="Button">
-                <Setter Property="Margin" Value="0,0,10,0" />
-                <Setter Property="Padding" Value="20" />
-                <Setter Property="TextColor" Value="{StaticResource AlmostWhite}" />
-                <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="VerticalOptions" Value="Center" />
-            </Style>
-
-            <Style x:Key="DeleteButton" TargetType="Button">
-                <Setter Property="TextColor" Value="Black" />
-                <Setter Property="Margin" Value="10,0,0,0" />
-                <Setter Property="Padding" Value="20" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BorderColor" Value="#FF4301" />
-                <Setter Property="BackgroundColor" Value="{StaticResource HighlightColor}" />
-                <Setter Property="VerticalOptions" Value="Center" />
-            </Style>
-
             <Style x:Key="NoteButton" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ButtonColor}" />
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="TextColor" Value="#FFFFFF" />
-            </Style>
-
-            <Style x:Key="NoteStyle" TargetType="Frame">
-                <Setter Property="CornerRadius" Value="6" />
-                <Setter Property="BackgroundColor" Value="#199AD5" />
-                <Setter Property="HasShadow" Value="False" />
             </Style>
         </ResourceDictionary>
     </Application.Resources>
